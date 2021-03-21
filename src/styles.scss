@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap';
+@import '~@angular/material/theming';
+@include mat-core();
+
+$DentistApp-primary: mat-palette($mat-teal);
+$DentistApp-accent: mat-palette($mat-blue-gray);
+$DentistApp-warn: mat-palette($mat-deep-orange);
+$DentistApp-theme: mat-light-theme((
+  color: (
+    primary: $DentistApp-primary,
+    accent: $DentistApp-accent,
+    warn: $DentistApp-warn,
+  )
+));
+@include angular-material-theme($DentistApp-theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

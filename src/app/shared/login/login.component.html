@@ -1,0 +1,29 @@
+<div class="login">
+    <div class="container-fluid">
+        <div class="login-header row align-items-center">
+            <div>Login</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="login-form-container col-sm-8 col-md-6 col-lg-4">
+                <div class="container">
+                    <div class="row">
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Email</mat-label>
+                            <input type="email" matInput placeholder="Ex. pat@example.com">
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Password</mat-label>
+                            <input type="password" matInput>
+                        </mat-form-field>
+                        <div class="button-container col-12">
+                            <button (click)="login()" mat-raised-button color="primary" class="col-12 mb-2">Zaloguj</button>
+                            <button mat-stroked-button color="accent" class="col-12">Rejestracja</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
