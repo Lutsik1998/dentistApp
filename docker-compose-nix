@@ -1,0 +1,22 @@
+version: '3.5' # We use version 3.5 syntax
+services: # Here we define our service(s)
+    db:
+      container_name: mongodb-test # Container name
+      image: mongo # image name to start/build
+      ports: # Port mapping
+        - '2717:27017'
+      volumes: # Volume binding
+        - '~/example:/data/db'
+    spring-WebAPI: # The name of the service
+      # Location of our Dockerfile
+      build:
+        context: .
+        dockerfile: Dockerfile
+      image: spring-webapi:dev
+      container_name: spring-WebAPI
+      depends_on: # start after
+        - db
+      ports: 
+        - '8081:8081'
+      links: # list mapping: service_name:name_how_will_see_your_program
+        - 'db:mymongo'
