@@ -1,0 +1,19 @@
+<div class="header">
+    <div class="container">
+        <div class="row header-border">
+            <div class="col-2 header-logo">
+                <img class="header-logo-img" src="assets/logos/logoTeal.png" alt="logo">
+            </div>
+            <div class="container col-10">
+                <div class="row h-50 justify-content-end align-items-end">
+                    <div>Witaj, USERNAME<button class="logout-button" mat-raised-button color="primary">Wyloguj</button></div>
+                </div>
+                <div class="row h-50">
+                    <nav class="nav-box col-12 align-items-end">
+                        <div *ngFor="let tab of navTabs" routerLink="{{tab.path}}" routerLinkActive="active">{{tab.text}}</div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

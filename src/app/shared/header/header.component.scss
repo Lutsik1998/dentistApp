@@ -1,0 +1,33 @@
+@import 'var';
+
+.header {
+    .nav-box {
+        display: flex;
+        div {
+            flex-grow: 1;
+            text-align: center;
+            padding-bottom: 15px;
+            outline: none;
+            cursor: pointer;
+            &:hover {
+                color: $primary;
+                border-bottom: 2px solid $primary;
+                margin-bottom: -2px;
+            }
+        }
+    }
+    .logout-button {
+        height: fit-content;
+        margin-left: 15px;
+    }
+    &-logo {
+        margin-bottom: 23px;
+        &-img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    &-border {
+        border-bottom: 2px solid $accent-lighter;
+    }
+}
