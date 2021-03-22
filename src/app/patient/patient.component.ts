@@ -9,12 +9,12 @@ import { NavTab } from '../models/various.model';
 export class PatientComponent implements OnInit {
 
   navTabs: NavTab[] = [
-    {path: '', text: 'Gabinet'},
-    {path: '', text: 'Lekarz'},
-    {path: '', text: 'Zdrowie'},
-    {path: '', text: 'Historia zabiegów'},
-    {path: '', text: 'Recepty'},
-    {path: '', text: 'Konto'},
+    {path: 'office', text: 'Gabinet'},
+    {path: 'doctor', text: 'Lekarz'},
+    {path: 'health', text: 'Zdrowie'},
+    {path: 'history', text: 'Historia zabiegów'},
+    {path: 'receipt', text: 'Recepty'},
+    {path: 'account', text: 'Konto'},
   ]
   constructor() { }
   ngOnInit(): void {

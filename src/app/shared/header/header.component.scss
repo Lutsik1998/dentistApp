@@ -1,7 +1,7 @@
 @import 'var';
 
 .header {
-    .nav-box {
+    &-nav-box {
         display: flex;
         div {
             flex-grow: 1;
@@ -9,14 +9,14 @@
             padding-bottom: 15px;
             outline: none;
             cursor: pointer;
-            &:hover {
+            &:hover, &.active {
                 color: $primary;
                 border-bottom: 2px solid $primary;
                 margin-bottom: -2px;
             }
         }
     }
-    .logout-button {
+    &-logout-button {
         height: fit-content;
         margin-left: 15px;
     }
