@@ -1,0 +1,63 @@
+<div class="registration">
+    <div class="container-fluid">
+        <div class="registration-header row align-items-center">
+            <div>Registration</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="registration-form-container col-sm-8 col-md-6 col-lg-4">
+                <div class="container">
+                    <div class="row">
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Imię</mat-label>
+                            <input type="text" matInput>
+
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Imię</mat-label>
+                            <input type="text" matInput>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Nazwisko</mat-label>
+                            <input type="text" matInput >
+
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>PESEL</mat-label>
+                            <input type="number" matInput >
+
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Data urodzenia</mat-label>
+                            <input type="date" matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="col-12 mb-2">
+                            <mat-label>Plec (required)</mat-label>
+                            <select matNativeControl required >
+                                <option label="--select something --"></option>
+                                <option value="M">M</option>
+                                <option value="K">K</option>
+                              </select>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Email</mat-label>
+                            <input type="email" matInput placeholder="Ex. pat@example.com">
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Telefon</mat-label>
+                            <input type="number" matInput placeholder="+48123456789">
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Adres</mat-label>
+                            <input type="text" matInput>
+                        </mat-form-field>
+                        <div class="button-container col-12">
+                            <button mat-stroked-button color="accent" class="col-12">Rejestracja</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
