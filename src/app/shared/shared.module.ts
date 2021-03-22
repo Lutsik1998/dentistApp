@@ -6,6 +6,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { RegistrationComponent } from './registration/registration.component';
 
+import{HttpClientModule} from '@angular/common/http'
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { RegistrationComponent } from './registration/registration.component';
   imports: [
     CommonModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ]
 })
 export class SharedModule { }
