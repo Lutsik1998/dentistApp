@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavTab } from 'src/app/models/various.model';
 
 @Component({
@@ -9,13 +10,17 @@ import { NavTab } from 'src/app/models/various.model';
 export class HeaderComponent implements OnInit {
 
   @Input() navTabs: NavTab;
-  isMobileNavOpen: boolean = true;
-  constructor() { }
+  isMobileNavOpen: boolean = false;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   toggleMobileNav(): void {
     this.isMobileNavOpen = !this.isMobileNavOpen;
+  }
+
+  logout(): void {
+    this.router.navigate(['login']);
   }
 }

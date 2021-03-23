@@ -1,12 +1,12 @@
-<div class="header">
+<div class="header header-border">
     <div class="container d-none d-md-block">
-        <div class="row header-border">
+        <div class="row">
             <div class="col-2 header-logo">
                 <img class="header-logo-img" src="assets/logos/logoTeal.png" alt="logo">
             </div>
             <div class="container col-10">
                 <div class="row h-50 justify-content-end align-items-end">
-                    <div>Witaj, USERNAME<button class="header-logout-button" mat-raised-button color="primary">Wyloguj</button></div>
+                    <div>Witaj, USERNAME<button (click)="logout()" class="header-logout-button" mat-raised-button color="primary">Wyloguj</button></div>
                 </div>
                 <div class="row h-50">
                     <nav class="header-nav-box col-12 align-items-end">
