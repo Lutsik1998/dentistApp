@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { HeaderComponent } from './header/header.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 
@@ -15,7 +16,8 @@ import { HeaderComponent } from './header/header.component';
     CommonModule,
     MatInputModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatDividerModule
   ],
   exports: [
     HeaderComponent

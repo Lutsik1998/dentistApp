@@ -16,4 +16,24 @@
             </div>
         </div>
     </div>
+    <div class="header-mobile d-md-none">
+        <div class="header-mobile-head h-100 d-flex justify-content-between align-items-center">
+            <img class="header-logo-img" src="assets/logos/logoWhite.png" alt="logo">
+            <img class="header-mobile-button" (click)="toggleMobileNav()" src="assets/icons/menuIcon.svg" alt="menu button">
+        </div>
+    </div>
+    <div class="header-mobile-menu d-md-none" [ngClass]="{'open': isMobileNavOpen}">
+        <div class="container">
+            <div class="close-nav" (click)="toggleMobileNav()">
+                <div>Zamknij</div>
+                <img src="assets/icons/closeIcon.svg" alt="close button">
+            </div>
+            <mat-divider></mat-divider>
+            <nav>
+                <ul>
+                    <li *ngFor="let tab of navTabs"><a routerLink="{{tab.path}}" routerLinkActive="active">{{tab.text}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>

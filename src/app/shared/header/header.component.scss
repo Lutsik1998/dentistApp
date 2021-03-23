@@ -1,6 +1,7 @@
 @import 'var';
 
 .header {
+    position: relative;
     &-nav-box {
         display: flex;
         div {
@@ -29,5 +30,60 @@
     }
     &-border {
         border-bottom: 2px solid $accent-lighter;
+    }
+    &-mobile {
+        height: 10vh;
+        min-height: 70px;
+        background-color: $primary;
+        &-button{
+            height: 70%;
+            width: auto;
+        }
+        &-head {
+            padding: 10px 15px;
+        }
+        &-menu {
+            position: absolute;
+            background-color: $accent-lighter;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            &.open {
+                transform: translateX(0)
+            }
+            .container {
+                padding: 25px;
+                .close-nav {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 2em;
+                    font-weight: 400;
+                    padding-bottom: 20px;
+                    img {
+                        height: 24px;
+                        width: 24px;
+                    }
+                }
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    li {
+                        margin-top: 1em;
+                        a {
+                            color: inherit;
+                            text-decoration: inherit;
+                            font-size: 1.3em;
+                            &.active {
+                                color: $primary;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

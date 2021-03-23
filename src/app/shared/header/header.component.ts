@@ -9,9 +9,13 @@ import { NavTab } from 'src/app/models/various.model';
 export class HeaderComponent implements OnInit {
 
   @Input() navTabs: NavTab;
+  isMobileNavOpen: boolean = true;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toggleMobileNav(): void {
+    this.isMobileNavOpen = !this.isMobileNavOpen;
+  }
 }
