@@ -6,7 +6,7 @@ services:
     ports: # Port mapping
       - "27017:27017"
     volumes: # Volume binding
-      - "~/example:/data/db"
+      - "c:/data/db:/data/db"
   spring-WebAPI: # The name of the service
     build:
       context: . # Location of Dockerfile

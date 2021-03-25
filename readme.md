@@ -41,5 +41,13 @@ docker-compose up dentist-spring-WebAPI
 ```
  
 ## Download existing image from dockerhub
- //TODO
+
+If you don't want to build an image, you can download the image from docker-hub.
+
+### !the version may be outdated
+
+- Download:
+```
+docker push despenrado/dentist-spring-webapi:tagname
+```
  
