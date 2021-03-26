@@ -1,15 +1,14 @@
 @import "var";
 
 .login {
-    height: 100vh;
     .container-fluid {
-        height: 10%;
-        min-height: 55px;
+        height: 10vh;
+        min-height: 100px;
     }
     &-header {
-        height: 100%;
         color: white;
         background-color: $primary;
+        padding: 10px 0;
         div {
             font-size: 40px;
             padding-left: 20px;

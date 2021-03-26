@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavTab } from '../models/various.model';
 
 @Component({
   selector: 'app-patient',
@@ -7,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientComponent implements OnInit {
 
+  navTabs: NavTab[] = [
+    {path: 'office', text: 'Gabinet'},
+    {path: 'doctor', text: 'Lekarz'},
+    {path: 'health', text: 'Zdrowie'},
+    {path: 'history', text: 'Historia zabiegów'},
+    {path: 'receipt', text: 'Recepty'},
+    {path: 'account', text: 'Konto'},
+  ]
   constructor() { }
-
   ngOnInit(): void {
   }
 
