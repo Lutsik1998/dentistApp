@@ -1,0 +1,39 @@
+<div class="header header-border">
+    <div class="container d-none d-md-block">
+        <div class="row">
+            <div class="col-2 header-logo">
+                <img class="header-logo-img" src="assets/logos/logoTeal.png" alt="logo">
+            </div>
+            <div class="container col-10">
+                <div class="row h-50 justify-content-end align-items-end">
+                    <div>Witaj, USERNAME<button (click)="logout()" class="header-logout-button" mat-raised-button color="primary">Wyloguj</button></div>
+                </div>
+                <div class="row h-50">
+                    <nav class="header-nav-box col-12 align-items-end">
+                        <div *ngFor="let tab of navTabs" routerLink="{{tab.path}}" routerLinkActive="active">{{tab.text}}</div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-mobile d-md-none">
+        <div class="header-mobile-head h-100 d-flex justify-content-between align-items-center">
+            <img class="header-logo-img" src="assets/logos/logoWhite.png" alt="logo">
+            <img class="header-mobile-button" (click)="toggleMobileNav()" src="assets/icons/menuIcon.svg" alt="menu button">
+        </div>
+    </div>
+    <div class="header-mobile-menu d-md-none" [ngClass]="{'open': isMobileNavOpen}">
+        <div class="container">
+            <div class="close-nav" (click)="toggleMobileNav()">
+                <div>Zamknij</div>
+                <img src="assets/icons/closeIcon.svg" alt="close button">
+            </div>
+            <mat-divider></mat-divider>
+            <nav>
+                <ul>
+                    <li *ngFor="let tab of navTabs"><a routerLink="{{tab.path}}" routerLinkActive="active">{{tab.text}}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

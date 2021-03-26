@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.router.navigate(['/patient'])
+    this.router.navigate(['/patient/office'])
   }
   registration(){
     this.router.navigate(['/registration'])
