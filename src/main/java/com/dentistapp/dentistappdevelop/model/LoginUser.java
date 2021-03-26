@@ -3,6 +3,7 @@ package com.dentistapp.dentistappdevelop.model;
 import org.springframework.data.annotation.Id;
 
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 public class LoginUser  {
@@ -10,17 +11,16 @@ public class LoginUser  {
     @Id
     public String id;
 
-    @NotNull
-    private String login;
+    @Email
+    private String email;
     @NotNull
     private String password;
     @NotNull
     private Roles role;
 
-
-    public LoginUser(String id, @NotNull String login, @NotNull String password, @NotNull Roles role) {
+    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Roles role) {
         this.id = id;
-        this.login = login;
+        this.email = email;
         this.password = password;
         this.role = role;
     }
@@ -36,12 +36,12 @@ public class LoginUser  {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

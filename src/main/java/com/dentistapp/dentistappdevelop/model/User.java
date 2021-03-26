@@ -10,8 +10,7 @@ import java.time.LocalDate;
 public class User extends LoginUser{
 
 
-    @Email
-    private String email;
+
     @NotNull
     private String firstName;
     private String secondName;
@@ -28,9 +27,8 @@ public class User extends LoginUser{
     public PhoneNumber phoneNumber;
 
 
-    public User(String id, @NotNull String login, @NotNull String password, @NotNull Roles role, @Email String email, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
-        super(id, login, password, role);
-        this.email = email;
+    public User(String id, @Email String email, @NotNull String password, @NotNull Roles role, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
+        super(id, email, password, role);
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
@@ -44,13 +42,7 @@ public class User extends LoginUser{
     public User() {
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getFirstName() {
         return firstName;
