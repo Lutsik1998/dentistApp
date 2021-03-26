@@ -8,8 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -20,9 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     SharedModule,
     AppRoutingModule,
     NgbModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatInputModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

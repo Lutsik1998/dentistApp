@@ -1,0 +1,6 @@
+.git
+node_modules
+npm-debug
+dist
+.gitignore
+docker
