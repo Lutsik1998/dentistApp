@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    return this.http.get('http://localhost:8080/api/helper/test');
     this.router.navigate(['/patient'])
   }
   registration(){

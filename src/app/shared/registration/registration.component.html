@@ -5,57 +5,115 @@
         </div>
     </div>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="registration-form-container col-sm-8 col-md-6 col-lg-4">
-                <div class="container">
-                    <div class="row">
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Imię</mat-label>
-                            <input type="text" matInput>
+        <div class="registration-form-container">
+            <div class="row justify-content-center">
 
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Imię</mat-label>
-                            <input type="text" matInput>
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Nazwisko</mat-label>
-                            <input type="text" matInput >
+                <div class=" col-sm-6">
+                    <h2 class="section-title"> User details</h2>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Imię</mat-label>
+                        <input type="text" matInput placeholder="Imię">
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Drugie Imię</mat-label>
+                        <input type="text" matInput placeholder="Drugie Imię">
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Nazwisko</mat-label>
+                        <input type="text" matInput>
 
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>PESEL</mat-label>
-                            <input type="number" matInput >
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>PESEL</mat-label>
+                        <input type="number" matInput>
 
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Data urodzenia</mat-label>
-                            <input type="date" matInput>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" class="col-12 mb-2">
-                            <mat-label>Plec (required)</mat-label>
-                            <select matNativeControl required >
-                                <option label="--select something --"></option>
-                                <option value="M">M</option>
-                                <option value="K">K</option>
-                              </select>
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Email</mat-label>
-                            <input type="email" matInput placeholder="Ex. pat@example.com">
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Telefon</mat-label>
-                            <input type="number" matInput placeholder="+48123456789">
-                        </mat-form-field>
-                        <mat-form-field class="col-12 mb-2">
-                            <mat-label>Adres</mat-label>
-                            <input type="text" matInput>
-                        </mat-form-field>
-                        <div class="button-container col-12">
-                            <button mat-stroked-button color="accent" class="col-12">Rejestracja</button>
-                        </div>
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Data urodzenia</mat-label>
+                        <input type="date" matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-12 mb-2">
+                        <mat-label>Plec (required)</mat-label>
+                        <select matNativeControl required>
+                            <option label="--select something --"></option>
+                            <option value="M">M</option>
+                            <option value="K">K</option>
+                        </select>
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput placeholder="Ex. pat@example.com">
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Telefon</mat-label>
+                        <input type="number" matInput placeholder="+48123456789">
+                    </mat-form-field>
+                    <mat-form-field class="col-12 mb-2">
+                        <mat-label>Adres</mat-label>
+                        <input type="text" matInput>
+                    </mat-form-field>
+                    <div class="button-container col-12">
+                        <button mat-stroked-button color="accent" class="col-12">Rejestracja</button>
                     </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <h2 class="section-title">Account details</h2>
+                    <form [formGroup]="accountDetailsForm" novalidate
+                        (ngSubmit)="onSubmitAccountDetails(accountDetailsForm.value)">
+                        <mat-form-field class="col-12 mb-2">
+                            <input matInput maxlength="25" placeholder="Username" formControlName="username" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.username">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('username').hasError(validation.type) && (accountDetailsForm.get('username').dirty || accountDetailsForm.get('username').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <input matInput type="email" placeholder="Email" formControlName="email" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.email">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('email').hasError(validation.type) && (accountDetailsForm.get('email').dirty || accountDetailsForm.get('email').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div  formGroupName="matching_passwords">
+                            <mat-form-field class="col-12 mb-2">
+                                <input matInput type="password" placeholder="Password" formControlName="password"
+                                    required>
+                                <mat-error *ngFor="let validation of account_validation_messages.password">
+                                    <mat-error class="error-message"
+                                        *ngIf="accountDetailsForm.get('matching_passwords').get('password').hasError(validation.type) && (accountDetailsForm.get('matching_passwords').get('password').dirty || accountDetailsForm.get('matching_passwords').get('password').touched)">
+                                        {{validation.message}}</mat-error>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-12 mb-2">
+                                <input matInput type="password" placeholder="Confirm Password"
+                                    formControlName="confirm_password" [errorStateMatcher]="parentErrorStateMatcher"
+                                    required>
+                                <mat-error *ngFor="let validation of account_validation_messages.confirm_password">
+                                    <mat-error class="error-message"
+                                        *ngIf="(accountDetailsForm.get('matching_passwords').get('confirm_password').hasError(validation.type)|| accountDetailsForm.get('matching_passwords').hasError(validation.type)) && (accountDetailsForm.get('matching_passwords').get('confirm_password').dirty || accountDetailsForm.get('matching_passwords').get('confirm_password').touched)">
+                                        {{validation.message}}</mat-error>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-checkbox class="col-12 mb-2" formControlName="terms">
+                            I accept terms and conditions
+                        </mat-checkbox>
+                        <mat-error *ngFor="let validation of account_validation_messages.terms">
+                            <mat-error class="error-message"
+                                *ngIf="accountDetailsForm.get('terms').hasError(validation.type) && (accountDetailsForm.get('terms').dirty || accountDetailsForm.get('terms').touched)">
+                                {{validation.message}}</mat-error>
+                        </mat-error>
+
+                        <button class="submit-btn col-12 mb-2" color="primary" mat-raised-button type="submit"
+                            [disabled]="!accountDetailsForm.valid">
+                            Submit
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
