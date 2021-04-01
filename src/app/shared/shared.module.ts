@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AngularMaterialModule } from '../material.module';
+import { RouterModule } from '@angular/router';
 
 import { RegistrationComponent } from './registration/registration.component';
 
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     AngularMaterialModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     HeaderComponent
