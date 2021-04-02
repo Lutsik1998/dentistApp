@@ -8,13 +8,15 @@ public class Patient extends User{
 
     private int cardNumber;
 
-    public Patient(String id, @NotNull String login, @NotNull String password, @NotNull Roles role, @Email String email, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber, int cardNumber) {
-        super(id, login, password, role, email, firstName, secondName, lastName, pesel, birthDate, sex, addres, phoneNumber);
+    public Patient(String id, @Email String email, @NotNull String password, @NotNull Roles role, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber, int cardNumber) {
+        super(id, email, password, role, firstName, secondName, lastName, pesel, birthDate, sex, addres, phoneNumber);
         this.cardNumber = cardNumber;
     }
 
     public Patient() {
     }
+
+
 
     public int getCardNumber() {
         return cardNumber;

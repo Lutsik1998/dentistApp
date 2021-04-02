@@ -9,4 +9,4 @@ FROM openjdk:11-jre-slim
 COPY --from=mavenbuild target/*.jar ./
 EXPOSE 8080
 RUN bash -c 'touch scrum-test-docker.jar'
-ENTRYPOINT ["java","-Dspring.data.mongodb.uri=mongodb://mymongo/dentist", "-jar", "./dentist-api.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-jar", "./dentist-api.jar"]
