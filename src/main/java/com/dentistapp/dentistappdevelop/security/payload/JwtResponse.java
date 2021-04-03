@@ -1,7 +1,5 @@
 package com.dentistapp.dentistappdevelop.security.payload;
 
-import com.dentistapp.dentistappdevelop.model.Roles;
-
 import java.util.List;
 
 public class JwtResponse {
@@ -9,11 +7,13 @@ public class JwtResponse {
     private String type = "Bearer";
     private String id;
     private String email;
+    private String role;
 
-    public JwtResponse(String accessToken, String id, String email) {
+    public JwtResponse(String accessToken, String id, String email, String role) {
         this.token = accessToken;
         this.id = id;
         this.email = email;
+        this.role = role;
     }
 
 
@@ -50,5 +50,20 @@ public class JwtResponse {
         this.email = email;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
+

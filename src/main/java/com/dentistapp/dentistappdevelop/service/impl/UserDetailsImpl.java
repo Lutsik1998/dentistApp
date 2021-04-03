@@ -2,15 +2,13 @@ package com.dentistapp.dentistappdevelop.service.impl;
 
 
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
@@ -34,9 +32,14 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Patient patient) {
-        List<GrantedAuthority> authorities = Collections.emptyList();
-        authorities.add(new SimpleGrantedAuthority(patient.getRole().toString()));
-
+//        Set<Roles> test = new HashSet<> ();
+//        test.add(patient.getRoles().n);
+//        System.out.println("-------------------------------------");
+////        List<GrantedAuthority> authorities = Collections.emptyList();
+////        authorities.add(new SimpleGrantedAuthority(APIRole.ROLE_USER.name()));
+        List<GrantedAuthority> authorities = patient.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .collect(Collectors.toList());
         return new UserDetailsImpl(
                 patient.getId(),
                 patient.getEmail(),

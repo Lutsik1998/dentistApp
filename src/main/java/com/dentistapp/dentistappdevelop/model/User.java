@@ -2,10 +2,13 @@ package com.dentistapp.dentistappdevelop.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User extends LoginUser{
 
@@ -18,8 +21,8 @@ public class User extends LoginUser{
     private String lastName;
     @NotNull
     private int pesel;
-    @JsonFormat(pattern = "dd.MM.yyyy")
-    @Schema(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Schema(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     @NotNull
     private Sex sex;
@@ -27,8 +30,8 @@ public class User extends LoginUser{
     public PhoneNumber phoneNumber;
 
 
-    public User(String id, @Email String email, @NotNull String password, @NotNull Roles role, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
-        super(id, email, password, role);
+    public User(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
+        super(id, email, password, roles);
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
@@ -41,8 +44,6 @@ public class User extends LoginUser{
 
     public User() {
     }
-
-
 
     public String getFirstName() {
         return firstName;

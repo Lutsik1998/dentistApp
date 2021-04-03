@@ -5,35 +5,24 @@ import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
-public class LoginUser  {
-
-    @Id
-    public String id;
-
+public class LoginUser extends BaseEntity {
     @Email
     private String email;
     @NotNull
     private String password;
     @NotNull
-    private Roles role;
+    private Set<Roles> roles;
 
-    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Roles role) {
-        this.id = id;
+    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles) {
+        super(id);
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
     }
 
     public LoginUser() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -52,11 +41,11 @@ public class LoginUser  {
         this.password = password;
     }
 
-    public Roles getRole() {
-        return role;
+    public Set<Roles> getRoles() {
+        return roles;
     }
 
-    public void setRole(Roles role) {
-        this.role = role;
+    public void setRoles(Set<Roles> roles) {
+        this.roles = roles;
     }
 }

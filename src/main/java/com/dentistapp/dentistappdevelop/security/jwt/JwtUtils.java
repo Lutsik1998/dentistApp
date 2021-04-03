@@ -15,18 +15,14 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
     @Value("${dentist.app.jwtSecret}")
     private String jwtSecret;
-
     @Value("${dentist.app.jwtExpirationMs}")
     private int jwtExpirationMs;
-
     private static final String REDIS_SET_ACTIVE_SUBJECTS = "active-subjects";
 
 
     public String generateJwtToken(Authentication authentication) {
-
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 
@@ -36,19 +32,7 @@ public class JwtUtils {
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
-
-
-
-
-
         return token;
-
-        /*return Jwts.builder()
-                .setSubject((userPrincipal.getEmail()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();*/
     }
 
     public String getUserNameFromJwtToken(String token) {
