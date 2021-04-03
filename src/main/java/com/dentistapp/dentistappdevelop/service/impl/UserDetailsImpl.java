@@ -37,9 +37,8 @@ public class UserDetailsImpl implements UserDetails {
 //        System.out.println("-------------------------------------");
 ////        List<GrantedAuthority> authorities = Collections.emptyList();
 ////        authorities.add(new SimpleGrantedAuthority(APIRole.ROLE_USER.name()));
-        List<GrantedAuthority> authorities = patient.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.name()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(patient.getRole().name()));
         return new UserDetailsImpl(
                 patient.getId(),
                 patient.getEmail(),
