@@ -13,13 +13,13 @@ public class LoginUser extends BaseEntity {
     @NotNull
     private String password;
     @NotNull
-    private Set<Roles> roles;
+    private Roles role;
 
-    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles) {
+    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Roles role) {
         super(id);
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 
     public LoginUser() {
@@ -41,11 +41,11 @@ public class LoginUser extends BaseEntity {
         this.password = password;
     }
 
-    public Set<Roles> getRoles() {
-        return roles;
+    public Roles getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Roles> roles) {
-        this.roles = roles;
+    public void setRole(Roles role) {
+        this.role = role;
     }
 }

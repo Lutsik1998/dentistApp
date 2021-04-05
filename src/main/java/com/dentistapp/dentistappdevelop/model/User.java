@@ -30,8 +30,8 @@ public class User extends LoginUser{
     public PhoneNumber phoneNumber;
 
 
-    public User(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
-        super(id, email, password, roles);
+    public User(String id, @Email String email, @NotNull String password, @NotNull Roles role, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
+        super(id, email, password, role);
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;

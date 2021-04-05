@@ -105,8 +105,8 @@ public class AuthPatientContoller {
 //            });
 //        }
         roles.add(Roles.ROLE_PATIENT);
-        patient.setRoles(roles);
-        LoginDto loginDto = new LoginDto(patient.getEmail(),patient.getPassword(), patient.getRoles().toString());
+        patient.setRole(Roles.ROLE_PATIENT);
+        LoginDto loginDto = new LoginDto(patient.getEmail(),patient.getPassword(), patient.getRole().name());
         patientService.save(patient);
         return login(loginDto);
     }
