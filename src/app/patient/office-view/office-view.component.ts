@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfficeViewComponent implements OnInit {
 
+  mapIsLoaded: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  mapLoaded() {
+    this.mapIsLoaded = true;
+  }
 }
