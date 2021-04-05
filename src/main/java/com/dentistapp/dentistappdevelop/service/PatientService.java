@@ -7,6 +7,7 @@ public interface PatientService {
 
     public PatientRepository patientRepository();
 
+    public Patient update(Patient patientsDetails);
     public Patient save(Patient patient);
 
 
