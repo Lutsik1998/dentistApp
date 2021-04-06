@@ -18,7 +18,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatCheckboxModule} from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @NgModule({
    imports: [
       CommonModule,
@@ -39,7 +41,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox'
       MatTooltipModule,
       MatTableModule,
       MatPaginatorModule,
-      MatCheckboxModule
+      MatCheckboxModule,
+      MatProgressSpinnerModule
       ],
    exports: [
       MatButtonModule,
@@ -58,7 +61,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox'
       MatTooltipModule,
       MatTableModule,
       MatPaginatorModule,
-      MatCheckboxModule
+      MatCheckboxModule,
+      MatProgressSpinnerModule
       ],
    providers: [
       MatDatepickerModule
