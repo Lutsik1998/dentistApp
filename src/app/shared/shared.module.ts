@@ -24,7 +24,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
   ],
   exports: [
     HeaderComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ReactiveFormsModule,
+    AngularMaterialModule
   ]
 })
 export class SharedModule { }

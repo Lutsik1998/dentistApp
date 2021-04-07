@@ -1,6 +1,10 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/theming';
-@include mat-core();
+@import 'var';
+$custom-typography: mat-typography-config(
+  $body-1: mat-typography-level(16px, 24px, 400)
+);
+@include mat-core($custom-typography);
 
 $DentistApp-primary: mat-palette($mat-teal);
 $DentistApp-accent: mat-palette($mat-blue-gray);
@@ -16,3 +20,7 @@ $DentistApp-theme: mat-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h4 {
+  color: $primary;
+}

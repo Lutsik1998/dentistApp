@@ -1,0 +1,34 @@
+<div class="d-flex justify-content-between">
+    <h4>Informacje i kontakt</h4>
+    <button *ngIf="!isEnabled" (click)="edit()"  mat-raised-button color="primary">Edytuj</button>
+    <div *ngIf="isEnabled">
+        <button (click)="save()" class="mr-lg-1" mat-raised-button color="primary">Zapisz</button>
+        <button (click)="drop()"  mat-stroked-button color="accent">Cofnij</button>
+    </div>
+</div>
+<form [formGroup]="infoForm" class="grid mt-lg-3">
+    <div>Nazwa:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="name">
+    </mat-form-field>
+    <div>ADRES:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="address">
+    </mat-form-field>
+    <div>TELEFON:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="phone">
+    </mat-form-field>
+    <div>EMAIL:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="email">
+    </mat-form-field>
+    <div>NIP:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="nip">
+    </mat-form-field>
+    <div>REGON:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="regon">
+    </mat-form-field>
+</form>
