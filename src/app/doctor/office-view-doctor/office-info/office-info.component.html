@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-column flex-sm-row">
-    <h4>Informacje i kontakt</h4>
+    <h4 id="subheader">Informacje i kontakt</h4>
     <button *ngIf="!isEnabled" (click)="edit()"  mat-raised-button color="primary">Edytuj</button>
     <div *ngIf="isEnabled" class="d-flex">
         <button (click)="save()" class="mr-1 mb-1 mb-sm-0" mat-raised-button color="primary">Zapisz</button>
