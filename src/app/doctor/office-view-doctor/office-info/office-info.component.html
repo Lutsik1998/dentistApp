@@ -1,8 +1,8 @@
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between flex-column flex-sm-row">
     <h4>Informacje i kontakt</h4>
     <button *ngIf="!isEnabled" (click)="edit()"  mat-raised-button color="primary">Edytuj</button>
-    <div *ngIf="isEnabled">
-        <button (click)="save()" class="mr-lg-1" mat-raised-button color="primary">Zapisz</button>
+    <div *ngIf="isEnabled" class="d-flex">
+        <button (click)="save()" class="mr-1 mb-1 mb-sm-0" mat-raised-button color="primary">Zapisz</button>
         <button (click)="drop()"  mat-stroked-button color="accent">Cofnij</button>
     </div>
 </div>

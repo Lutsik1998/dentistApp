@@ -41,8 +41,9 @@
             padding: 10px 15px;
         }
         &-menu {
-            position: absolute;
+            position: fixed;
             background-color: $accent-lighter;
+            z-index: 10;
             top: 0;
             left: 0;
             width: 100vw;
