@@ -1,14 +1,15 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-patients-view',
   templateUrl: './patients-view.component.html',
   styleUrls: ['./patients-view.component.scss']
 })
-export class PatientsViewComponent implements OnInit, AfterViewInit {
+export class PatientsViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   patients: Patient[] = [
     {cardNumber: '1234', name: 'Scarlett', surname: 'Madron', gender: 'K', email: 'sca@gmail.com'},
@@ -23,15 +24,20 @@ export class PatientsViewComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['cardNumber', 'name', 'surname', 'gender', 'email'];
   displayedColumnsMobile: string[] = ['cardNumber', 'name', 'surname'];
   dataSource = new MatTableDataSource(this.patients);
+  sub: Subscription = new Subscription();
 
   constructor(private breakpointObserver: BreakpointObserver) { }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
-    this.breakpointObserver.observe([
+    this.sub.add(this.breakpointObserver.observe([
       '(max-width: 692px)'
     ]).subscribe(result => {
       if (result.matches) {
@@ -39,7 +45,7 @@ export class PatientsViewComponent implements OnInit, AfterViewInit {
       } else {
         this.tableColumns = this.displayedColumns;
       }
-    });
+    }));
   }
 
   applyFilter($event) {
