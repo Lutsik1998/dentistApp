@@ -11,7 +11,7 @@ export class PatientComponent implements OnInit {
   navTabs: NavTab[] = [
     {path: 'office', text: 'Gabinet'},
     {path: 'doctor', text: 'Lekarz'},
-    {path: 'health', text: 'Zdrowie'},
+    {path: 'health', text: 'Zęby'},
     {path: 'history', text: 'Historia zabiegów'},
     {path: 'receipt', text: 'Recepty'},
     {path: 'account', text: 'Konto'},
