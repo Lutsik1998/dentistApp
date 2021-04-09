@@ -10,28 +10,24 @@ export class OfficeInfoComponent implements OnInit {
 
   infoForm: FormGroup = this.fb.group({
     name: {value: 'PRODENTAL', disabled: true},
-    address: {value: 'Trwała 7, 50-529 Wrocław', disabled: true},
-    phone: {value: '+48 691 594 352', disabled: true},
+    address: {value: 'Trwała 5, 53-335 Wrocław', disabled: true},
+    phone: {value: '48691594352', disabled: true},
     email: {value: 'prodental@gmail.com', disabled: true},
     nip: {value: '1567320844', disabled: true},
     regon: {value: '278296930', disabled: true},
   })
-  isEnabled: boolean = false;
   constructor(private fb: FormBuilder) { }
 
-  edit() {
+  edit($event) {
     this.infoForm.enable();
-    this.isEnabled = true;
   }
 
-  save() {
+  save($event) {
     this.infoForm.disable();
-    this.isEnabled = false;
   }
 
-  drop() {
+  cancel($event) {
     this.infoForm.disable();
-    this.isEnabled = false;
   }
 
   ngOnInit(): void {

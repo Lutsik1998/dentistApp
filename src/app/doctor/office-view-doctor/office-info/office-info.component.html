@@ -1,11 +1,4 @@
-<div class="d-flex justify-content-between flex-column flex-sm-row">
-    <h4 id="subheader">Informacje i kontakt</h4>
-    <button *ngIf="!isEnabled" (click)="edit()"  mat-raised-button color="primary">Edytuj</button>
-    <div *ngIf="isEnabled" class="d-flex">
-        <button (click)="save()" class="mr-1 mb-1 mb-sm-0" mat-raised-button color="primary">Zapisz</button>
-        <button (click)="drop()"  mat-stroked-button color="accent">Cofnij</button>
-    </div>
-</div>
+<app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" header="Informacje i kontakt"></app-subheader-edit>
 <form [formGroup]="infoForm" class="grid mt-lg-3">
     <div>Nazwa:</div>
     <mat-form-field class="example-full-width">
@@ -17,11 +10,11 @@
     </mat-form-field>
     <div>TELEFON:</div>
     <mat-form-field class="example-full-width">
-        <input matInput formControlName="phone">
+        <input type="number" matInput formControlName="phone">
     </mat-form-field>
     <div>EMAIL:</div>
     <mat-form-field class="example-full-width">
-        <input matInput formControlName="email">
+        <input type="email" matInput formControlName="email">
     </mat-form-field>
     <div>NIP:</div>
     <mat-form-field class="example-full-width">
