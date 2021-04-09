@@ -9,8 +9,9 @@ import { NavTab } from '../models/various.model';
 export class DoctorComponent implements OnInit {
 
   navTabs: NavTab[] = [
-    {path: 'patients', text: 'Pacjenci'},
     {path: 'office', text: 'Gabinet'},
+    {path: 'doctors', text: 'Lekarze'},
+    {path: 'patients', text: 'Pacjenci'},
     {path: 'account', text: 'Konto'},
   ]
 

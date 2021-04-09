@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="table-container mt-5 pb-3">
+        <div class="d-flex justify-content-between">
+            <h4 id="subheader">Lekarze</h4>
+            <button mat-raised-button color="primary">Dodaj lekarza</button>
+        </div>
+        <mat-form-field class="w-100">
+            <mat-label>Szukaj lekarza</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Szukaj lekarza" #input>
+        </mat-form-field>
+        <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="cardNumber">
+              <th mat-header-cell *matHeaderCellDef> Numer licencji </th>
+              <td class="card-number" mat-cell *matCellDef="let element"> {{element.cardNumber}} </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Imię </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="surname">
+              <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
+              <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+            </ng-container>
+            <ng-container matColumnDef="gender">
+              <th mat-header-cell *matHeaderCellDef> Płeć </th>
+              <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell no-patient" colspan="4">Brak lekarza: "{{input.value}}"</td>
+            </tr>
+            <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+          </table>
+          <mat-paginator class="mat-elevation-z8" #paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
