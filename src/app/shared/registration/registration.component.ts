@@ -16,16 +16,25 @@ export class RegistrationComponent implements OnInit {
   genders =  ['Mężczyzna','Kobieta'];
 
   account_validation_messages = {
-    'username': [
-      { type: 'required', message: 'Username is required' },
-      { type: 'minlength', message: 'Username must be at least 5 characters long' },
-      { type: 'maxlength', message: 'Username cannot be more than 25 characters long' },
-      { type: 'pattern', message: 'Your username must contain only numbers and letters' },
-      { type: 'validUsername', message: 'Your username has already been taken' }
+    'firstName': [
+      { type: 'required', message: 'first Name is required' },
+      { type: 'pattern', message: 'Enter a valid first Name' }
+    ],
+    'lastName': [
+      { type: 'required', message: 'last Name is required' },
+      { type: 'pattern', message: 'Enter a valid last Name' }
     ],
     'email': [
       { type: 'required', message: 'Email is required' },
       { type: 'pattern', message: 'Enter a valid email' }
+    ],
+    'pesel': [
+      { type: 'required', message: 'pesel is required' },
+      { type: 'pattern', message: 'Enter a valid pesel' }
+    ],
+    'birthDate': [
+      { type: 'required', message: 'Date of birth is required' },
+      { type: 'pattern', message: 'Enter a valid Date of birth' }
     ],
     'confirm_password': [
       { type: 'required', message: 'Confirm password is required' },
@@ -63,16 +72,39 @@ export class RegistrationComponent implements OnInit {
 
     // user links form validations
     this.accountDetailsForm = this.fb.group({
-      username: new FormControl('', Validators.compose([
-       Validators.maxLength(25),
-       Validators.minLength(5),
-       Validators.pattern('^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),
-       Validators.required
-      ])),
+      firstName: new FormControl('', Validators.compose([
+        Validators.required,
+        ])),
+      lastName: new FormControl('', Validators.compose([
+        Validators.required,
+
+       ])),
+      pesel: new FormControl('', Validators.compose([
+        Validators.maxLength(25),
+        Validators.minLength(5),
+        Validators.pattern(''),
+        Validators.required
+       ])),
+      birthDate:new FormControl('', Validators.compose([
+        Validators.pattern(''),
+        Validators.required
+       ])),
+      sex:new FormControl('', Validators.compose([
+        Validators.pattern(''),
+       ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
+      phoneNumber: new FormControl('', Validators.compose([
+        Validators.pattern(''),
+       ])),
+      cardNumber: new FormControl('', Validators.compose([
+        Validators.pattern(''),
+       ])),
+      addres: new FormControl('', Validators.compose([
+        Validators.pattern(''),
+       ])),
       matching_passwords: this.matching_passwords_group,
       terms: new FormControl(false, Validators.pattern('true'))
     })
