@@ -74,11 +74,10 @@ export class RegistrationComponent implements OnInit {
     this.accountDetailsForm = this.fb.group({
       firstName: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-zA-Z]')
         ])),
       lastName: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-zA-Z]')
+
        ])),
       pesel: new FormControl('', Validators.compose([
         Validators.maxLength(25),
