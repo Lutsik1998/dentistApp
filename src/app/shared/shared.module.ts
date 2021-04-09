@@ -10,10 +10,11 @@ import { HeaderComponent } from './header/header.component';
 import{HttpClientModule} from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SubheaderEditComponent } from './subheader-edit/subheader-edit.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -24,7 +25,10 @@ import { SpinnerComponent } from './spinner/spinner.component';
   ],
   exports: [
     HeaderComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SubheaderEditComponent,
+    ReactiveFormsModule,
+    AngularMaterialModule
   ]
 })
 export class SharedModule { }

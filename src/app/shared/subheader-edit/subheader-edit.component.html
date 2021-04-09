@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-between flex-column flex-sm-row">
+    <h4 id="subheader">{{header}}</h4>
+    <button *ngIf="!edit" (click)="editEnable($event)"  mat-raised-button color="primary">Edytuj</button>
+    <div *ngIf="edit" class="d-flex">
+        <button (click)="save($event)" class="mr-1 mb-1 mb-sm-0" mat-raised-button color="primary">Zapisz</button>
+        <button (click)="cancel($event)" mat-stroked-button color="accent">Cofnij</button>
+    </div>
+</div>

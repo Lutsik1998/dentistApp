@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./office-view-doctor.component.scss']
 })
 export class OfficeViewDoctorComponent implements OnInit {
-
+  mapIsLoaded: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  mapLoaded() {
+    this.mapIsLoaded = true;
+  }
 }

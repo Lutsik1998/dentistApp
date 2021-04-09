@@ -1,1 +1,70 @@
-<p>account-view-doctor works!</p>
+<div class="container mt-5 pb-3">
+    <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0 pr-2">
+            <app-subheader-edit (isEditing)="personalEnable($event)" 
+                                (isSaved)="personalSave($event)" 
+                                (isCanceled)="personalCancel($event)" 
+                                header="Dane osobiste">
+            </app-subheader-edit>
+            <form [formGroup]="personalForm">
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Imię</mat-label>
+                    <input formControlName="name" type="text" matInput placeholder="Imię">
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Drugie Imię</mat-label>
+                    <input formControlName="secondName" type="text" matInput placeholder="Drugie Imię">
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Nazwisko</mat-label>
+                    <input formControlName="surname" type="text" matInput>
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>PESEL</mat-label>
+                    <input formControlName="pesel" type="number" matInput>
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Data urodzenia</mat-label>
+                    <input formControlName="birthday" type="date" matInput>
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Płeć (wymagane)</mat-label>
+                    <select formControlName="gender"  matNativeControl required>
+                        <option value="M">M</option>
+                        <option value="K">K</option>
+                    </select>
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com">
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Telefon</mat-label>
+                    <input formControlName="phone" type="number" matInput placeholder="+48123456789">
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Adres</mat-label>
+                    <input formControlName="address" type="text" matInput>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="col-md-6 pr-2">
+            <app-subheader-edit (isEditing)="accountEnable($event)" 
+                                (isSaved)="accountSave($event)" 
+                                (isCanceled)="accountCancel($event)" 
+                                header="Dane konta">
+            </app-subheader-edit>
+            <form [formGroup]="accountForm">
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Username</mat-label>
+                    <input formControlName="username" type="text" matInput>
+                </mat-form-field>
+                <mat-form-field class="col-12 mb-2">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com">
+                </mat-form-field>
+            </form>
+            <button mat-stroked-button color="accent" class="col-12">Zmień hasło</button>
+        </div>
+    </div>
+</div>

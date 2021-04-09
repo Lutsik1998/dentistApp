@@ -5,11 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-patients-view',
-  templateUrl: './patients-view.component.html',
-  styleUrls: ['./patients-view.component.scss']
+  selector: 'app-doctors-list',
+  templateUrl: './doctors-list.component.html',
+  styleUrls: ['./doctors-list.component.scss']
 })
-export class PatientsViewComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DoctorsListComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   patients: Patient[] = [
     {cardNumber: '1234', name: 'Scarlett', surname: 'Madron', gender: 'K', email: 'sca@gmail.com'},

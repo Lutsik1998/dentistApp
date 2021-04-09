@@ -1,0 +1,27 @@
+<app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" header="Informacje i kontakt"></app-subheader-edit>
+<form [formGroup]="infoForm" class="grid mt-lg-3">
+    <div>Nazwa:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="name">
+    </mat-form-field>
+    <div>ADRES:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="address">
+    </mat-form-field>
+    <div>TELEFON:</div>
+    <mat-form-field class="example-full-width">
+        <input type="number" matInput formControlName="phone">
+    </mat-form-field>
+    <div>EMAIL:</div>
+    <mat-form-field class="example-full-width">
+        <input type="email" matInput formControlName="email">
+    </mat-form-field>
+    <div>NIP:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="nip">
+    </mat-form-field>
+    <div>REGON:</div>
+    <mat-form-field class="example-full-width">
+        <input matInput formControlName="regon">
+    </mat-form-field>
+</form>
