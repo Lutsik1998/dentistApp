@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {ParentErrorStateMatcher, PasswordValidator} from '../validators';
+import {Patient} from '../../interfaces/patient'
+import { AuthService } from './../../services/auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -14,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   matching_passwords_group: FormGroup;
   parentErrorStateMatcher = new ParentErrorStateMatcher();
   genders =  ['Mężczyzna','Kobieta'];
-
+  user: Patient;
   account_validation_messages = {
     'firstName': [
       { type: 'required', message: 'first Name is required' },
@@ -51,7 +55,7 @@ export class RegistrationComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private authService: AuthService,private router: Router) { }
   ngOnInit(): void {
     this.createForms();
   }
@@ -110,9 +114,20 @@ export class RegistrationComponent implements OnInit {
     })
 
   }
-
+  register(userRegester: Patient){
+    this.authService.register(userRegester).subscribe(
+      ()=>{
+        this.router.navigate(['/login']);
+      }
+    )
+  }
   onSubmitAccountDetails(value){
-    console.log(value);
+    this.user = value;
+    this.user.password= value.matching_passwords.password;
+    this.user.addres = Object;
+    this.user.phoneNumber = Object
+    this.register(this.user);
+    console.log(this.user);
   }
 
 }

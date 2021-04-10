@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class PatientService {
 
-  getUrl = 'http://localhost:';
+  getUrl = 'http://localhost:8081/api';
   constructor(private http: HttpClient) { }
 
   addPatient( patient: Patient): Observable<any>{
