@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from './../../services/auth.service';
+import {User} from '../../interfaces/user'
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +24,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -31,7 +34,23 @@ export class LoginComponent implements OnInit {
       return;
     }
     console.log(this.loginForm.getRawValue())
-    this.router.navigate(['/patient/office'])
+    this.authService.login(this.loginForm.value).subscribe(
+      (user: User) =>{
+        console.log(user);
+        if(user.role === "[ROLE_PATIENT]"){
+          this.router.navigate(['/patient/office'])
+        }
+        if(user.role === "[ROLE_DOCTOR]"){
+          this.router.navigate(['/doctor/office'])
+        }
+        if(user.role === "[ROLE_ADMIN]"){
+          this.router.navigate(['/patient/office'])
+        }
+      },
+      (exc)=>{
+        alert("Doesn't exist user with this login or password. Try again");
+      }
+    );
   }
   registration(){
     this.router.navigate(['/registration'])
