@@ -1,8 +1,8 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
 
+import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Patient;
-import com.dentistapp.dentistappdevelop.model.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,18 +31,21 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Patient patient) {
+    public static UserDetailsImpl build(LoginUser loginUser) {
 //        Set<Roles> test = new HashSet<> ();
 //        test.add(patient.getRoles().n);
 //        System.out.println("-------------------------------------");
 ////        List<GrantedAuthority> authorities = Collections.emptyList();
 ////        authorities.add(new SimpleGrantedAuthority(APIRole.ROLE_USER.name()));
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority(patient.getRole().name()));
+//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//        authorities.add(new SimpleGrantedAuthority(patient.getRoles().name()));
+        List<GrantedAuthority> authorities = loginUser.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .collect(Collectors.toList());
         return new UserDetailsImpl(
-                patient.getId(),
-                patient.getEmail(),
-                patient.getPassword(),
+                loginUser.getId(),
+                loginUser.getEmail(),
+                loginUser.getPassword(),
                 authorities);
     }
 

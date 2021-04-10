@@ -59,7 +59,7 @@ public class PatientController {
 
 
 //    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
-    @GetMapping (value = "/getAllPatients")
+    @GetMapping (value = "/all")
     public ResponseEntity<List<Patient>> getAllUsers() {
         List<Patient> patients = patientService.patientRepository().findAll();
         if(patients == null){

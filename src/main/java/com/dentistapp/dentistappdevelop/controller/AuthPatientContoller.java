@@ -1,6 +1,5 @@
 package com.dentistapp.dentistappdevelop.controller;
 
-import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Patient;
 import com.dentistapp.dentistappdevelop.model.Roles;
 import com.dentistapp.dentistappdevelop.security.jwt.JwtUtils;
@@ -62,55 +61,14 @@ public class AuthPatientContoller {
         }
         // Create new patient's account
         Patient patient = signUpPatientRequest;
-//        Patient patient = new Patient(
-//                signUpPatientRequest.getEmail(),
-//                encoder.encode(signUpPatientRequest.getPassword()),
-//                signUpPatientRequest.getRole(),
-//                signUpPatientRequest.getFirstName(),
-//                signUpPatientRequest.getSecondName(),
-//                signUpPatientRequest.getLastName(),
-//                signUpPatientRequest.getPesel(),
-//                signUpPatientRequest.getBirthDate(),
-//                signUpPatientRequest.getSex(),
-//                signUpPatientRequest.getAddres(),
-//                signUpPatientRequest.getPhoneNumber(),
-//                signUpPatientRequest.getCardNumber()
-//                );
 
-        //Set<String> strRoles = signUpPatientRequest.getRole();
         Set<Roles> roles = new HashSet<>();
-//        if (strRoles == null) {
-//            Roles userRole = roleRepository.findByName(Roles.PATIENT)
-//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//            roles.add(userRole);
-//        } else {
-//            strRoles.forEach(role -> {
-//                switch (role) {
-//                    case "admin":
-//                        Roles adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(adminRole);
-//
-//                        break;
-//                    case "mod":
-//                        Roles modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(modRole);
-//
-//                        break;
-//                    default:
-//                        Roles userRole = roleRepository.findByName(ERole.ROLE_USER)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(userRole);
-//                }
-//            });
-//        }
         roles.add(Roles.ROLE_PATIENT);
-        patient.setRole(Roles.ROLE_PATIENT);
+        patient.setRoles(roles);
         LoginDto loginUser = new LoginDto();
         loginUser.setEmail(patient.getEmail());
         loginUser.setPassword(patient.getPassword());
-        loginUser.setRole(patient.getRole().name());
+        loginUser.setRoles(patient.getRoles());
         loginUser.setId(patient.getId());
         patientService.save(patient);
         return login(loginUser);

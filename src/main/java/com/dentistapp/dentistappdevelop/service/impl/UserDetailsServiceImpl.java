@@ -1,7 +1,8 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
-import com.dentistapp.dentistappdevelop.model.Patient;
-import com.dentistapp.dentistappdevelop.repository.PatientRepository;
+import com.dentistapp.dentistappdevelop.model.LoginUser;
+import com.dentistapp.dentistappdevelop.model.Roles;
+import com.dentistapp.dentistappdevelop.service.DoctorService;
 import com.dentistapp.dentistappdevelop.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,20 +12,36 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     PatientService patientService;
+    @Autowired
+    DoctorService doctorService;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        if(!patientService.patientRepository().existsByEmail(email)){
+        Set<Roles> rolesSet = new HashSet<>();
+        LoginUser user = null;
+        if(patientService.patientRepository().existsByEmail(email)){
+            rolesSet.add(Roles.ROLE_PATIENT);
+            user = patientService.patientRepository().findByEmail(email);
+        }
+        if(doctorService.doctorRepository().existsByEmail(email)){
+            rolesSet.add(Roles.ROLE_DOCTOR);
+            if (user == null){
+                user = doctorService.doctorRepository().findByEmail(email);
+            }
+        }
+        if(user == null){
             throw new UsernameNotFoundException("User Not Found with email: " + email);
         }
-        Patient patient = patientService.patientRepository().findByEmail(email);
-        return UserDetailsImpl.build(patient);
+        return UserDetailsImpl.build(user);
     }
 
 }

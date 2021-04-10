@@ -1,11 +1,14 @@
 package com.dentistapp.dentistappdevelop.dto;
 
+import com.dentistapp.dentistappdevelop.model.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
 @Data
 public class LoginDto {
@@ -17,13 +20,14 @@ public class LoginDto {
     private String email;
     @NotNull
     private String password;
-    @NotNull
-    private String Role;
 
-    public LoginDto(String email, String password, String role) {
+    private Set<Roles> roles;
+
+    public LoginDto(String id, @NotNull @Email String email, @NotNull String password, Set<Roles> roles) {
+        this.id = id;
         this.email = email;
         this.password = password;
-        Role = role;
+        this.roles = roles;
     }
 
     public LoginDto() {
