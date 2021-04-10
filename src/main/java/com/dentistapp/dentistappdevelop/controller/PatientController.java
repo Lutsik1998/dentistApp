@@ -54,6 +54,7 @@ public class PatientController {
         patientDetails.setId(patientId);
         Patient patient = patientService.update(patientDetails);
         final Patient updatedPatient =  patientService.patientRepository().save(patient);
+        patient.toDTO();
         return ResponseEntity.ok(updatedPatient);
     }
 
@@ -61,7 +62,7 @@ public class PatientController {
 //    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @GetMapping (value = "/all")
     public ResponseEntity<List<Patient>> getAllUsers() {
-        List<Patient> patients = patientService.patientRepository().findAll();
+        List<Patient> patients = patientService.findAll();
         if(patients == null){
             return new ResponseEntity( null, HttpStatus.NO_CONTENT);
         }
@@ -76,6 +77,7 @@ public class PatientController {
             return new ResponseEntity(null, HttpStatus.NO_CONTENT);
         }
         Patient patient = optionalPatient.get();
+        patient.toDTO();
         return new ResponseEntity<Patient>(patient, HttpStatus.OK);
     }
 

@@ -29,4 +29,9 @@ public class Patient extends User{
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
+
+    public void toDTO(){
+        super.toDTO();
+    }
+
 }

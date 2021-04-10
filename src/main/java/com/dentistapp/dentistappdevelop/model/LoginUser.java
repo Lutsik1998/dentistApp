@@ -28,4 +28,8 @@ public class LoginUser extends BaseEntity {
 
     public LoginUser() {
     }
+
+    public void toDTO(){
+        this.setPassword(null);
+    }
 }

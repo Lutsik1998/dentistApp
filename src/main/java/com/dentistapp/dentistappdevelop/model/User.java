@@ -47,4 +47,8 @@ public class User extends LoginUser{
     public User() {
     }
 
+    public void toDTO(){
+        super.toDTO();
+    }
+
 }
