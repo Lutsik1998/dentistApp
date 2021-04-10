@@ -19,7 +19,7 @@ export class PatientService {
     return this.http.get<any>(this.getUrl).pipe(catchError(this.handleError))
   }
   getPatientById(id: string): Observable<Patient>{
-    return this.http.get<any>(this.getUrl).pipe(catchError(this.handleError))
+    return this.http.get<any>(this.getUrl+'/'+id).pipe(catchError(this.handleError))
   }
   updatePatient(patient: Patient): Observable<any>{
     return this.http.put(this.getUrl, patient).pipe(catchError(this.handleError))

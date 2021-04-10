@@ -17,7 +17,7 @@ export class DoctorService {
     return this.http.get<any>(this.getUrl).pipe(catchError(this.handleError))
   }
   getDoctorById(id: string): Observable<Doctor>{
-    return this.http.get<any>(this.getUrl).pipe(catchError(this.handleError))
+    return this.http.get<any>(this.getUrl+'/'+id).pipe(catchError(this.handleError))
   }
   updateDoctor(doctor: Doctor): Observable<any>{
     return this.http.put(this.getUrl, doctor).pipe(catchError(this.handleError))
