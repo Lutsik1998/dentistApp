@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
-    private PatientRepository patientRepository;
+    PatientRepository patientRepository;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    BCryptPasswordEncoder passwordEncoder;
 
 
     @Override

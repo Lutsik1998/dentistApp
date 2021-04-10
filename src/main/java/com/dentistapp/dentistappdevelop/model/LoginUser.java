@@ -15,7 +15,6 @@ public class LoginUser extends BaseEntity {
     @NotNull
     private String email;
     @NotNull
-    @JsonIgnore
     private String password;
     @NotNull
     private Set<Roles> roles;
