@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HealthViewComponent implements OnInit {
 
+  selectedTooth;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  toothClicked($event) {
+    this.selectedTooth = $event;
+  }
 }
