@@ -1,5 +1,7 @@
 package com.dentistapp.dentistappdevelop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 
@@ -7,10 +9,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+@Data
 public class LoginUser extends BaseEntity {
     @Email
+    @NotNull
     private String email;
     @NotNull
+    @JsonIgnore
     private String password;
     @NotNull
     private Roles role;
@@ -31,21 +36,5 @@ public class LoginUser extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
     }
 }

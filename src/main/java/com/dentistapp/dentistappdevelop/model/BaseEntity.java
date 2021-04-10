@@ -1,7 +1,9 @@
 package com.dentistapp.dentistappdevelop.model;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
+@Data
 public class BaseEntity {
     @Id
     public String id;

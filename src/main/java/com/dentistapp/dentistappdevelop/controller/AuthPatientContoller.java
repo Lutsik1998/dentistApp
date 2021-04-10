@@ -1,5 +1,6 @@
 package com.dentistapp.dentistappdevelop.controller;
 
+import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Patient;
 import com.dentistapp.dentistappdevelop.model.Roles;
 import com.dentistapp.dentistappdevelop.security.jwt.JwtUtils;
@@ -48,8 +49,8 @@ public class AuthPatientContoller {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginDto) {
-        return login(loginDto);
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginUser) {
+        return login(loginUser);
     }
 
     @PostMapping("/signup")
@@ -106,17 +107,18 @@ public class AuthPatientContoller {
 //        }
         roles.add(Roles.ROLE_PATIENT);
         patient.setRole(Roles.ROLE_PATIENT);
-        LoginDto loginDto = new LoginDto(patient.getEmail(),patient.getPassword(), patient.getRole().name());
+        LoginDto loginUser = new LoginDto();
+        loginUser.setEmail(patient.getEmail());
+        loginUser.setPassword(patient.getPassword());
+        loginUser.setRole(patient.getRole().name());
+        loginUser.setId(patient.getId());
         patientService.save(patient);
-        return login(loginDto);
+        return login(loginUser);
     }
 
-    private ResponseEntity<?> login(LoginDto loginDto){
+    private ResponseEntity<?> login(LoginDto loginUser){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
-
-            System.out.println("test");
-
+                new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);

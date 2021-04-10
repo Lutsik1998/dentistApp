@@ -8,6 +8,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerErrorException;
 
@@ -24,14 +25,15 @@ public class PatientController {
     PatientService patientService;
 
 
-
+    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/save")
     public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
 
-        patientService.patientRepository().save(patient);
+        patientService.save(patient);
         return new ResponseEntity(patient, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> deletePatientByID(@PathVariable(value = "id") String patientId) throws ResourceNotFoundException {
 
@@ -56,7 +58,7 @@ public class PatientController {
     }
 
 
-
+//    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @GetMapping (value = "/getAllPatients")
     public ResponseEntity<List<Patient>> getAllUsers() {
         List<Patient> patients = patientService.patientRepository().findAll();
@@ -66,6 +68,7 @@ public class PatientController {
         return new ResponseEntity<List<Patient>>(patients, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')" + " || " + "hasRole('ROLE_PATIENT')")
     @GetMapping(value = "/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Patient> getPatientById(@PathVariable String patientId){
         Optional<Patient> optionalPatient = patientService.patientRepository().findById(patientId);
@@ -75,14 +78,5 @@ public class PatientController {
         Patient patient = optionalPatient.get();
         return new ResponseEntity<Patient>(patient, HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
-
 
 }
