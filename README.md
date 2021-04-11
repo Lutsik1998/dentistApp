@@ -25,3 +25,37 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Docker Cointainers:
+
+### Build
+
+```
+docker-compose build
+```
+
+### Run
+
+```
+docker-compose up
+```
+
+### Removing previous builds (Linux)
+
+- list images
+
+```
+docker images
+```
+
+You have to copy `IMAGE ID` and paste it:
+
+```
+docker rmi images_names
+```
+
+Remove all <none> images (linux)
+
+```
+docker rmi $(docker images | grep '<none>' | awk '{print $3}')
+```
