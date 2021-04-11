@@ -3,8 +3,9 @@ import { HttpClient,HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map } from "rxjs/operators";
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import {CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
-import {Patient} from '../interfaces/patient'
+import { Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
+import { Patient } from '../interfaces/patient'
+import { User } from '../interfaces/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,8 +35,8 @@ export class AuthService {
     
     login(userLogin: any){
       this.isLoggedOut = false;
-      return this.http.post('http://localhost:8080/api/auth/patient/signin', userLogin).pipe(
-          map((user:any) => {
+      return this.http.post('http://localhost:8080/api/user/auth/signin', userLogin).pipe(
+          map((user: User) => {
               localStorage.setItem('currentUser', JSON.stringify(user));
               this.currentUserSubject.next(user);
               return user;
