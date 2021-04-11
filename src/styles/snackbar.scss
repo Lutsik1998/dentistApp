@@ -1,0 +1,25 @@
+@import 'var';
+
+.snack {
+    &-error {
+        background-color: whitesmoke !important;
+        border: 2px solid $warn;
+        span {
+            color: $warn;
+        }
+    }
+    &-success {
+        background-color: whitesmoke !important;
+        border: 2px solid $primary;
+        span {
+            color: $primary;
+        }
+    }
+    &-info {
+        background-color: whitesmoke !important;
+        border: 2px solid $accent;
+        span {
+            color: $accent;
+        }
+    }
+}

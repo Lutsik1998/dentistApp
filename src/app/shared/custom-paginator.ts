@@ -3,7 +3,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @Injectable()
 export class MatPaginatorIntlCro extends MatPaginatorIntl {
-  itemsPerPageLabel = 'Liczba pacjentów na stronie';
+  itemsPerPageLabel = 'Liczba wierszy na stronie';
   nextPageLabel     = 'Następna strona';
   previousPageLabel = 'Poprzednia strona';
   firstPageLabel = 'Pierwsza strona';

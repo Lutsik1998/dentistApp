@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../services/auth.service';
-import {User} from '../../interfaces/user'
+import { User } from '../../interfaces/user'
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  constructor(private router: Router,private authService: AuthService) { }
+  constructor(private router: Router,private authService: AuthService, private snackbar: SnackbarService) { }
 
   ngOnInit(): void {
   }
@@ -33,7 +34,6 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.invalid) {
       return;
     }
-    console.log(this.loginForm.getRawValue())
     this.authService.login(this.loginForm.value).subscribe(
       (user: User) =>{
         console.log(user);
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         }
       },
       (exc)=>{
-        alert("Doesn't exist user with this login or password. Try again");
+        this.snackbar.error('Nieprawidłowy email/hasło')
       }
     );
   }

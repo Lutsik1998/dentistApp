@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@angular/material/theming';
 @import 'var';
+@import 'styles/snackbar.scss';
 $custom-typography: mat-typography-config(
   $body-1: mat-typography-level(16px, 24px, 400)
 );
@@ -8,7 +9,7 @@ $custom-typography: mat-typography-config(
 
 $DentistApp-primary: mat-palette($mat-teal);
 $DentistApp-accent: mat-palette($mat-blue-gray);
-$DentistApp-warn: mat-palette($mat-deep-orange);
+$DentistApp-warn: mat-palette($mat-red);
 $DentistApp-theme: mat-light-theme((
   color: (
     primary: $DentistApp-primary,

@@ -21,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorIntlCro } from './shared/custom-paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
    imports: [
@@ -43,7 +44,8 @@ import { MatPaginatorIntlCro } from './shared/custom-paginator';
       MatTableModule,
       MatPaginatorModule,
       MatCheckboxModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      MatSnackBarModule
       ],
    exports: [
       MatButtonModule,
@@ -63,7 +65,8 @@ import { MatPaginatorIntlCro } from './shared/custom-paginator';
       MatTableModule,
       MatPaginatorModule,
       MatCheckboxModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      MatSnackBarModule
       ],
    providers: [
       MatDatepickerModule,
