@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../services/auth.service';
 import { User } from '../../interfaces/user'
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { UserRole } from 'src/app/enums/various.enum';
 
 @Component({
   selector: 'app-login',
@@ -37,13 +38,13 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe(
       (user: User) =>{
         console.log(user);
-        if(user.role === "[ROLE_PATIENT]"){
+        if(user.role === UserRole.patient){
           this.router.navigate(['/patient/office'])
         }
-        if(user.role === "[ROLE_DOCTOR]"){
+        if(user.role === UserRole.doctor){
           this.router.navigate(['/doctor/office'])
         }
-        if(user.role === "[ROLE_ADMIN]"){
+        if(user.role === UserRole.admin){
           this.router.navigate(['/patient/office'])
         }
       },

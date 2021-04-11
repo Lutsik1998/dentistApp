@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavTab } from 'src/app/models/various.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() navTabs: NavTab;
   isMobileNavOpen: boolean = false;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
+    this.auth.logout();
     this.router.navigate(['login']);
   }
 }
