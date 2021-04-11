@@ -31,65 +31,65 @@ import java.util.stream.Collectors;
 public class AuthPatientContoller {
 
 
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    PatientService patientService;
-
-    @Autowired
-    PasswordEncoder encoder;
-
-    @Autowired
-    JwtUtils jwtUtils;
-
-
-
-
-
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginUser) {
-        return login(loginUser);
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody Patient signUpPatientRequest, HttpServletResponse httpServletResponse) {
-        if (patientService.patientRepository().existsByEmail(signUpPatientRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: User with email: " + signUpPatientRequest.getEmail() +" is already taken!"));
-        }
-        // Create new patient's account
-        Patient patient = signUpPatientRequest;
-
-        Set<Roles> roles = new HashSet<>();
-        roles.add(Roles.ROLE_PATIENT);
-        patient.setRoles(roles);
-        LoginDto loginUser = new LoginDto();
-        loginUser.setEmail(patient.getEmail());
-        loginUser.setPassword(patient.getPassword());
-        loginUser.setRoles(patient.getRoles());
-        loginUser.setId(patient.getId());
-        patientService.save(patient);
-        return login(loginUser);
-    }
-
-    private ResponseEntity<?> login(LoginDto loginUser){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getEmail(),
-                roles.toString()));
-    }
+//    @Autowired
+//    AuthenticationManager authenticationManager;
+//
+//    @Autowired
+//    PatientService patientService;
+//
+//    @Autowired
+//    PasswordEncoder encoder;
+//
+//    @Autowired
+//    JwtUtils jwtUtils;
+//
+//
+//
+//
+//
+//    @PostMapping("/signin")
+//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginUser) {
+//        return login(loginUser);
+//    }
+//
+//    @PostMapping("/signup")
+//    public ResponseEntity<?> registerUser(@Valid @RequestBody Patient signUpPatientRequest, HttpServletResponse httpServletResponse) {
+//        if (patientService.patientRepository().existsByEmail(signUpPatientRequest.getEmail())) {
+//            return ResponseEntity
+//                    .badRequest()
+//                    .body(new MessageResponse("Error: User with email: " + signUpPatientRequest.getEmail() +" is already taken!"));
+//        }
+//        // Create new patient's account
+//        Patient patient = signUpPatientRequest;
+//
+//        Set<Roles> roles = new HashSet<>();
+//        roles.add(Roles.ROLE_PATIENT);
+//        patient.setRoles(roles);
+//        LoginDto loginUser = new LoginDto();
+//        loginUser.setEmail(patient.getEmail());
+//        loginUser.setPassword(patient.getPassword());
+//        loginUser.setRoles(patient.getRoles());
+//        loginUser.setId(patient.getId());
+//        patientService.save(patient);
+//        return login(loginUser);
+//    }
+//
+//    private ResponseEntity<?> login(LoginDto loginUser){
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        String jwt = jwtUtils.generateJwtToken(authentication);
+//
+//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//        List<String> roles = userDetails.getAuthorities().stream()
+//                .map(item -> item.getAuthority())
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(new JwtResponse(jwt,
+//                userDetails.getId(),
+//                userDetails.getEmail(),
+//                roles.toString()));
+//    }
 
 }
