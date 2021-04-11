@@ -126,7 +126,7 @@ export class RegistrationComponent implements OnInit {
     this.user.password= value.matching_passwords.password;
     this.user.addres = Object;
     this.user.phoneNumber = Object
-    this.register(this.user);
+    var role = this.register(this.user);
     console.log(this.user);
   }
 
