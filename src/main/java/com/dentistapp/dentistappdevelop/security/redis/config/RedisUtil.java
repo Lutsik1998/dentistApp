@@ -7,13 +7,18 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class RedisUtil {
+
+
     private int jwtExpirationMs;
     private int port;
     private String host;
 
     private final JedisPool pool;
+
 
     RedisUtil(@Value("${spring.redis.port}") int port, @Value("${spring.redis.host}") String host, @Value("${dentist.app.jwtExpirationMs}") int jwtExpirationMs) {
         this.jwtExpirationMs = jwtExpirationMs;
@@ -23,6 +28,8 @@ public class RedisUtil {
         System.out.println("------------ redis port: " + port + "-----------");
         pool = new JedisPool(new JedisPoolConfig(), host, port, jwtExpirationMs);
     }
+
+
 
     public void sadd(String key, String value) {
         Jedis jedis = null;
@@ -51,6 +58,8 @@ public class RedisUtil {
     public boolean sismember(String key, String value) {
         Jedis jedis = null;
         try {
+            System.out.println("------------ redis host: " + host + "-----------");
+            System.out.println("------------ redis port: " + port + "-----------");
             jedis = pool.getResource();
             return jedis.sismember(key, value);
         } finally {
