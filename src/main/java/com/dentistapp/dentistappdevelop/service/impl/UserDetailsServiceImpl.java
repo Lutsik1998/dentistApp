@@ -41,6 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("User Not Found with email: " + email);
         }
+        user.setRoles(rolesSet);
         return UserDetailsImpl.build(user);
     }
 

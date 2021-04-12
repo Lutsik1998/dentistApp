@@ -26,13 +26,12 @@ public class UserController {
 //    @PreAuthorize("has('ROLE_DOCTOR')")
     @GetMapping(value = "/{email}/roles")
     public ResponseEntity<List<Roles>> fetUserRoles(@PathVariable String email) {
-        System.out.println("---------------"+email+"---------------");
         List<Roles> roles = new ArrayList<>();
         if (patientService.patientRepository().existsByEmail(email)){
             roles.add(Roles.ROLE_PATIENT);
         }
         if (doctorService.doctorRepository().existsByEmail(email)){
-            roles.add(Roles.ROLE_PATIENT);
+            roles.add(Roles.ROLE_DOCTOR);
         }
         if(roles.size() == 0){
             return new ResponseEntity( null, HttpStatus.NO_CONTENT);

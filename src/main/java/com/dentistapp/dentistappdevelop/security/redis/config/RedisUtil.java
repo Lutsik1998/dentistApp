@@ -24,8 +24,6 @@ public class RedisUtil {
         this.jwtExpirationMs = jwtExpirationMs;
         this.port = port;
         this.host = host;
-        System.out.println("------------ redis host: " + host + "-----------");
-        System.out.println("------------ redis port: " + port + "-----------");
         pool = new JedisPool(new JedisPoolConfig(), host, port, jwtExpirationMs);
     }
 
@@ -58,8 +56,6 @@ public class RedisUtil {
     public boolean sismember(String key, String value) {
         Jedis jedis = null;
         try {
-            System.out.println("------------ redis host: " + host + "-----------");
-            System.out.println("------------ redis port: " + port + "-----------");
             jedis = pool.getResource();
             return jedis.sismember(key, value);
         } finally {
