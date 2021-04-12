@@ -31,62 +31,42 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth/doctor")
 public class AuthDoctorController {
-    @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    DoctorService doctorService;
-
-    @Autowired
-    PasswordEncoder encoder;
-
-    @Autowired
-    JwtUtils jwtUtils;
-
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginUser) {
-        return login(loginUser);
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody Doctor signUpDoctorRequest, HttpServletResponse httpServletResponse) {
-        if (doctorService.doctorRepository().existsByEmail(signUpDoctorRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: User with email: " + signUpDoctorRequest.getEmail() +" is already taken!"));
-        }
-        // Create new patient's account
-        Doctor doctor = signUpDoctorRequest;
-
-        Set<Roles> roles = new HashSet<>();
-        roles.add(Roles.ROLE_PATIENT);
-        doctor.setRoles(roles);
-        LoginDto loginUser = new LoginDto();
-        loginUser.setEmail(doctor.getEmail());
-        loginUser.setPassword(doctor.getPassword());
-        loginUser.setRoles(doctor.getRoles());
-        loginUser.setId(doctor.getId());
-        doctorService.save(doctor);
-        return login(loginUser);
-    }
-
-    private ResponseEntity<?> login(LoginDto loginUser){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getEmail(),
-                roles.toString()));
-    }
+//    @Autowired
+//    AuthenticationManager authenticationManager;
+//
+//    @Autowired
+//    DoctorService doctorService;
+//
+//    @Autowired
+//    PasswordEncoder encoder;
+//
+//    @Autowired
+//    JwtUtils jwtUtils;
+//
+//    @PostMapping("/signin")
+//    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDto loginUser) {
+//        return login(loginUser);
+//    }
+//
+//
+//
+//    private ResponseEntity<?> login(LoginDto loginUser){
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        String jwt = jwtUtils.generateJwtToken(authentication);
+//
+//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+//        List<String> roles = userDetails.getAuthorities().stream()
+//                .map(item -> item.getAuthority())
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(new JwtResponse(jwt,
+//                userDetails.getId(),
+//                userDetails.getEmail(),
+//                roles.toString()));
+//    }
 
 
 }
