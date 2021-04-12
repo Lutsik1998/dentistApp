@@ -1,0 +1,28 @@
+@import "var";
+
+.registration{
+    height: 100vh;
+    .container-fluid {
+        height: 10%;
+        min-height: 55px;
+    }
+    &-header {
+        height: 100%;
+        color: white;
+        background-color: $primary;
+        div {
+            font-size: 40px;
+            padding-left: 20px;
+        }
+    }
+    &-form-container {
+        .button-container {
+            padding: 0 15px;
+        }
+        @include media-breakpoint-up(sm) { 
+            border: 4px solid $primary;
+            padding: 50px;
+            border-radius: 20px;
+        }
+    }
+}

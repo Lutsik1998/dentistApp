@@ -1,0 +1,29 @@
+@import '~bootstrap/scss/bootstrap';
+@import '~@angular/material/theming';
+@import 'var';
+@import 'styles/snackbar.scss';
+$custom-typography: mat-typography-config(
+  $body-1: mat-typography-level(16px, 24px, 400)
+);
+@include mat-core($custom-typography);
+
+$DentistApp-primary: mat-palette($mat-teal);
+$DentistApp-accent: mat-palette($mat-blue-gray);
+$DentistApp-warn: mat-palette($mat-red);
+$DentistApp-theme: mat-light-theme((
+  color: (
+    primary: $DentistApp-primary,
+    accent: $DentistApp-accent,
+    warn: $DentistApp-warn,
+  )
+));
+@include angular-material-theme($DentistApp-theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+#subheader {
+  color: $primary;
+  font-size: 2em;
+  font-weight: bolder;
+}

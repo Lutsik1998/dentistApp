@@ -1,0 +1,39 @@
+version: "3.5"
+services:
+  main-db:
+    container_name: dentist-mongodb # Container name
+    image: mongo # image name to start/build
+    ports: # Port mapping
+      - 27017:27017
+    volumes: # Volume binding
+      - ~/example/mongodb:/data/db
+  cache-db:
+    container_name: dentist-redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/example/redis/data:/data
+  spring-WebAPI: # The name of the service
+    build:
+      context: ./Spring_API # Location of Dockerfile
+      dockerfile: Dockerfile
+    container_name: dentist-spring-WebAPI
+    image: dentist-spring-webapi:dev.1
+    depends_on: # start after
+      - main-db
+      - cache-db
+    ports:
+      - 8080:8080
+    links: # list mapping: service_name:name_how_will_see_your_program
+      - main-db
+  angular-WebUI:
+    build:
+      context: ./Angular_UI
+      dockerfile: Dockerfile
+    container_name: dentist-angular-webui
+    image: dentist-angular-webui:dev.1
+    ports:
+      - "80:80"
+    # links:
+    #   - spring-WebAPI

@@ -1,0 +1,8 @@
+@import 'var';
+
+ellipse {
+    cursor: pointer;
+    &:hover {
+        stroke: $accent-lighter !important;
+    }
+}

@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  angular-WebUI:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: despenrado/dentist-angular-webui:dev
+    container_name: dentist-angular-webui
+    ports:
+      - "4200:4200"

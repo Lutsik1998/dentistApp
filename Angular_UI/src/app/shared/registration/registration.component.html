@@ -1,0 +1,129 @@
+<div class="registration">
+    <div class="container-fluid">
+        <div class="registration-header row align-items-center">
+            <div>Registration</div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="registration-form-container">
+            <div class="row justify-content-center ">
+                <form [formGroup]="accountDetailsForm" novalidate
+                    (ngSubmit)="onSubmitAccountDetails(accountDetailsForm.value)">
+                    <div class="justify-content-center">
+                        <h2 class="section-title"> Dane osobiste</h2>
+                       
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Imię</mat-label>
+                            <input type="text" formControlName="firstName" matInput placeholder="Imię" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.firstName">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('firstName').hasError(validation.type) && (accountDetailsForm.get('firstName').dirty || accountDetailsForm.get('firstName').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Drugie Imię</mat-label>
+                            <input type="text" matInput placeholder="Drugie Imię">
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Nazwisko</mat-label>
+                            <input type="text" formControlName="lastName" matInput placeholder="Nazwisko" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.lastName">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('lastName').hasError(validation.type) && (accountDetailsForm.get('lastName').dirty || accountDetailsForm.get('lastName').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>PESEL</mat-label>
+                            <input type="number" formControlName="pesel" matInput placeholder="PESEL" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.pesel">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('pesel').hasError(validation.type) && (accountDetailsForm.get('pesel').dirty || accountDetailsForm.get('pesel').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Data urodzenia</mat-label>
+                            <input type="date" formControlName="birthDate" matInput placeholder="Data urodzenia" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.birthDate">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('birthDate').hasError(validation.type) && (accountDetailsForm.get('birthDate').dirty || accountDetailsForm.get('birthDate').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="col-12 mb-2">
+                            <mat-label>Plec (required)</mat-label>
+                            <select matNativeControl formControlName="sex" required>
+                                <option label="--select something --"></option>
+                                <option value="MAN">M</option>
+                                <option value="WOMAN">K</option>
+                            </select>
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Telefon</mat-label>
+                            <input type="number" matInput formControlName="phoneNumber" placeholder="+48123456789">
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Numer Karty</mat-label>
+                            <input type="number" formControlName="cardNumber" matInput placeholder="0">
+                        </mat-form-field>
+                        <mat-form-field class="col-12 mb-2">
+                            <mat-label>Adres</mat-label>
+                            <input type="text" formControlName="addres" matInput>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="justify-content-center">
+                        <h2 class="section-title">Dane konta</h2>
+
+                        <mat-form-field class="col-12 mb-2">
+                            <input matInput type="email" placeholder="Ex. pat@example.com" formControlName="email" required>
+                            <mat-error *ngFor="let validation of account_validation_messages.email">
+                                <mat-error class="error-message"
+                                    *ngIf="accountDetailsForm.get('email').hasError(validation.type) && (accountDetailsForm.get('email').dirty || accountDetailsForm.get('email').touched)">
+                                    {{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div formGroupName="matching_passwords">
+                            <mat-form-field class="col-12 mb-2">
+                                <input matInput type="password" placeholder="Password" formControlName="password"
+                                    required>
+                                <mat-error *ngFor="let validation of account_validation_messages.password">
+                                    <mat-error class="error-message"
+                                        *ngIf="accountDetailsForm.get('matching_passwords').get('password').hasError(validation.type) && (accountDetailsForm.get('matching_passwords').get('password').dirty || accountDetailsForm.get('matching_passwords').get('password').touched)">
+                                        {{validation.message}}</mat-error>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-12 mb-2">
+                                <input matInput type="password" placeholder="Confirm Password"
+                                    formControlName="confirm_password" [errorStateMatcher]="parentErrorStateMatcher"
+                                    required>
+                                <mat-error *ngFor="let validation of account_validation_messages.confirm_password">
+                                    <mat-error class="error-message"
+                                        *ngIf="(accountDetailsForm.get('matching_passwords').get('confirm_password').hasError(validation.type)|| accountDetailsForm.get('matching_passwords').hasError(validation.type)) && (accountDetailsForm.get('matching_passwords').get('confirm_password').dirty || accountDetailsForm.get('matching_passwords').get('confirm_password').touched)">
+                                        {{validation.message}}</mat-error>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <mat-checkbox class="col-12 mb-2" formControlName="terms">
+                            Akceptuję zasady i warunki
+                        </mat-checkbox>
+                        <mat-error *ngFor="let validation of account_validation_messages.terms">
+                            <mat-error class="error-message"
+                                *ngIf="accountDetailsForm.get('terms').hasError(validation.type) && (accountDetailsForm.get('terms').dirty || accountDetailsForm.get('terms').touched)">
+                                {{validation.message}}</mat-error>
+                        </mat-error>
+
+                        <button class="submit-btn col-12 mb-2" color="primary" mat-raised-button type="submit"
+                           [disabled]="!accountDetailsForm.valid">
+                            Potwierdź
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
