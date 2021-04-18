@@ -28,21 +28,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Set<Roles> rolesSet = new HashSet<>();
         LoginUser user = null;
+        LoginUser doctor = null;
         if(patientService.patientRepository().existsByEmail(email)){
             rolesSet.add(Roles.ROLE_PATIENT);
             user = patientService.patientRepository().findByEmail(email);
         }
         if(doctorService.doctorRepository().existsByEmail(email)){
             rolesSet.add(Roles.ROLE_DOCTOR);
-            if (user == null){
-                user = doctorService.doctorRepository().findByEmail(email);
-            }
+            doctor = doctorService.doctorRepository().findByEmail(email);
         }
         if(user == null){
             throw new UsernameNotFoundException("User Not Found with email: " + email);
         }
         user.setRoles(rolesSet);
-        return UserDetailsImpl.build(user);
+
+        UserDetailsImpl userDetails = UserDetailsImpl.build(user);
+        userDetails.getId().add(doctor.getId());
+        return userDetails;
     }
 
 }
