@@ -1,32 +1,37 @@
 package com.dentistapp.dentistappdevelop.security.redis.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.annotation.PostConstruct;
 
-public enum RedisUtil {
-    INSTANCE;
-    @Value("${dentist.app.jwtExpirationMs}")
+@Component
+public class RedisUtil {
+
+
     private int jwtExpirationMs;
-
-    @Value("${redis.port}")
-    private int port = 6379;
-
-    private String host = "localhost";
-
+    private int port;
+    private String host;
 
     private final JedisPool pool;
 
-    RedisUtil() {
-        pool = new JedisPool(new JedisPoolConfig(), host, port, jwtExpirationMs);
 
+    RedisUtil(@Value("${spring.redis.port}") int port, @Value("${spring.redis.host}") String host, @Value("${dentist.app.jwtExpirationMs}") int jwtExpirationMs) {
+        this.jwtExpirationMs = jwtExpirationMs;
+        this.port = port;
+        this.host = host;
+        pool = new JedisPool(new JedisPoolConfig(), host, port, jwtExpirationMs);
     }
+
+
 
     public void sadd(String key, String value) {
         Jedis jedis = null;
-        try{
+        try {
             jedis = pool.getResource();
             jedis.sadd(key, value);
         } finally {
@@ -38,7 +43,7 @@ public enum RedisUtil {
 
     public void srem(String key, String value) {
         Jedis jedis = null;
-        try{
+        try {
             jedis = pool.getResource();
             jedis.srem(key, value);
         } finally {
@@ -50,7 +55,7 @@ public enum RedisUtil {
 
     public boolean sismember(String key, String value) {
         Jedis jedis = null;
-        try{
+        try {
             jedis = pool.getResource();
             return jedis.sismember(key, value);
         } finally {

@@ -1,22 +1,21 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
 
+import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private List<String> id;
 
     private String email;
 
@@ -27,20 +26,35 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(String id, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
+        this.id = new ArrayList<>();
+        this.id.add(id);
         this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Patient patient) {
-        List<GrantedAuthority> authorities = Collections.emptyList();
-        authorities.add(new SimpleGrantedAuthority(patient.getRole().toString()));
-
+    public static UserDetailsImpl build(LoginUser loginUser) {
+//        Set<Roles> test = new HashSet<> ();
+//        test.add(patient.getRoles().n);
+//        System.out.println("-------------------------------------");
+////        List<GrantedAuthority> authorities = Collections.emptyList();
+////        authorities.add(new SimpleGrantedAuthority(APIRole.ROLE_USER.name()));
+//        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+//        authorities.add(new SimpleGrantedAuthority(patient.getRoles().name()));
+//        List<GrantedAuthority> authorities = loginUser.getRoles().stream()
+//                .map(role -> new SimpleGrantedAuthority(role.name()))
+//                .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Roles role: loginUser.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+//            role.getPrivileges().stream()
+//                    .map(p -> new SimpleGrantedAuthority(p.getName()))
+//                    .forEach(authorities::add);
+        }
         return new UserDetailsImpl(
-                patient.getId(),
-                patient.getEmail(),
-                patient.getPassword(),
+                loginUser.getId(),
+                loginUser.getEmail(),
+                loginUser.getPassword(),
                 authorities);
     }
 
@@ -49,7 +63,8 @@ public class UserDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public String getId() {
+
+    public List<String> getId() {
         return id;
     }
 

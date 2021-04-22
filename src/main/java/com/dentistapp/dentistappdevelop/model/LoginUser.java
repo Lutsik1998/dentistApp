@@ -1,62 +1,35 @@
 package com.dentistapp.dentistappdevelop.model;
 
-import org.springframework.data.annotation.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
-public class LoginUser  {
-
-    @Id
-    public String id;
-
+@Data
+public class LoginUser extends BaseEntity {
     @Email
+    @NotNull
     private String email;
     @NotNull
     private String password;
     @NotNull
-    private Roles role;
+    private Set<Roles> roles;
 
-    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Roles role) {
-        this.id = id;
+    public LoginUser(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles) {
+        super(id);
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.roles = roles;
     }
 
     public LoginUser() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
+    public void toDTO(){
+        this.setPassword(null);
     }
 }

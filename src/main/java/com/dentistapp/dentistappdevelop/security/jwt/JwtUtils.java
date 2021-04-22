@@ -5,6 +5,7 @@ import com.dentistapp.dentistappdevelop.service.impl.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -15,18 +16,16 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
     @Value("${dentist.app.jwtSecret}")
     private String jwtSecret;
-
     @Value("${dentist.app.jwtExpirationMs}")
     private int jwtExpirationMs;
-
     private static final String REDIS_SET_ACTIVE_SUBJECTS = "active-subjects";
+    @Autowired
+    RedisUtil redisUtil;
 
 
     public String generateJwtToken(Authentication authentication) {
-
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
 
@@ -36,19 +35,7 @@ public class JwtUtils {
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
-
-
-
-
-
         return token;
-
-        /*return Jwts.builder()
-                .setSubject((userPrincipal.getEmail()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();*/
     }
 
     public String getUserNameFromJwtToken(String token) {
@@ -57,11 +44,11 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String authToken) {
 
-        if (RedisUtil.INSTANCE.sismember(REDIS_SET_ACTIVE_SUBJECTS, authToken)) {
+        if (redisUtil.sismember(REDIS_SET_ACTIVE_SUBJECTS, authToken)) {
             return false;
         }
         try {
-            if (RedisUtil.INSTANCE.sismember(REDIS_SET_ACTIVE_SUBJECTS, authToken)) {
+            if (redisUtil.sismember(REDIS_SET_ACTIVE_SUBJECTS, authToken)) {
                 throw new MalformedJwtException("Invalid JWT token: {}");
             }
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
@@ -81,8 +68,8 @@ public class JwtUtils {
         return false;
     }
 
-    public static void invalidateRelatedTokens(HttpServletRequest httpServletRequest) {
+    public void invalidateRelatedTokens(HttpServletRequest httpServletRequest) {
         String token = httpServletRequest.getHeader("Authorization");
-        RedisUtil.INSTANCE.sadd(REDIS_SET_ACTIVE_SUBJECTS, token.substring(7, token.length()));
+        redisUtil.sadd(REDIS_SET_ACTIVE_SUBJECTS, token.substring(7, token.length()));
     }
 }
