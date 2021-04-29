@@ -3,12 +3,10 @@ package com.dentistapp.dentistappdevelop.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -28,11 +26,11 @@ public class User extends LoginUser{
     private LocalDate birthDate;
     @NotNull
     private Sex sex;
-    private Addres addres;
+    private Address address;
     public PhoneNumber phoneNumber;
 
 
-    public User(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Addres addres, PhoneNumber phoneNumber) {
+    public User(String id, @Email String email, @NotNull String password, @NotNull Set<Roles> roles, @NotNull String firstName, String secondName, @NotNull String lastName, @NotNull int pesel, LocalDate birthDate, @NotNull Sex sex, Address address, PhoneNumber phoneNumber) {
         super(id, email, password, roles);
         this.firstName = firstName;
         this.secondName = secondName;
@@ -40,7 +38,7 @@ public class User extends LoginUser{
         this.pesel = pesel;
         this.birthDate = birthDate;
         this.sex = sex;
-        this.addres = addres;
+        this.address = address;
         this.phoneNumber = phoneNumber;
     }
 

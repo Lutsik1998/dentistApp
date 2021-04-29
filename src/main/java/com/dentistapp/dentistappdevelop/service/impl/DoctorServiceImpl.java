@@ -1,7 +1,6 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
 import com.dentistapp.dentistappdevelop.model.Doctor;
-import com.dentistapp.dentistappdevelop.model.Patient;
 import com.dentistapp.dentistappdevelop.repository.DoctorRepository;
 import com.dentistapp.dentistappdevelop.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +44,8 @@ public class DoctorServiceImpl implements DoctorService {
         if(doctorDetails.getLicence() != null && !doctorDetails.getLicence().equals("")){
             doctor.setLicence(doctorDetails.getLicence());
         }
-        if(doctorDetails.getAddres() != null && !doctorDetails.getAddres().equals("")){
-            doctor.setAddres(doctorDetails.getAddres());
+        if(doctorDetails.getAddress() != null && !doctorDetails.getAddress().equals("")){
+            doctor.setAddress(doctorDetails.getAddress());
         }
         if(doctorDetails.getPhoneNumber() != null && !doctorDetails.getPhoneNumber().equals("")){
             doctor.setPhoneNumber(doctorDetails.getPhoneNumber());
