@@ -48,8 +48,8 @@ public class PatientServiceImpl implements PatientService {
         if (patientsDetails.getCardNumber() != 0) {
             patient.setCardNumber(patientsDetails.getCardNumber());
         }
-        if (patientsDetails.getAddres() != null && !patientsDetails.getAddres().equals("")) {
-            patient.setAddres(patientsDetails.getAddres());
+        if (patientsDetails.getAddress() != null && !patientsDetails.getAddress().equals("")) {
+            patient.setAddress(patientsDetails.getAddress());
         }
         if (patientsDetails.getPhoneNumber() != null && !patientsDetails.getPhoneNumber().equals("")) {
             patient.setPhoneNumber(patientsDetails.getPhoneNumber());
