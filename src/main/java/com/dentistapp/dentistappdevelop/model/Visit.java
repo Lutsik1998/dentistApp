@@ -23,15 +23,16 @@ public class Visit extends BaseEntity {
     private String doctorId;
     @NotNull
     private String patientId;
+    private float rating;
 
-
-    public Visit(String id, @NotNull LocalDateTime dateTimeStart, @NotNull LocalDateTime dateTimeEnd, @NotNull String information, @NotNull String doctorId, @NotNull String patientId) {
+    public Visit(String id, @NotNull LocalDateTime dateTimeStart, @NotNull LocalDateTime dateTimeEnd, @NotNull String information, @NotNull String doctorId, @NotNull String patientId, float rating) {
         super(id);
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeEnd;
         this.information = information;
         this.doctorId = doctorId;
         this.patientId = patientId;
+        this.rating = rating;
     }
 
     public Visit() {
