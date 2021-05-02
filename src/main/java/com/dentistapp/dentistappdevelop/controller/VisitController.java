@@ -1,7 +1,7 @@
 package com.dentistapp.dentistappdevelop.controller;
 
-import com.dentistapp.dentistappdevelop.model.Office;
-import com.dentistapp.dentistappdevelop.service.OfficeService;
+import com.dentistapp.dentistappdevelop.model.Visit;
+import com.dentistapp.dentistappdevelop.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -16,17 +16,17 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/office")
-public class OfficeController {
+@RequestMapping("/api/visit")
+public class VisitController {
     @Autowired
-    OfficeService officeService;
+    VisitService visitService;
 
     //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/save")
-    public ResponseEntity<?> saveOffice(@RequestBody @Valid Office office) {
+    public ResponseEntity<?> saveOffice(@RequestBody @Valid Visit visit) {
         try {
-            office = officeService.save(office);
-            return new ResponseEntity(office, HttpStatus.CREATED);
+            visit = visitService.save(visit);
+            return new ResponseEntity(visit, HttpStatus.CREATED);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatus());
         } catch (Exception e1) {
@@ -36,11 +36,11 @@ public class OfficeController {
 
     //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Office> updateOffice(@PathVariable(value = "id") String id, @RequestBody @Valid Office officeDetails) throws ResourceNotFoundException {
+    public ResponseEntity<Visit> updateOffice(@PathVariable(value = "id") String id, @RequestBody @Valid Visit visitDetails) throws ResourceNotFoundException {
         try {
-            officeDetails.setId(id);
-            Office office = officeService.update(officeDetails);
-            return new ResponseEntity<Office>(office, HttpStatus.OK);
+            visitDetails.setId(id);
+            Visit visit = visitService.update(visitDetails);
+            return new ResponseEntity<Visit>(visit, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity(e.getMessage(), e.getStatus());
         } catch (Exception e1) {
@@ -49,10 +49,10 @@ public class OfficeController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<List<Office>> getAllOffices() {
+    public ResponseEntity<List<Visit>> getAllOffices() {
         try {
-            List<Office> officeList = officeService.findAll();
-            return new ResponseEntity<List<Office>>(officeList, HttpStatus.OK);
+            List<Visit> visitList = visitService.findAll();
+            return new ResponseEntity<List<Visit>>(visitList, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity(e.getMessage(), e.getStatus());
         } catch (Exception e1) {
@@ -61,10 +61,10 @@ public class OfficeController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Office> getOfficeById(@PathVariable String id) {
+    public ResponseEntity<Visit> getOfficeById(@PathVariable String id) {
         try {
-            Office office = officeService.findById(id);
-            return new ResponseEntity<Office>(office, HttpStatus.OK);
+            Visit visit = visitService.findById(id);
+            return new ResponseEntity<Visit>(visit, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity(e.getMessage(), e.getStatus());
         } catch (Exception e1) {
@@ -74,15 +74,15 @@ public class OfficeController {
 
     //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteOfficeByID(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
+    public ResponseEntity<Visit> deleteOfficeByID(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
         try {
-            officeService.deleteById(id);
+            visitService.deleteById(id);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity("Patient not found for this id: " + id, HttpStatus.NOT_FOUND);
         } catch (ServerErrorException e1) {
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (ResponseStatusException e2) {
-            return new ResponseEntity<>(e2.getMessage(), e2.getStatus());
+            return new ResponseEntity(e2.getMessage(), e2.getStatus());
         }
         return new ResponseEntity("Deleted successfully", HttpStatus.OK);
 

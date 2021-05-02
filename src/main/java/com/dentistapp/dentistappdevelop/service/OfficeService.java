@@ -12,6 +12,6 @@ public interface OfficeService {
     public Office update(Office office);
     public List<Office> findAll();
     public Office findById(String id);
-    public boolean deleteById(String id);
+    public void deleteById(String id);
     boolean existsOfficeById(String id);
 }

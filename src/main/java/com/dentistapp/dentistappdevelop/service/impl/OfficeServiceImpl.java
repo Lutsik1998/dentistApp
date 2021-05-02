@@ -2,14 +2,13 @@ package com.dentistapp.dentistappdevelop.service.impl;
 
 import com.dentistapp.dentistappdevelop.model.Office;
 import com.dentistapp.dentistappdevelop.repository.OfficeRepository;
+import com.dentistapp.dentistappdevelop.service.DoctorService;
 import com.dentistapp.dentistappdevelop.service.OfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +16,8 @@ import java.util.Optional;
 public class OfficeServiceImpl implements OfficeService {
     @Autowired
     OfficeRepository officeRepository;
+    @Autowired
+    DoctorService doctorService;
 
     @Override
     public OfficeRepository getOfficeRepository() {
@@ -28,6 +29,11 @@ public class OfficeServiceImpl implements OfficeService {
         if (office == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
         }
+        for (String doctorId: office.getListDoctorsId()) {
+            if(!doctorService.existsById(doctorId)){
+                office.getListDoctorsId().remove(doctorId);
+            }
+        }
         return officeRepository.save(office);
     }
 
@@ -38,6 +44,11 @@ public class OfficeServiceImpl implements OfficeService {
         }
         if (!existsOfficeById(office.getId())){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Bad id");
+        }
+        for (String doctorId: office.getListDoctorsId()) {
+            if(!doctorService.existsById(doctorId)){
+                office.getListDoctorsId().remove(doctorId);
+            }
         }
         return officeRepository.save(office);
     }
@@ -64,12 +75,11 @@ public class OfficeServiceImpl implements OfficeService {
     }
 
     @Override
-    public boolean deleteById(String id) {
+    public void deleteById(String id) {
         if (id == null || id.equals("") || id.length() != 24) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad id");
         }
         officeRepository.deleteById(id);
-        return false;
     }
 
     @Override

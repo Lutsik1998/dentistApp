@@ -5,8 +5,10 @@ import com.dentistapp.dentistappdevelop.repository.DoctorRepository;
 import com.dentistapp.dentistappdevelop.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -61,5 +63,13 @@ public class DoctorServiceImpl implements DoctorService {
         doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         doctorRepository.save(doctor);
         return doctor;
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        if (id == null || id.equals("") || id.length() != 24) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad id");
+        }
+        return doctorRepository.existsById(id);
     }
 }

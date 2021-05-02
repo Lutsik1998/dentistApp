@@ -9,4 +9,5 @@ public interface DoctorService{
 
     public Doctor update(Doctor doctorDetails);
     public Doctor save(Doctor doctor);
+    public boolean existsById(String id);
 }
