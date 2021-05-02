@@ -55,7 +55,7 @@ public class DoctorController {
 
     @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/save")
-    public ResponseEntity<Doctor> saveDoctor(@RequestBody Doctor doctor) {
+    public ResponseEntity<Doctor> saveDoctor(@RequestBody @Valid Doctor doctor) {
 
         doctorService.save(doctor);
         return new ResponseEntity(doctor, HttpStatus.CREATED);
@@ -77,7 +77,7 @@ public class DoctorController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable(value = "id") String id, @RequestBody Doctor doctorDetails) throws ResourceNotFoundException {
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable(value = "id") String id, @RequestBody @Valid Doctor doctorDetails) throws ResourceNotFoundException {
 
         doctorDetails.setId(id);
         Doctor doctor = doctorService.update(doctorDetails);
