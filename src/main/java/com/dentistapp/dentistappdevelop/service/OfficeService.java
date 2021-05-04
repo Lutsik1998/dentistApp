@@ -13,6 +13,6 @@ public interface OfficeService {
     public List<Office> findAll();
     public Office findById(String id);
     public void deleteById(String id);
-    boolean existsOfficeById(String id);
-    boolean existsByNIP(int nip);
+    public boolean existsOfficeById(String id);
+    public boolean existsByNIP(int nip);
 }

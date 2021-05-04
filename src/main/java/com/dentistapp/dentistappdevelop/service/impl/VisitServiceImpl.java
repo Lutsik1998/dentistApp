@@ -3,6 +3,7 @@ package com.dentistapp.dentistappdevelop.service.impl;
 import com.dentistapp.dentistappdevelop.model.Visit;
 import com.dentistapp.dentistappdevelop.repository.VisitRepository;
 import com.dentistapp.dentistappdevelop.service.DoctorService;
+import com.dentistapp.dentistappdevelop.service.OfficeService;
 import com.dentistapp.dentistappdevelop.service.PatientService;
 import com.dentistapp.dentistappdevelop.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class VisitServiceImpl implements VisitService {
     DoctorService doctorService;
     @Autowired
     PatientService patientService;
+    @Autowired
+    OfficeService officeService;
 
     @Override
     public VisitRepository getVisitRepository() {
@@ -34,6 +37,9 @@ public class VisitServiceImpl implements VisitService {
         }
         if (!doctorService.existsById(visit.getDoctorId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong doctor id \"" + visit.getDoctorId() + "\"");
+        }
+        if (!officeService.existsOfficeById(visit.getOfficeId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong office id \"" + visit.getOfficeId() + "\"");
         }
         if (!patientService.existsById(visit.getPatientId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + visit.getPatientId() + "\"");
@@ -51,6 +57,9 @@ public class VisitServiceImpl implements VisitService {
         }
         if (!doctorService.existsById(visit.getDoctorId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong doctor id \"" + visit.getDoctorId() + "\"");
+        }
+        if (!officeService.existsOfficeById(visit.getOfficeId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong office id \"" + visit.getOfficeId() + "\"");
         }
         if (!patientService.existsById(visit.getPatientId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + visit.getPatientId() + "\"");
