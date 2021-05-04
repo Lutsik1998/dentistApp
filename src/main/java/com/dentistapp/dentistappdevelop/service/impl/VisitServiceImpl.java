@@ -46,7 +46,7 @@ public class VisitServiceImpl implements VisitService {
         if (visit == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
         }
-        if (!existsOfficeById(visit.getId())) {
+        if (!existsById(visit.getId())) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Bad id");
         }
         if (!doctorService.existsById(visit.getDoctorId())) {
@@ -88,10 +88,10 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public boolean existsOfficeById(String id) {
+    public boolean existsById(String id) {
         if (id == null || id.equals("") || id.length() != 24) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad id");
         }
-        return visitRepository.existsOfficeById(id);
+        return visitRepository.existsById(id);
     }
 }

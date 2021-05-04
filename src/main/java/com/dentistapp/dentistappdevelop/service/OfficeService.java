@@ -14,4 +14,5 @@ public interface OfficeService {
     public Office findById(String id);
     public void deleteById(String id);
     boolean existsOfficeById(String id);
+    boolean existsByNIP(int nip);
 }

@@ -13,5 +13,5 @@ public interface VisitService {
     public Visit findById(String id);
     public List<Visit> findAll();
     public void deleteById(String id);
-    public boolean existsOfficeById(String id);
+    public boolean existsById(String id);
 }

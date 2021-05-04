@@ -29,6 +29,9 @@ public class OfficeServiceImpl implements OfficeService {
         if (office == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
         }
+        if (existsByNIP(office.getNIP())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Office with NIP:"+Integer.toString(office.getNIP())+" is already exists");
+        }
         for (String doctorId: office.getListDoctorsId()) {
             if(!doctorService.existsById(doctorId)){
                 office.getListDoctorsId().remove(doctorId);
@@ -41,6 +44,9 @@ public class OfficeServiceImpl implements OfficeService {
     public Office update(Office office) {
         if (office == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
+        }
+        if (existsByNIP(office.getNIP())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Office with NIP:"+Integer.toString(office.getNIP())+" is already exists");
         }
         if (!existsOfficeById(office.getId())){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Bad id");
@@ -88,5 +94,10 @@ public class OfficeServiceImpl implements OfficeService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad id");
         }
         return officeRepository.existsOfficeById(id);
+    }
+
+    @Override
+    public boolean existsByNIP(int nip) {
+        return officeRepository.existsByNIP(nip);
     }
 }
