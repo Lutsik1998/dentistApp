@@ -29,8 +29,6 @@ public class VisitController {
             return new ResponseEntity(visit, HttpStatus.CREATED);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatus());
-        } catch (Exception e1) {
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -43,8 +41,6 @@ public class VisitController {
             return new ResponseEntity<Visit>(visit, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity(e.getMessage(), e.getStatus());
-        } catch (Exception e1) {
-            return new ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -55,8 +51,6 @@ public class VisitController {
             return new ResponseEntity<List<Visit>>(visitList, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity(e.getMessage(), e.getStatus());
-        } catch (Exception e1) {
-            return new ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -67,8 +61,6 @@ public class VisitController {
             return new ResponseEntity<Visit>(visit, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity(e.getMessage(), e.getStatus());
-        } catch (Exception e1) {
-            return new ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -79,9 +71,7 @@ public class VisitController {
             visitService.deleteById(id);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity("Patient not found for this id: " + id, HttpStatus.NOT_FOUND);
-        } catch (ServerErrorException e1) {
-            return new ResponseEntity("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (ResponseStatusException e2) {
+        }catch (ResponseStatusException e2) {
             return new ResponseEntity(e2.getMessage(), e2.getStatus());
         }
         return new ResponseEntity("Deleted successfully", HttpStatus.OK);

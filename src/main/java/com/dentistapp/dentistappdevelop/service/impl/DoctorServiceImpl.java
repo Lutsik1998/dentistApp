@@ -68,7 +68,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public boolean existsById(String id) {
         if (id == null || id.equals("") || id.length() != 24) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong doctor id \"" + id + "\"");
         }
         return doctorRepository.existsById(id);
     }

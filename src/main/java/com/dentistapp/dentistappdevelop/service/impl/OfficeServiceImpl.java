@@ -30,11 +30,13 @@ public class OfficeServiceImpl implements OfficeService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
         }
         if (existsByNIP(office.getNIP())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Office with NIP:"+Integer.toString(office.getNIP())+" is already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Office with NIP:" + Integer.toString(office.getNIP()) + " is already exists");
         }
-        for (String doctorId: office.getListDoctorsId()) {
-            if(!doctorService.existsById(doctorId)){
-                office.getListDoctorsId().remove(doctorId);
+        if (office.getListDoctorsId() != null) {
+            for (String doctorId : office.getListDoctorsId()) {
+                if (!doctorService.existsById(doctorId)) {
+                    office.getListDoctorsId().remove(doctorId);
+                }
             }
         }
         return officeRepository.save(office);
@@ -42,21 +44,10 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Override
     public Office update(Office office) {
-        if (office == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
-        }
-        if (existsByNIP(office.getNIP())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Office with NIP:"+Integer.toString(office.getNIP())+" is already exists");
-        }
-        if (!existsOfficeById(office.getId())){
+        if (!existsOfficeById(office.getId())) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Bad id");
         }
-        for (String doctorId: office.getListDoctorsId()) {
-            if(!doctorService.existsById(doctorId)){
-                office.getListDoctorsId().remove(doctorId);
-            }
-        }
-        return officeRepository.save(office);
+        return this.save(office);
     }
 
     @Override
@@ -91,7 +82,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     public boolean existsOfficeById(String id) {
         if (id == null || id.equals("") || id.length() != 24) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad id");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong office id \"" + id + "\"");
         }
         return officeRepository.existsOfficeById(id);
     }

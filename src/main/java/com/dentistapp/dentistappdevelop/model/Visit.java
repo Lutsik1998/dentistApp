@@ -22,10 +22,10 @@ public class Visit extends BaseEntity {
     @NotNull
     private String doctorId;
     @NotNull
-    private String OfficeId;
+    private String officeId;
     @NotNull
     private String patientId;
-    
+
     public Visit() {
     }
 }
