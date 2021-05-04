@@ -1,9 +1,19 @@
+@import "var";
+
 :host {
     display: inline-block;
     .grid {
         display: grid;
         grid-template-columns: auto 1fr;
-        row-gap: 1em;
         column-gap: 1em;
+        align-items: center;
+    }
+    button {
+        height: 40px;
+    }
+    .address-form {
+        mat-form-field {
+            width: 100%;
+        }
     }
 }

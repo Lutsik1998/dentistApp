@@ -1,6 +1,7 @@
 <div class="container mt-5">
     <div class="row contact">
-        <app-office-info class="col-lg-5"></app-office-info>
+        <app-office-info *ngIf="officeData" (getData)="fetchInfo()" [data]="officeData" class="col-lg-5"></app-office-info>
+        <app-spinner *ngIf="!officeData"></app-spinner>
         <div class="col-lg-7 contact-map mt-3 mt-lg-0">
             <iframe [ngClass]="{'d-none': !mapIsLoaded}" class="map" (load)="mapLoaded()" loading="lazy" allowfullscreen
                 src="https://maps.google.com/maps?width=100%25&amp;height=500&amp;hl=pl&amp;q=Wroc%C5%82aw%20Trwa%C5%82a%205+(Prodental)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
@@ -11,10 +12,8 @@
     <div class="row mt-3 mt-lg-5">
         <div class="col-12">
             <h4 id="subheader">Historia</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat mauris sed est maximus, in elementum tortor dictum. Vivamus pellentesque sollicitudin est sed vulputate. Nam condimentum pretium lorem. Phasellus feugiat vestibulum tortor finibus condimentum. Morbi in euismod urna. 
-                Morbi sit amet felis cursus, ullamcorper elit laoreet, euismod dui. Sed auctor quis nibh ut tristique. Phasellus quis mollis ante, a ornare dolor. Sed id massa dolor. Fusce tristique mollis dictum. Quisque congue leo nec rhoncus sagittis. Donec vehicula lobortis tortor ac accumsan.</p>
-            <p>Quisque pulvinar nulla eget feugiat lobortis. Integer interdum gravida neque at consectetur. In nec metus sed est rutrum tincidunt vitae sed nisl. Morbi tempor tempus sem ac hendrerit. Curabitur eget maximus arcu. Cras eget bibendum ligula. Sed tincidunt pulvinar velit. 
-                Sed fringilla vel massa eu imperdiet. Aliquam in lacus ullamcorper, commodo massa vel, malesuada diam. Fusce semper congue aliquam. Duis finibus mollis cursus. Pellentesque in pharetra augue. Cras sodales velit sem, id fringilla arcu sodales nec. Praesent suscipit quis leo sagittis interdum.</p>
+            <p *ngIf="officeData">{{officeData.address.information}}</p>
+            <app-spinner *ngIf="!officeData"></app-spinner>
         </div>
     </div>
 </div>

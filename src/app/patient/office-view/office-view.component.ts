@@ -1,4 +1,8 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { OfficeInfoResponseModel } from 'src/app/models/office.model';
+import { OfficeService } from 'src/app/services/office.service';
 
 @Component({
   selector: 'app-office-view',
@@ -8,9 +12,19 @@ import { Component, OnInit } from '@angular/core';
 export class OfficeViewComponent implements OnInit {
 
   mapIsLoaded: boolean = false;
-  constructor() { }
+  officeData: OfficeInfoResponseModel | null = null;
+  private sub = new Subscription();
+  constructor(private officeService: OfficeService) { }
 
   ngOnInit(): void {
+    this.fetchInfo();
+  }
+
+  fetchInfo() {
+    this.officeData = null;
+    this.sub.add(this.officeService.getOffice().subscribe(res => {
+      this.officeData = res[0];
+    }))
   }
 
   mapLoaded() {

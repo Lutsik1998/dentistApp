@@ -11,5 +11,10 @@
     button {
         height: 40px;
     }
+    .address-form {
+        mat-form-field {
+            width: 100%;
+        }
+    }
 }
 
