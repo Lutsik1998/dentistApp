@@ -41,6 +41,7 @@ public class AuthController {
 
 
     public ResponseEntity<?> login(LoginDto loginUser){
+        System.out.println(loginUser);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginUser.getEmail(), loginUser.getPassword()));
 
