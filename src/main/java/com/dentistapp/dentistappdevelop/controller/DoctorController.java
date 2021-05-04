@@ -16,10 +16,7 @@ import org.springframework.web.server.ServerErrorException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -41,7 +38,7 @@ public class DoctorController {
         // Create new patient's account
         Doctor doctor = signUpDoctorRequest;
 
-        Set<Roles> roles = new HashSet<>();
+        LinkedHashSet<Roles> roles = new LinkedHashSet<>();
         roles.add(Roles.ROLE_DOCTOR);
         doctor.setRoles(roles);
         LoginDto loginUser = new LoginDto();

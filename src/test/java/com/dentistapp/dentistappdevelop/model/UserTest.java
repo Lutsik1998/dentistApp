@@ -12,10 +12,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -48,7 +45,7 @@ public class UserTest {
         user.setSex(Sex.MAN);
         user.setPassword("asdadasda");
         user.setEmail("unittest1@unittest1");
-        user.setRoles(new HashSet<>(Arrays.asList(Roles.ROLE_PATIENT)));
+        user.setRoles(new LinkedHashSet<>(Arrays.asList(Roles.ROLE_PATIENT)));
         user.setPhoneNumber(new HashSet<>(Arrays.asList(new PhoneNumber("+0775312412"))));
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         for (ConstraintViolation<User> violation : violations) {

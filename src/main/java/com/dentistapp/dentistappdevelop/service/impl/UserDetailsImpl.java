@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private List<String> id;
+    private String id;
 
     private String email;
 
@@ -26,8 +26,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(String id, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
-        this.id = new ArrayList<>();
-        this.id.add(id);
+        this.id = id;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -44,7 +43,7 @@ public class UserDetailsImpl implements UserDetails {
 //        List<GrantedAuthority> authorities = loginUser.getRoles().stream()
 //                .map(role -> new SimpleGrantedAuthority(role.name()))
 //                .collect(Collectors.toList());
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        LinkedHashSet<GrantedAuthority> authorities = new LinkedHashSet<>();
         for (Roles role: loginUser.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.name()));
 //            role.getPrivileges().stream()
@@ -64,7 +63,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
 
-    public List<String> getId() {
+    public String getId() {
         return id;
     }
 

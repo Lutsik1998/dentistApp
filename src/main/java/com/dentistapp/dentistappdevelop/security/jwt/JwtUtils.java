@@ -31,9 +31,7 @@ public class JwtUtils {
 
 
         String token = Jwts.builder()
-//                .setSubject((userPrincipal.getId().stream()
-//                        .map(n -> String.valueOf(n))
-//                        .collect(Collectors.joining(",", "", ""))))
+                .setId(userPrincipal.getId().toString())
                 .setSubject(userPrincipal.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
@@ -43,7 +41,6 @@ public class JwtUtils {
     }
 
     public String getUserNameFromJwtToken(String token) {
-        System.out.println(Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject());
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 

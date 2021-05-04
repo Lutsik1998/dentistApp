@@ -17,10 +17,7 @@ import org.springframework.web.server.ServerErrorException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @CrossOrigin(origins = "*")
@@ -44,7 +41,7 @@ public class PatientController {
         // Create new patient's account
         Patient patient = signUpPatientRequest;
 
-        Set<Roles> roles = new HashSet<>();
+        LinkedHashSet<Roles> roles = new LinkedHashSet<>();
         roles.add(Roles.ROLE_PATIENT);
         patient.setRoles(roles);
         LoginDto loginUser = new LoginDto();
@@ -72,8 +69,6 @@ public class PatientController {
             patientService.patientRepository().deleteById(patientId);
         }catch (ResourceNotFoundException e){
            return new ResponseEntity("Patient not found for this id: " + patientId , HttpStatus.NOT_FOUND);
-        }catch (ServerErrorException e1){
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity("Deleted successfully" , HttpStatus.OK);
 
