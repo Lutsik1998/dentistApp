@@ -49,10 +49,22 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public Visit update(Visit visit) {
-        if (!existsById(visit.getId())) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Bad id");
+        if (visit == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
         }
-        return this.save(visit);
+        if (!existsById(visit.getId())) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Visit with id \"" + visit.getId() + "\" not found");
+        }
+        if (!doctorService.existsById(visit.getDoctorId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong doctor id \"" + visit.getDoctorId() + "\"");
+        }
+        if (!officeService.existsOfficeById(visit.getOfficeId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong office id \"" + visit.getOfficeId() + "\"");
+        }
+        if (!patientService.existsById(visit.getPatientId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + visit.getPatientId() + "\"");
+        }
+        return visitRepository.save(visit);
     }
 
     @Override
@@ -87,7 +99,7 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public boolean existsById(String id) {
         if (id == null || id.equals("") || id.length() != 24) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Visit id:"+id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad Visit id:" + id);
         }
         return visitRepository.existsById(id);
     }
