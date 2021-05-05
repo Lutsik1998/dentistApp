@@ -47,8 +47,14 @@ public class OfficeServiceImpl implements OfficeService {
         if (office == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad data");
         }
-        if (!existsOfficeById(office.getId())) {
+        Office oldOffice = findById(office.getId());
+        if (oldOffice == null) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Office with id \"" + office.getId() + "\" not found");
+        }
+        if (office.getNIP() != oldOffice.getNIP()){
+            if (existsByNIP(office.getNIP())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Office with NIP:" + Integer.toString(office.getNIP()) + " is already exists");
+            }
         }
         if (office.getListDoctorsId() != null) {
             for (String doctorId : office.getListDoctorsId()) {
