@@ -18,17 +18,14 @@ export class SubheaderEditComponent implements OnInit {
   }
 
   save($event) {
-    this.edit = false;
     this.isSaved.emit($event);
   }
 
   cancel($event) {
-    this.edit = false;
     this.isCanceled.emit($event);
   }
 
   editEnable($event) {
-    this.edit = true;
     this.isEditing.emit($event);
   }
 }

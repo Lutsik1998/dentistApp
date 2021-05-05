@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { OfficeInfoResponseModel } from 'src/app/models/office.model';
 import { OfficeService } from 'src/app/services/office.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-office-info',
@@ -13,25 +14,29 @@ export class OfficeInfoComponent implements OnInit, OnDestroy {
 
   private sub: Subscription = new Subscription();
   infoForm: FormGroup = this.fb.group({
-    id: {value: '', disabled: true},
-    name: {value: '', disabled: true},
+    id: [''],
+    name: ['', [Validators.required]],
     address: this.fb.group({
-      country: {value: '', disabled: true},
-      region: {value: '', disabled: true},
-      city: {value: '', disabled: true},
-      postalCode: {value: '', disabled: true},
-      street: {value: '', disabled: true},
-      houseNr: {value: '', disabled: true},
-      roomNr: {value: '', disabled: true},
-      information: {value: '', disabled: true},
+      country: [''],
+      region: [''],
+      city: ['', [Validators.required]],
+      postalCode: ['', [Validators.required]],
+      street: ['', [Validators.required]],
+      houseNr: ['', [Validators.required]],
+      roomNr: [''],
+      information: [''],
     }),
-    listDoctorsId: {value: '', disabled: true},
-    phone: {value: '', disabled: true},
-    nip: {value: '', disabled: true},
+    listDoctorsId: [''],
+    phone: ['', [Validators.required]],
+    nip: ['', [Validators.required]],
   })
+  isEditing: boolean = false;
+  isLoaded: boolean = false;
+  @Output() editingChange = new EventEmitter<boolean>();
   @Output() getData = new EventEmitter();
   @Input() set data(value: OfficeInfoResponseModel | null) {
     if(!value) return;
+    this.isLoaded = true;
     this.infoForm.patchValue({
       id: value.id,
       name: value.name,
@@ -40,9 +45,8 @@ export class OfficeInfoComponent implements OnInit, OnDestroy {
       address: value.address,
       listDoctorsId: value.listDoctorsId,
     })
-    console.log(this.infoForm.getRawValue())
   }
-  constructor(private fb: FormBuilder, private officeService: OfficeService) { }
+  constructor(private fb: FormBuilder, private officeService: OfficeService, private snackBar: SnackbarService) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -50,9 +54,15 @@ export class OfficeInfoComponent implements OnInit, OnDestroy {
 
   edit($event) {
     this.infoForm.enable();
+    this.isEditing = true;
+    this.editingChange.emit(this.isEditing)
   }
 
   save($event) {
+    if(this.infoForm.invalid) {
+      this.snackBar.error("Formularz jest niepoprawnie wypełniony")
+      return;
+    }
     this.infoForm.disable();
     const data: OfficeInfoResponseModel = {
       ...this.infoForm.getRawValue(),
@@ -60,18 +70,27 @@ export class OfficeInfoComponent implements OnInit, OnDestroy {
         number: this.infoForm.get('phone').value,
       }
     }
+    this.isLoaded = false;
+    console.log(data)
     this.sub.add(this.officeService.patchOffice(data).subscribe(res => {
-      console.log(res)
+      this.getData.emit();
+      this.isEditing = false;
+      this.editingChange.emit(this.isEditing)
+    }, err => {
+      this.snackBar.error('Zmiana danych nie powiodła się!')
+      this.getData.emit();
     }))
-    this.getData.emit();
   }
 
   cancel($event) {
     this.infoForm.disable();
+    this.isLoaded = false;
+    this.isEditing = false;
+    this.editingChange.emit(this.isEditing)
     this.getData.emit();
   }
 
   ngOnInit(): void {
-    
+    this.infoForm.disable();
   }
 }

@@ -12,6 +12,7 @@ import { OfficeService } from 'src/app/services/office.service';
 export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
   mapIsLoaded: boolean = false;
   officeData: OfficeInfoResponseModel | null = null;
+  isEditing: boolean = false;
   private sub = new Subscription();
   constructor(private officeService: OfficeService, private sanitizer: DomSanitizer) { }
   ngOnDestroy(): void {
@@ -26,11 +27,20 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
     this.officeData = null;
     this.sub.add(this.officeService.getOffice().subscribe(res => {
       this.officeData = res[0];
+      console.log(this.officeData)
     }))
   }
 
   mapLoaded() {
     this.mapIsLoaded = true;
+  }
+
+  changeEditing($event) {
+    this.isEditing = $event;
+  }
+
+  textFieldChanged($event) {
+    console.log(this.officeData.address.information)
   }
   
 }

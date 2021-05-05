@@ -26,8 +26,10 @@ export class OfficeInfoComponent implements OnInit {
     phone: {value: '', disabled: true},
     nip: {value: '', disabled: true},
   })
+  isLoaded: boolean = false;
   @Input() set data(value: OfficeInfoResponseModel | null) {
     if(!value) return;
+    this.isLoaded = true;
     this.infoForm.patchValue({
       id: value.id,
       name: value.name,

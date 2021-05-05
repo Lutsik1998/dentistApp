@@ -1,30 +1,79 @@
-<app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" header="Informacje i kontakt"></app-subheader-edit>
-<form [formGroup]="infoForm" class="grid mt-lg-3">
-    <div>Nazwa:</div>
-    <mat-form-field>
-        <input matInput formControlName="name">
-    </mat-form-field>
-    <div>ADRES:</div>
-    <form class="address-form" [formGroup]="infoForm.get('address')">
-        <mat-form-field>
-            <input matInput formControlName="street">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput formControlName="houseNr">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput formControlName="postalCode">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput formControlName="city">
-        </mat-form-field>
+<ng-container *ngIf="isLoaded">
+    <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Informacje i kontakt"></app-subheader-edit>
+    <form [formGroup]="infoForm" class="grid mt-lg-3">
+        <div>Nazwa:</div>
+        <div class="w-100">
+            <mat-form-field>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <app-display-validation *ngIf="infoForm.get('name')?.errors"
+                    [errors]="infoForm.get('name')?.errors"
+                    label="Nazwa">
+            </app-display-validation>
+        </div>
+        <div>Telefon:</div>
+        <div>
+            <mat-form-field>
+                <input type="number" matInput formControlName="phone">
+            </mat-form-field>
+            <app-display-validation *ngIf="infoForm.get('phone')?.errors"
+                    [errors]="infoForm.get('phone')?.errors"
+                    label="Telefon">
+            </app-display-validation>
+        </div>
+        <div>NIP:</div>
+        <div>
+            <mat-form-field>
+                <input matInput formControlName="nip">
+            </mat-form-field>
+            <app-display-validation *ngIf="infoForm.get('nip')?.errors"
+                    [errors]="infoForm.get('nip')?.errors"
+                    label="NIP">
+            </app-display-validation>
+        </div>
+        <form class="address-form" [formGroup]="infoForm.get('address')">
+            <div>Ulica:</div>
+            <div>
+                <mat-form-field>
+                    <input matInput formControlName="street">
+                </mat-form-field>
+                <app-display-validation *ngIf="infoForm.get('street')?.errors"
+                        [errors]="infoForm.get('street')?.errors"
+                        label="Ulica">
+                </app-display-validation>
+            </div>
+            <div>Numer budynku:</div>
+            <div>
+                <mat-form-field>
+                    <input matInput formControlName="houseNr">
+                </mat-form-field>
+                <app-display-validation *ngIf="infoForm.get('houseNr')?.errors"
+                        [errors]="infoForm.get('houseNr')?.errors"
+                        label="Numer domu">
+                </app-display-validation>
+            </div>
+            <div>Kod pocztowy:</div>
+            <div>
+                <mat-form-field>
+                    <input matInput formControlName="postalCode">
+                </mat-form-field>
+                <app-display-validation *ngIf="infoForm.get('postalCode')?.errors"
+                        [errors]="infoForm.get('postalCode')?.errors"
+                        label="Kod pocztowy">
+                </app-display-validation>
+            </div>
+            <div>Miasto:</div>
+            <div>
+                <mat-form-field>
+                    <input matInput formControlName="city">
+                </mat-form-field>
+                <app-display-validation *ngIf="infoForm.get('city')?.errors"
+                        [errors]="infoForm.get('city')?.errors"
+                        label="Miasto">
+                </app-display-validation>
+            </div>
+        </form>
     </form>
-    <div>TELEFON:</div>
-    <mat-form-field>
-        <input type="number" matInput formControlName="phone">
-    </mat-form-field>
-    <div>NIP:</div>
-    <mat-form-field>
-        <input matInput formControlName="nip">
-    </mat-form-field>
-</form>
+</ng-container>
+<app-spinner *ngIf="!isLoaded"></app-spinner>
+

@@ -1,29 +1,35 @@
-<form [formGroup]="infoForm" class="grid mt-lg-3">
-    <div>Nazwa:</div>
-    <mat-form-field>
-        <input matInput formControlName="name">
-    </mat-form-field>
-    <div>ADRES:</div>
-    <form class="address-form" [formGroup]="infoForm.get('address')">
+<ng-container *ngIf="isLoaded">
+    <form [formGroup]="infoForm" class="grid mt-lg-3">
+        <div>Nazwa:</div>
         <mat-form-field>
-            <input matInput formControlName="street">
+            <input matInput formControlName="name">
         </mat-form-field>
+        <div>Telefon:</div>
         <mat-form-field>
-            <input matInput formControlName="houseNr">
+            <input type="text" matInput formControlName="phone">
         </mat-form-field>
+        <div>NIP:</div>
         <mat-form-field>
-            <input matInput formControlName="postalCode">
+            <input matInput formControlName="nip">
         </mat-form-field>
-        <mat-form-field>
-            <input matInput formControlName="city">
-        </mat-form-field>
+        <form class="address-form" [formGroup]="infoForm.get('address')">
+            <div>Ulica:</div>
+            <mat-form-field>
+                <input matInput formControlName="street">
+            </mat-form-field>
+            <div>Numer budynku:</div>
+            <mat-form-field>
+                <input matInput formControlName="houseNr">
+            </mat-form-field>
+            <div>Kod pocztowy:</div>
+            <mat-form-field>
+                <input matInput formControlName="postalCode">
+            </mat-form-field>
+            <div>Miasto:</div>
+            <mat-form-field>
+                <input matInput formControlName="city">
+            </mat-form-field>
+        </form>
     </form>
-    <div>TELEFON:</div>
-    <mat-form-field>
-        <input type="number" matInput formControlName="phone">
-    </mat-form-field>
-    <div>NIP:</div>
-    <mat-form-field>
-        <input matInput formControlName="nip">
-    </mat-form-field>
-</form>
+</ng-container>
+<app-spinner *ngIf="!isLoaded"></app-spinner>

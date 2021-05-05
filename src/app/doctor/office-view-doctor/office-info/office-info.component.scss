@@ -4,7 +4,7 @@
     display: inline-block;
     .grid {
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 120px 1fr;
         column-gap: 1em;
         align-items: center;
     }
@@ -12,9 +12,16 @@
         height: 40px;
     }
     .address-form {
-        mat-form-field {
-            width: 100%;
+        grid-column-end: span 2;
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        column-gap: 1em;
+        align-items: center;
+        &-cont {
+            min-width: 0;
+            min-height: 0;
         }
+
     }
 }
 

@@ -15,7 +15,6 @@ export class OfficeService {
   }
 
   patchOffice(body: OfficeInfoResponseModel) {
-    console.log(body)
     return this.http.put(`${this.baseUrl}/${body.id}`, body)
   }
 }

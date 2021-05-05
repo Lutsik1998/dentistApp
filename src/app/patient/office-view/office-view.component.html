@@ -1,9 +1,8 @@
 <div class="container mt-5">
     <div class="row contact">
-        <div class="col-lg-4 contact-info d-flex flex-column">
+        <div class="col-lg-4 contact-map mt-3 mt-lg-0">
             <h4 id="subheader">Informacje i kontakt</h4>
-            <app-office-info *ngIf="officeData" (getData)="fetchInfo()" [data]="officeData" class="col-lg-5"></app-office-info>
-            <app-spinner *ngIf="!officeData"></app-spinner>
+            <app-office-info (getData)="fetchInfo()" [data]="officeData" class="col-lg-5"></app-office-info>
         </div>
         <div class="col-lg-8 contact-map mt-3 mt-lg-0">
             <iframe [ngClass]="{'d-none': !mapIsLoaded}" class="map" (load)="mapLoaded()" loading="lazy" allowfullscreen
