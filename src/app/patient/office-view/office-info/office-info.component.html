@@ -1,8 +1,35 @@
-<div class="grid mt-lg-3">
-    <div>Nazwa:</div><div>PRODENTAL</div>
-    <div>ADRES:</div><div>Trwała 7, 50-529 Wrocław</div>
-    <div>TELEFON:</div><div>+48 691 594 352</div>
-    <div>EMAIL:</div><div>prodental@gmail.com</div>
-    <div>NIP:</div><div>1567320844</div>
-    <div>REGON:</div><div>278296930</div>
-</div>
+<ng-container *ngIf="isLoaded">
+    <form [formGroup]="infoForm" class="grid mt-lg-3">
+        <div>Nazwa:</div>
+        <mat-form-field>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <div>Telefon:</div>
+        <mat-form-field>
+            <input type="text" matInput formControlName="phone">
+        </mat-form-field>
+        <div>NIP:</div>
+        <mat-form-field>
+            <input matInput formControlName="nip">
+        </mat-form-field>
+        <form class="address-form" [formGroup]="infoForm.get('address')">
+            <div>Ulica:</div>
+            <mat-form-field>
+                <input matInput formControlName="street">
+            </mat-form-field>
+            <div>Numer budynku:</div>
+            <mat-form-field>
+                <input matInput formControlName="houseNr">
+            </mat-form-field>
+            <div>Kod pocztowy:</div>
+            <mat-form-field>
+                <input matInput formControlName="postalCode">
+            </mat-form-field>
+            <div>Miasto:</div>
+            <mat-form-field>
+                <input matInput formControlName="city">
+            </mat-form-field>
+        </form>
+    </form>
+</ng-container>
+<app-spinner *ngIf="!isLoaded"></app-spinner>

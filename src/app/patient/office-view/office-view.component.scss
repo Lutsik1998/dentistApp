@@ -1,6 +1,9 @@
 @import "var";
 
 .contact {
+    app-office-info {
+        padding: 0;
+    }
     &-map {
         .map {
             width: 100%;
