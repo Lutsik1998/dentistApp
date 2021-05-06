@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit, Sanitizer } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { OfficeInfoResponseModel } from 'src/app/models/office.model';
 import { OfficeService } from 'src/app/services/office.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-office-view-doctor',
@@ -14,7 +16,10 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
   officeData: OfficeInfoResponseModel | null = null;
   isEditing: boolean = false;
   private sub = new Subscription();
-  constructor(private officeService: OfficeService, private sanitizer: DomSanitizer) { }
+
+  officeInfo = new FormControl('');
+
+  constructor(private officeService: OfficeService, private snackBar: SnackbarService) { }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
@@ -27,7 +32,7 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
     this.officeData = null;
     this.sub.add(this.officeService.getOffice().subscribe(res => {
       this.officeData = res[0];
-      console.log(this.officeData)
+      this.officeInfo.patchValue(res[0].address.information)
     }))
   }
 
@@ -35,12 +40,29 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
     this.mapIsLoaded = true;
   }
 
-  changeEditing($event) {
-    this.isEditing = $event;
+  edit($event) {
+    this.isEditing = true;
+    console.log(this.officeInfo.value)
   }
 
-  textFieldChanged($event) {
-    console.log(this.officeData.address.information)
+  save($event) {
+    const data: OfficeInfoResponseModel = {
+      ...this.officeData,
+      address: {
+        ...this.officeData.address,
+        information: this.officeInfo.value
+      }
+    }
+    this.sub.add(this.officeService.patchOffice(data).subscribe(res => {
+      this.isEditing = false;
+      this.fetchInfo()
+    }, err => {
+      this.snackBar.error('Zmiana danych nie powiodła się!')
+    }))
   }
-  
+
+  cancel($event) {
+    this.isEditing = false;
+    this.fetchInfo();
+  }
 }
