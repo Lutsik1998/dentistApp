@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DoctorAddRequestModel } from 'src/app/models/doctor';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -10,10 +11,10 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './add-doctor.component.html',
   styleUrls: ['./add-doctor.component.scss']
 })
-export class AddDoctorComponent implements OnInit {
+export class AddDoctorComponent implements OnInit, OnDestroy {
 
   docForm = this.fb.group({
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
     password: this.fb.group({
       pass: ['', [Validators.required]],
       confirmPass: ['', [Validators.required]],
@@ -40,7 +41,13 @@ export class AddDoctorComponent implements OnInit {
     specialization: ['', [Validators.required]],
   })
 
+  sub = new Subscription()
+
   constructor(private router: Router, private fb: FormBuilder, private doctorService: DoctorService, private snackbar: SnackbarService) { }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
   ngOnInit(): void {
   }
@@ -54,7 +61,6 @@ export class AddDoctorComponent implements OnInit {
       console.log(this.docForm)
       return;
     }
-    console.log(this.docForm.getRawValue())
     const data: DoctorAddRequestModel = {
       ...this.docForm.getRawValue(),
       phoneNumber: [{
@@ -64,12 +70,11 @@ export class AddDoctorComponent implements OnInit {
       roles: [this.docForm.get('roles').value],
       password: this.docForm.get('password').get('pass').value,
     }
-    console.log(data)
-    this.doctorService.addDoctor(data).subscribe(res => {
+    this.sub.add(this.doctorService.addDoctor(data).subscribe(res => {
       this.snackbar.success("Lekarz został dodany");
       this.back();
     }, err => {
       this.snackbar.error("Lekarz nie został dodany")
-    })
+    }))
   }
 }

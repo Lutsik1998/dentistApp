@@ -1,70 +1,118 @@
-<div class="container mt-5 pb-3">
-    <div class="row">
-        <div class="col-md-6 mb-3 mb-md-0 pr-2">
-            <app-subheader-edit (isEditing)="personalEnable($event)" 
-                                (isSaved)="personalSave($event)" 
-                                (isCanceled)="personalCancel($event)" 
-                                header="Dane osobiste">
-            </app-subheader-edit>
-            <form [formGroup]="personalForm">
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Imię</mat-label>
-                    <input formControlName="name" type="text" matInput placeholder="Imię">
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Drugie Imię</mat-label>
-                    <input formControlName="secondName" type="text" matInput placeholder="Drugie Imię">
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Nazwisko</mat-label>
-                    <input formControlName="surname" type="text" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>PESEL</mat-label>
-                    <input formControlName="pesel" type="number" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Data urodzenia</mat-label>
-                    <input formControlName="birthday" type="date" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Płeć (wymagane)</mat-label>
-                    <select formControlName="gender"  matNativeControl required>
-                        <option value="M">M</option>
-                        <option value="K">K</option>
-                    </select>
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Email</mat-label>
-                    <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com">
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Telefon</mat-label>
-                    <input formControlName="phone" type="number" matInput placeholder="+48123456789">
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Adres</mat-label>
-                    <input formControlName="address" type="text" matInput>
-                </mat-form-field>
-            </form>
-        </div>
-        <div class="col-md-6 pr-2">
-            <app-subheader-edit (isEditing)="accountEnable($event)" 
-                                (isSaved)="accountSave($event)" 
-                                (isCanceled)="accountCancel($event)" 
-                                header="Dane konta">
-            </app-subheader-edit>
-            <form [formGroup]="accountForm">
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Username</mat-label>
-                    <input formControlName="username" type="text" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-12 mb-2">
-                    <mat-label>Email</mat-label>
-                    <input formControlName="email" type="email" matInput placeholder="Ex. pat@example.com">
-                </mat-form-field>
-            </form>
-            <button mat-stroked-button color="accent" class="col-12">Zmień hasło</button>
-        </div>
-    </div>
+<div *ngIf="!isLoading" class="container mt-5">
+    <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Informacje i kontakt"></app-subheader-edit>
+    <h5 id="subheader" class="mt-2">Dane osobowe</h5>
+    <form [formGroup]="docForm" class="row form">
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Imię</mat-label>
+            <input formControlName="firstName" type="text" matInput>
+            <mat-error *ngIf="docForm.get('firstName').hasError('required')">
+                Imię jest wymagane!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Drugie imię</mat-label>
+            <input formControlName="secondName" type="text" matInput>
+            <mat-error *ngIf="docForm.get('secondName').hasError('required')">
+                Drugie imię jest wymagane!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Nazwisko</mat-label>
+            <input formControlName="lastName" type="text" matInput>
+            <mat-error *ngIf="docForm.get('lastName').hasError('required')">
+                Nazwisko jest wymagane!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Telefon</mat-label>
+            <input formControlName="phoneNumber" type="number" matInput>
+            <mat-error *ngIf="docForm.get('phoneNumber').hasError('required')">
+                Telefon jest wymagany!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Data urodzenia</mat-label>
+            <input formControlName="birthDate" type="date" matInput>
+            <mat-error *ngIf="docForm.get('birthDate').hasError('required')">
+                Data urodzenia jest wymagana!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Płeć</mat-label>
+            <select formControlName="sex" matNativeControl>
+                <option value="MAN">M</option>
+                <option value="WOMEN">K</option>
+            </select>
+            <mat-error *ngIf="docForm.get('sex').hasError('required')">
+                Płeć jest wymagana!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Specjalizacja</mat-label>
+            <input formControlName="specialization" type="text" matInput>
+            <mat-error *ngIf="docForm.get('specialization').hasError('required')">
+                Specjalizacja jest wymagana!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Numer licencji</mat-label>
+            <input formControlName="licence" type="text" matInput>
+            <mat-error *ngIf="docForm.get('licence').hasError('required')">
+                Numer licencji jest wymagany!
+            </mat-error>
+        </mat-form-field>
+        <h5 id="subheader" class="col-12 mt-2">Adres</h5>
+        <form formGroupName="address">
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Kraj</mat-label>
+                <input formControlName="country" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('country').hasError('required')">
+                    Kraj jest wymagany!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Region</mat-label>
+                <input formControlName="region" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('region').hasError('required')">
+                    Region jest wymagany!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Miasto</mat-label>
+                <input formControlName="city" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('city').hasError('required')">
+                    Miasto jest wymagane!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Kod pocztowy</mat-label>
+                <input formControlName="postalCode" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('postalCode').hasError('required')">
+                    Kod pocztowy jest wymagany!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Ulica</mat-label>
+                <input formControlName="street" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('street').hasError('required')">
+                    Ulica jest wymagana!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Numer domu</mat-label>
+                <input formControlName="houseNr" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('houseNr').hasError('required')">
+                    Numer domu jest wymagany!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Numer mieszkania</mat-label>
+                <input formControlName="roomNr" type="text" matInput>
+                <mat-error *ngIf="docForm.get('address').get('roomNr').hasError('required')">
+                    Numer mieszkania jest wymagany!
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </form>
 </div>
+<app-spinner *ngIf="isLoading"></app-spinner>

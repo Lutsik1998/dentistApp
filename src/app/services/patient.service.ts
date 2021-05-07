@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Patient, PatientInfoResponseModel} from '../models/patient'
-import { HttpClient,HttpHeaders,HttpErrorResponse } from '@angular/common/http';
+import {Patient, PatientInfoResponseModel, PatientUpdateRequestModel} from '../models/patient'
+import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -18,11 +18,11 @@ export class PatientService {
   getPatients(): Observable<PatientInfoResponseModel[]>{
     return this.http.get<PatientInfoResponseModel[]>(`${this.getUrl}/all`).pipe(catchError(this.handleError))
   }
-  getPatientById(id: string): Observable<Patient>{
-    return this.http.get<any>(this.getUrl+'/'+id).pipe(catchError(this.handleError))
+  getPatientById(id: string): Observable<PatientInfoResponseModel>{
+    return this.http.get<PatientInfoResponseModel>(`${this.getUrl}/${id}`).pipe(catchError(this.handleError))
   }
-  updatePatient(patient: Patient): Observable<any>{
-    return this.http.put(this.getUrl, patient).pipe(catchError(this.handleError))
+  updatePatient(id: string, patient: PatientUpdateRequestModel): Observable<any>{
+    return this.http.put(`${this.getUrl}/update/${id}`, patient).pipe(catchError(this.handleError))
   }
   deletePatient( id: string): Observable<any>{
     return this.http.delete(this.getUrl + '/' + id).pipe(catchError(this.handleError))

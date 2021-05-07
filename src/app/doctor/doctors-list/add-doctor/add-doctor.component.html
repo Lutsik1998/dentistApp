@@ -32,6 +32,9 @@
             <mat-error *ngIf="docForm.get('email').hasError('required')">
                 Email jest wymagany!
             </mat-error>
+            <mat-error *ngIf="docForm.get('email').hasError('email')">
+                Email jest niepoprawny!
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6 col-lg-4">
             <mat-label>Telefon</mat-label>
@@ -42,7 +45,7 @@
         </mat-form-field>
         <mat-form-field class="col-md-6 col-lg-4">
             <mat-label>Pesel</mat-label>
-            <input formControlName="pesel" type="text" matInput>
+            <input formControlName="pesel" type="number" matInput>
             <mat-error *ngIf="docForm.get('pesel').hasError('required')">
                 Pesel jest wymagany!
             </mat-error>
@@ -58,7 +61,7 @@
             <mat-label>Płeć</mat-label>
             <select formControlName="sex" matNativeControl>
                 <option value="MAN">M</option>
-                <option value="WOMAN">K</option>
+                <option value="WOMEN">K</option>
             </select>
             <mat-error *ngIf="docForm.get('sex').hasError('required')">
                 Płeć jest wymagana!

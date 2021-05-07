@@ -11,6 +11,7 @@ import{HttpClientModule} from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SubheaderEditComponent } from './subheader-edit/subheader-edit.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 @NgModule({
@@ -21,9 +22,11 @@ import { SubheaderEditComponent } from './subheader-edit/subheader-edit.componen
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    PipesModule
   ],
   exports: [
+    PipesModule,
     HeaderComponent,
     SpinnerComponent,
     SubheaderEditComponent,

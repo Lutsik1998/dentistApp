@@ -20,7 +20,7 @@
             </ng-container>
             <ng-container matColumnDef="sex">
               <th mat-header-cell *matHeaderCellDef> Płeć </th>
-              <td mat-cell *matCellDef="let element"> {{element.sex}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.sex | gender}} </td>
             </ng-container>
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef> Email </th>

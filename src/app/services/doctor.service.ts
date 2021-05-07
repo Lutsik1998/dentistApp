@@ -16,11 +16,11 @@ export class DoctorService {
   getDoctors(): Observable<DoctorInfoResponseModel[]>{
     return this.http.get<DoctorInfoResponseModel[]>(`${this.getUrl}/all`).pipe(catchError(this.handleError))
   }
-  getDoctorById(id: string): Observable<Doctor>{
-    return this.http.get<any>(this.getUrl+'/'+id).pipe(catchError(this.handleError))
+  getDoctorById(id: string): Observable<DoctorInfoResponseModel>{
+    return this.http.get<DoctorInfoResponseModel>(`${this.getUrl}/${id}`).pipe(catchError(this.handleError))
   }
-  updateDoctor(doctor: Doctor): Observable<any>{
-    return this.http.put(this.getUrl, doctor).pipe(catchError(this.handleError))
+  updateDoctor(id: string, doctor: DoctorAddRequestModel): Observable<any>{
+    return this.http.put(`${this.getUrl}/update/${id}`, doctor).pipe(catchError(this.handleError))
   }
   deleteDoctor( id: string): Observable<any>{
     return this.http.delete(this.getUrl + '/' + id).pipe(catchError(this.handleError))

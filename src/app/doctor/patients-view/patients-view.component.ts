@@ -36,7 +36,6 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
       }
     }));
     this.sub.add(this.patientService.getPatients().subscribe(res => {
-      console.log(res)
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
     }))
