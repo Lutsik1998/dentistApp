@@ -9,21 +9,21 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Szukaj lekarza" #input>
         </mat-form-field>
         <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="cardNumber">
+            <ng-container matColumnDef="licence">
               <th mat-header-cell *matHeaderCellDef> Numer licencji </th>
-              <td class="card-number" mat-cell *matCellDef="let element"> {{element.cardNumber}} </td>
+              <td class="card-number" mat-cell *matCellDef="let element"> {{element.licence}} </td>
             </ng-container>
-            <ng-container matColumnDef="name">
+            <ng-container matColumnDef="firstName">
               <th mat-header-cell *matHeaderCellDef> Imię </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
             </ng-container>
-            <ng-container matColumnDef="surname">
+            <ng-container matColumnDef="lastName">
               <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
-              <td mat-cell *matCellDef="let element"> {{element.surname}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
             </ng-container>
-            <ng-container matColumnDef="gender">
+            <ng-container matColumnDef="sex">
               <th mat-header-cell *matHeaderCellDef> Płeć </th>
-              <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.sex}} </td>
             </ng-container>
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef> Email </th>

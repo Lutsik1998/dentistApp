@@ -1,3 +1,5 @@
+import { Address } from "./user";
+
 export interface OfficeInfoResponseModel {
     id: string,
     name: string,
@@ -5,15 +7,4 @@ export interface OfficeInfoResponseModel {
     phoneNumber: {number: string},
     listDoctorsId: Array<string>,
     nip: number
-}
-
-export interface Address {
-    country: string,
-    region: string,
-    city: string,
-    postalCode: string,
-    street: string,
-    houseNr: string,
-    roomNr: string,
-    information: string,
 }

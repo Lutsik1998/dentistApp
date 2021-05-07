@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../services/auth.service';
-import { User } from '../../interfaces/user'
+import { User } from '../../models/user'
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserRole } from 'src/app/enums/various.enum';
 

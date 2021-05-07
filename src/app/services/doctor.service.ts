@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Doctor} from '../interfaces/doctor'
+import {Doctor, DoctorInfoResponseModel} from '../models/doctor'
 import { HttpClient,HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -7,14 +7,14 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DoctorService {
-  getUrl = 'http://localhost:';
+  getUrl = 'http://localhost:8080/api/doctor';
   constructor(private http: HttpClient) { }
 
   addDoctor( doctor: Doctor): Observable<any>{
     return this.http.post(this.getUrl, JSON.stringify(doctor)).pipe(catchError(this.handleError))
   }
-  getDoctors(): Observable<Doctor[]>{
-    return this.http.get<any>(this.getUrl).pipe(catchError(this.handleError))
+  getDoctors(): Observable<DoctorInfoResponseModel[]>{
+    return this.http.get<DoctorInfoResponseModel[]>(`${this.getUrl}/all`).pipe(catchError(this.handleError))
   }
   getDoctorById(id: string): Observable<Doctor>{
     return this.http.get<any>(this.getUrl+'/'+id).pipe(catchError(this.handleError))
