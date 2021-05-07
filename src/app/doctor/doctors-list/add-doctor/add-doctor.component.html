@@ -1,0 +1,95 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between">
+        <h4 id="subheader">Dodaj lekarza</h4>
+        <button (click)="back()" mat-stroked-button color="accent">Cofnij</button>
+    </div>
+    <h5 id="subheader">Dane osobowe</h5>
+    <form [formGroup]="docForm" class="row form">
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Imię</mat-label>
+            <input formControlName="firstName" type="text" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Drugie imię</mat-label>
+            <input formControlName="secondName" type="text" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Nazwisko</mat-label>
+            <input formControlName="lastName" type="text" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" type="email" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Telefon</mat-label>
+            <input formControlName="phoneNumber" type="number" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Pesel</mat-label>
+            <input formControlName="pesel" type="text" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Data urodzenia</mat-label>
+            <input formControlName="birthDate" type="date" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Płeć</mat-label>
+            <select formControlName="sex" matNativeControl>
+                <option value="MAN">M</option>
+                <option value="WOMAN">K</option>
+            </select>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Specjalizacje</mat-label>
+            <input formControlName="specialization" type="text" matInput>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Numer licencji</mat-label>
+            <input formControlName="licence" type="text" matInput>
+        </mat-form-field>
+        <h5 id="subheader" class="col-12">Adres</h5>
+        <form formGroupName="address">
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Kraj</mat-label>
+                <input formControlName="country" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Region</mat-label>
+                <input formControlName="region" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Miasto</mat-label>
+                <input formControlName="city" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Kod pocztowy</mat-label>
+                <input formControlName="postalCode" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Ulica</mat-label>
+                <input formControlName="street" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Numer domu</mat-label>
+                <input formControlName="houseNr" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-lg-4">
+                <mat-label>Numer mieszkania</mat-label>
+                <input formControlName="roomNr" type="text" matInput>
+            </mat-form-field>
+        </form>
+        <h5 id="subheader">Hasło</h5>
+        <form formGroupName="password" class="w-100">
+            <mat-form-field class="col-md-6">
+                <mat-label>Hasło</mat-label>
+                <input formControlName="pass" type="password" matInput>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+                <mat-label>Potwierdź hasło</mat-label>
+                <input formControlName="confirmPass" type="password" matInput>
+            </mat-form-field>
+        </form>
+    </form>
+    <button (click)="confirm()" mat-raised-button color="primary" class="w-100">Dodaj</button>
+</div>

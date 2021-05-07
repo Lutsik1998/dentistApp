@@ -22,8 +22,14 @@ $DentistApp-theme: mat-light-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-#subheader {
+h4#subheader {
   color: $primary;
   font-size: 2em;
+  font-weight: bolder;
+}
+
+h5#subheader {
+  color: $primary;
+  font-size: 1.5em;
   font-weight: bolder;
 }

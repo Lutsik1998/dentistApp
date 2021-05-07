@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Doctor, DoctorInfoResponseModel} from '../models/doctor'
+import {Doctor, DoctorAddRequestModel, DoctorInfoResponseModel} from '../models/doctor'
 import { HttpClient,HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -10,8 +10,8 @@ export class DoctorService {
   getUrl = 'http://localhost:8080/api/doctor';
   constructor(private http: HttpClient) { }
 
-  addDoctor( doctor: Doctor): Observable<any>{
-    return this.http.post(this.getUrl, JSON.stringify(doctor)).pipe(catchError(this.handleError))
+  addDoctor(doctor: DoctorAddRequestModel): Observable<any>{
+    return this.http.post(`${this.getUrl}/auth/signup`, doctor).pipe(catchError(this.handleError))
   }
   getDoctors(): Observable<DoctorInfoResponseModel[]>{
     return this.http.get<DoctorInfoResponseModel[]>(`${this.getUrl}/all`).pipe(catchError(this.handleError))

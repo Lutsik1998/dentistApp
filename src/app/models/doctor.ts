@@ -21,3 +21,19 @@ export interface DoctorInfoResponseModel {
     licence: string,
     specialization: string[]
 }
+
+export interface DoctorAddRequestModel {
+    email: string,
+    password: string,
+    roles: string[],
+    firstName: string,
+    secondName: string,
+    lastName: string,
+    pesel: number,
+    birthDate: Date,
+    sex: Gender,
+    phoneNumber: {number: string},
+    address: Address,
+    licence: string,
+    specialization: string[]
+}

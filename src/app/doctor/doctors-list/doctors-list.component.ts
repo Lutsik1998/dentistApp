@@ -2,6 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { DoctorService } from 'src/app/services/doctor.service';
@@ -19,7 +20,7 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
   sub: Subscription = new Subscription();
 
-  constructor(private breakpointObserver: BreakpointObserver, private doctorService: DoctorService) { }
+  constructor(private breakpointObserver: BreakpointObserver, private doctorService: DoctorService, private router: Router) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -44,5 +45,9 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
   applyFilter($event) {
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  addDoctor() {
+    this.router.navigate(['/doctor/add-doctor'])
   }
 }
