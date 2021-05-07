@@ -1,33 +1,54 @@
 <ng-container *ngIf="isLoaded">
-    <form [formGroup]="infoForm" class="grid mt-lg-3">
-        <div>Nazwa:</div>
-        <mat-form-field>
-            <input matInput formControlName="name">
+    <form [formGroup]="infoForm" class="row">
+        <mat-form-field class="col-12">
+            <mat-label>Nazwa</mat-label>
+            <input formControlName="name" type="text" matInput>
+            <mat-error *ngIf="infoForm.get('name').hasError('required')">
+                Nazwa jest wymagana!
+            </mat-error>
         </mat-form-field>
-        <div>Telefon:</div>
-        <mat-form-field>
-            <input type="text" matInput formControlName="phone">
+        <mat-form-field class="col-12">
+            <mat-label>Telefon</mat-label>
+            <input formControlName="phone" type="text" matInput>
+            <mat-error *ngIf="infoForm.get('phone').hasError('required')">
+                Telefon jest wymagany!
+            </mat-error>
         </mat-form-field>
-        <div>NIP:</div>
-        <mat-form-field>
-            <input matInput formControlName="nip">
+        <mat-form-field class="col-12">
+            <mat-label>NIP</mat-label>
+            <input formControlName="nip" type="text" matInput>
+            <mat-error *ngIf="infoForm.get('nip').hasError('required')">
+                NIP jest wymagany!
+            </mat-error>
         </mat-form-field>
-        <form class="address-form" [formGroup]="infoForm.get('address')">
-            <div>Ulica:</div>
-            <mat-form-field>
-                <input matInput formControlName="street">
+        <form formGroupName="address">
+            <mat-form-field class="col-12">
+                <mat-label>Miasto</mat-label>
+                <input formControlName="city" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('city').hasError('required')">
+                    Miasto jest wymagane!
+                </mat-error>
             </mat-form-field>
-            <div>Numer budynku:</div>
-            <mat-form-field>
-                <input matInput formControlName="houseNr">
+            <mat-form-field class="col-12">
+                <mat-label>Kod pocztowy</mat-label>
+                <input formControlName="postalCode" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('postalCode').hasError('required')">
+                    Kod pocztowy jest wymagany!
+                </mat-error>
             </mat-form-field>
-            <div>Kod pocztowy:</div>
-            <mat-form-field>
-                <input matInput formControlName="postalCode">
+            <mat-form-field class="col-12">
+                <mat-label>Ulica</mat-label>
+                <input formControlName="street" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('street').hasError('required')">
+                    Ulica jest wymagana!
+                </mat-error>
             </mat-form-field>
-            <div>Miasto:</div>
-            <mat-form-field>
-                <input matInput formControlName="city">
+            <mat-form-field class="col-12">
+                <mat-label>Numer domu</mat-label>
+                <input formControlName="houseNr" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('houseNr').hasError('required')">
+                    Numer domu jest wymagany!
+                </mat-error>
             </mat-form-field>
         </form>
     </form>

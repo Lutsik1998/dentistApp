@@ -11,11 +11,10 @@ import{HttpClientModule} from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SubheaderEditComponent } from './subheader-edit/subheader-edit.component';
-import { DisplayValidationComponent } from './display-validation/display-validation.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, DisplayValidationComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -28,7 +27,6 @@ import { DisplayValidationComponent } from './display-validation/display-validat
     HeaderComponent,
     SpinnerComponent,
     SubheaderEditComponent,
-    DisplayValidationComponent,
     ReactiveFormsModule,
     AngularMaterialModule
   ]
