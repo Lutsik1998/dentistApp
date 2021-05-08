@@ -50,4 +50,8 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
   addDoctor() {
     this.router.navigate(['/doctor/add-doctor'])
   }
+
+  openDetails(id: string) {
+    console.log(id)
+  }
 }

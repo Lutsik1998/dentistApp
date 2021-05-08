@@ -50,4 +50,8 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   addPatient() {
     this.router.navigate(['doctor/add-patient']);
   }
+
+  openDetails(id: string) {
+    this.router.navigate([`doctor/patient-details/${id}`])
+  }
 }

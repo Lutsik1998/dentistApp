@@ -11,10 +11,11 @@ import { OfficeInfoComponent } from './office-view-doctor/office-info/office-inf
 import { DoctorsListComponent } from './doctors-list/doctors-list.component';
 import { AddDoctorComponent } from './doctors-list/add-doctor/add-doctor.component';
 import { AddPatientComponent } from './patients-view/add-patient/add-patient.component';
+import { PatientDetailsComponent } from './patients-view/patient-details/patient-details.component';
 
 
 @NgModule({
-  declarations: [DoctorComponent, PatientsViewComponent, OfficeViewDoctorComponent, AccountViewDoctorComponent, OfficeInfoComponent, DoctorsListComponent, AddDoctorComponent, AddPatientComponent],
+  declarations: [DoctorComponent, PatientsViewComponent, OfficeViewDoctorComponent, AccountViewDoctorComponent, OfficeInfoComponent, DoctorsListComponent, AddDoctorComponent, AddPatientComponent, PatientDetailsComponent],
   imports: [
     CommonModule,
     DoctorRoutingModule,

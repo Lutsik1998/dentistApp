@@ -11,7 +11,7 @@
         <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="licence">
               <th mat-header-cell *matHeaderCellDef> Numer licencji </th>
-              <td class="card-number" mat-cell *matCellDef="let element"> {{element.licence}} </td>
+              <td class="card-number" mat-cell *matCellDef="let element" (click)="openDetails(element.id)"> {{element.licence}} </td>
             </ng-container>
             <ng-container matColumnDef="firstName">
               <th mat-header-cell *matHeaderCellDef> Imię </th>

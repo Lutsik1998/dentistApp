@@ -6,6 +6,7 @@ import { AddDoctorComponent } from './doctors-list/add-doctor/add-doctor.compone
 import { DoctorsListComponent } from './doctors-list/doctors-list.component';
 import { OfficeViewDoctorComponent } from './office-view-doctor/office-view-doctor.component';
 import { AddPatientComponent } from './patients-view/add-patient/add-patient.component';
+import { PatientDetailsComponent } from './patients-view/patient-details/patient-details.component';
 import { PatientsViewComponent } from './patients-view/patients-view.component';
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
     {path: 'account', component: AccountViewDoctorComponent},
     {path: 'doctors', component: DoctorsListComponent},
     {path: 'add-doctor', component: AddDoctorComponent},
-    {path: 'add-patient', component: AddPatientComponent}
+    {path: 'add-patient', component: AddPatientComponent},
+    {path: 'patient-details/:id', component: PatientDetailsComponent},
   ]}
 ];
 
