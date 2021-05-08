@@ -15,6 +15,9 @@ export class PatientService {
   addPatient( patient: Patient): Observable<any>{
     return this.http.post(this.getUrl, JSON.stringify(patient)).pipe(catchError(this.handleError))
   }
+  signUpPatient(patient: PatientUpdateRequestModel): Observable<any> {
+    return this.http.post(`${this.getUrl}/auth/signup`, patient).pipe(catchError(this.handleError))
+  }
   getPatients(): Observable<PatientInfoResponseModel[]>{
     return this.http.get<PatientInfoResponseModel[]>(`${this.getUrl}/all`).pipe(catchError(this.handleError))
   }

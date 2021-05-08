@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between">
-        <h4 id="subheader">Dodaj lekarza</h4>
+        <h4 id="subheader">Dodaj pacjenta</h4>
         <button (click)="back()" mat-stroked-button color="accent">Cofnij</button>
     </div>
     <h5 id="subheader" class="mt-2">Dane osobowe</h5>
@@ -68,17 +68,10 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6 col-lg-4">
-            <mat-label>Specjalizacja</mat-label>
-            <input formControlName="specialization" type="text" matInput>
-            <mat-error *ngIf="docForm.get('specialization').hasError('required')">
-                Specjalizacja jest wymagana!
-            </mat-error>
-        </mat-form-field>
-        <mat-form-field class="col-md-6 col-lg-4">
-            <mat-label>Numer licencji</mat-label>
-            <input formControlName="licence" type="text" matInput>
-            <mat-error *ngIf="docForm.get('licence').hasError('required')">
-                Numer licencji jest wymagany!
+            <mat-label>Numer karty</mat-label>
+            <input formControlName="cardNumber" type="number" matInput>
+            <mat-error *ngIf="docForm.get('cardNumber').hasError('required')">
+                Numer karty jest wymagany!
             </mat-error>
         </mat-form-field>
         <h5 id="subheader" class="col-12 mt-2">Adres</h5>

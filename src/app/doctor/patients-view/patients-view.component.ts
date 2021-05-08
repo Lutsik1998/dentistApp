@@ -2,6 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PatientInfoResponseModel } from 'src/app/models/patient';
 import { PatientService } from 'src/app/services/patient.service';
@@ -19,7 +20,7 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<PatientInfoResponseModel>;
   sub: Subscription = new Subscription();
 
-  constructor(private breakpointObserver: BreakpointObserver, private patientService: PatientService) { }
+  constructor(private breakpointObserver: BreakpointObserver, private patientService: PatientService, private router: Router) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -44,5 +45,9 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   applyFilter($event) {
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  addPatient() {
+    this.router.navigate(['doctor/add-patient']);
   }
 }
