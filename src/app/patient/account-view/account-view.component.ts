@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PatientUpdateRequestModel } from 'src/app/models/patient';
@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './account-view.component.html',
   styleUrls: ['./account-view.component.scss']
 })
-export class AccountViewComponent implements OnInit {
+export class AccountViewComponent implements OnInit, OnDestroy {
   patientForm = this.fb.group({
     email: [''],
     password: [''],
