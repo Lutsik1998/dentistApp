@@ -101,11 +101,10 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      phoneNumber:this.fb.group({
-        number: new FormControl('', Validators.compose([
+      phoneNumber:new FormControl('', Validators.compose([
         Validators.pattern(''),
        ])),
-      }),
+
       cardNumber: new FormControl('', Validators.compose([
         Validators.pattern(''),
        ])),
@@ -150,6 +149,8 @@ export class RegistrationComponent implements OnInit {
   onSubmitAccountDetails(value){
     this.user = value;
     this.user.password= value.matching_passwords.password;
+    this.user.phoneNumber = ['+24312312124'];
+    this.user.roles = [];
     var role = this.register(this.user);
     console.log(this.user);
   }

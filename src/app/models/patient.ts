@@ -5,7 +5,7 @@ export interface Patient {
     id: string;
     email: string;
     password: string;
-    role: string;
+    roles: [];
     firstName: string;
     secondName: string;
     lastName: string;
@@ -13,7 +13,7 @@ export interface Patient {
     birthDate : Date;
     sex: string;
     addres: object;
-    phoneNumber: object;
+    phoneNumber: [string],
     cardNumber: number;
 }
 

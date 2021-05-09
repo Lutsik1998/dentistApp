@@ -61,17 +61,17 @@
                             </select>
                         </mat-form-field>
                 
-                        <form formGroupName="phoneNumber">
+              
                             <mat-form-field class="col-12 mb-2">
                             <mat-label>Telefon</mat-label>
-                            <input type="number" matInput formControlName="number" placeholder="+48123456789">
+                            <input type="text" matInput formControlName="phoneNumber" placeholder="+48123456789">
                             <mat-error *ngFor="let validation of account_validation_messages.phoneNumber">
                                 <mat-error class="error-message"
-                                    *ngIf="accountDetailsForm.get('phoneNumber').get('number').hasError(validation.type) && (accountDetailsForm.get('phoneNumber').get('number').dirty || accountDetailsForm.get('phoneNumber').touched)">
+                                    *ngIf="accountDetailsForm.get('phoneNumber').hasError(validation.type) && (accountDetailsForm.get('phoneNumber').dirty || accountDetailsForm.get('phoneNumber').touched)">
                                     {{validation.message}}</mat-error>
                             </mat-error>
                         </mat-form-field>
-                        </form>
+                
                        
                        
                         <mat-form-field class="col-12 mb-2">
