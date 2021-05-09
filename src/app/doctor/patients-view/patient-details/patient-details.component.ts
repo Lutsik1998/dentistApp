@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PatientUpdateRequestModel } from 'src/app/models/patient';
 import { AuthService } from 'src/app/services/auth.service';
@@ -7,11 +8,11 @@ import { PatientService } from 'src/app/services/patient.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
-  selector: 'app-account-view',
-  templateUrl: './account-view.component.html',
-  styleUrls: ['./account-view.component.scss']
+  selector: 'app-patient-details',
+  templateUrl: './patient-details.component.html',
+  styleUrls: ['./patient-details.component.scss']
 })
-export class AccountViewComponent implements OnInit, OnDestroy {
+export class PatientDetailsComponent implements OnInit, OnDestroy {
   patientForm = this.fb.group({
     email: [''],
     password: [''],
@@ -30,17 +31,21 @@ export class AccountViewComponent implements OnInit, OnDestroy {
       street: ['', [Validators.required]],
       houseNr: ['', [Validators.required]],
       roomNr: ['', [Validators.required]],
-      information: ['', [Validators.required]],
+      information: [''],
     }),
     phoneNumber: ['', [Validators.required]],
     cardNumber: ['', [Validators.required]],
   })
 
+  get name() {
+    return `${this.patientForm.get('firstName').value} ${this.patientForm.get('lastName').value}`
+  }
+
   isEditing: boolean = false;
   sub: Subscription = new Subscription();
   patientId: string;
-  isLoading: boolean = true;
-  constructor(private fb: FormBuilder, private patientService: PatientService, private auth: AuthService, private snackBar: SnackbarService) { }
+  isLoading: boolean;
+  constructor(private fb: FormBuilder, private patientService: PatientService, private router: Router, private route: ActivatedRoute, private snackBar: SnackbarService) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -53,15 +58,13 @@ export class AccountViewComponent implements OnInit, OnDestroy {
   getData() {
     this.isLoading = true;
     this.patientForm.disable();
-    this.sub.add(this.auth.currentUser.subscribe(res => {
-      this.patientId = res.id.substring(1, res.id.length - 1);
-      this.sub.add(this.patientService.getPatientById(this.patientId).subscribe(res => {
-        this.patientForm.patchValue({
-          ...res,
-          phoneNumber: res.phoneNumber[0].number,
-        })
-        this.isLoading = false;
-      }))
+    this.patientId = this.route.snapshot.params.id;
+    this.sub.add(this.patientService.getPatientById(this.patientId).subscribe(res => {
+      this.patientForm.patchValue({
+        ...res,
+        phoneNumber: res.phoneNumber[0].number,
+      })
+      this.isLoading = false;
     }))
   }
 
@@ -97,5 +100,9 @@ export class AccountViewComponent implements OnInit, OnDestroy {
   cancel($event) {
     this.getData();
     this.isEditing = false;
+  }
+
+  back() {
+    this.router.navigate(['doctor/patients'])
   }
 }

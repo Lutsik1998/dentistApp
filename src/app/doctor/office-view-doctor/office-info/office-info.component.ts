@@ -71,7 +71,6 @@ export class OfficeInfoComponent implements OnInit, OnDestroy {
       }
     }
     this.isLoaded = false;
-    console.log(data)
     this.sub.add(this.officeService.patchOffice(data).subscribe(res => {
       this.getData.emit();
       this.isEditing = false;

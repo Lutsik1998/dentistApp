@@ -1,5 +1,8 @@
-<div *ngIf="!isLoading" class="container mt-5">
-    <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Informacje i kontakt"></app-subheader-edit>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between">
+        <h4 id="subheader">Dodaj lekarza</h4>
+        <button (click)="back()" mat-stroked-button color="accent">Cofnij</button>
+    </div>
     <h5 id="subheader" class="mt-2">Dane osobowe</h5>
     <form [formGroup]="docForm" class="row form">
         <mat-form-field class="col-md-6 col-lg-4">
@@ -24,10 +27,27 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" type="email" matInput>
+            <mat-error *ngIf="docForm.get('email').hasError('required')">
+                Email jest wymagany!
+            </mat-error>
+            <mat-error *ngIf="docForm.get('email').hasError('email')">
+                Email jest niepoprawny!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
             <mat-label>Telefon</mat-label>
             <input formControlName="phoneNumber" type="number" matInput>
             <mat-error *ngIf="docForm.get('phoneNumber').hasError('required')">
                 Telefon jest wymagany!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-4">
+            <mat-label>Pesel</mat-label>
+            <input formControlName="pesel" type="number" matInput>
+            <mat-error *ngIf="docForm.get('pesel').hasError('required')">
+                Pesel jest wymagany!
             </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6 col-lg-4">
@@ -113,6 +133,29 @@
                 </mat-error>
             </mat-form-field>
         </form>
+        <h5 id="subheader" class="mt-2">Hasło</h5>
+        <form formGroupName="password" class="w-100">
+            <mat-form-field class="col-md-6">
+                <mat-label>Hasło</mat-label>
+                <input formControlName="pass" type="password" matInput [errorStateMatcher]="passwordMatcher">
+                <mat-error *ngIf="docForm.get('password').get('pass').hasError('required')">
+                    Hasło jest wymagane!
+                </mat-error>
+                <mat-error *ngIf="docForm.get('password').hasError('stringMismatch') && !docForm.get('password').get('pass').hasError('required')">
+                    Hasła muszą być identyczne!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+                <mat-label>Potwierdź hasło</mat-label>
+                <input formControlName="confirmPass" type="password" matInput [errorStateMatcher]="passwordMatcher">
+                <mat-error *ngIf="docForm.get('password').get('confirmPass').hasError('required')">
+                    Potwierdź hasło jest wymagane!
+                </mat-error>
+                <mat-error *ngIf="docForm.get('password').hasError('stringMismatch') && !docForm.get('password').get('confirmPass').hasError('required')">
+                    Hasła muszą być identyczne!
+                </mat-error>
+            </mat-form-field>
+        </form>
     </form>
+    <button (click)="confirm()" mat-raised-button color="primary" class="w-100 mt-2">Dodaj</button>
 </div>
-<app-spinner *ngIf="isLoading"></app-spinner>

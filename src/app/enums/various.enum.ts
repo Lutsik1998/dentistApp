@@ -3,3 +3,8 @@ export enum UserRole {
     patient = "[ROLE_PATIENT]",
     admin = "[ROLE_ADMIN]"
 }
+
+export enum Gender {
+    man = "MAN",
+    woman = "WOMEN",
+}

@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { DoctorInfoResponseModel } from 'src/app/models/doctor';
+import { DoctorService } from 'src/app/services/doctor.service';
 
 @Component({
   selector: 'app-doctor-view',
@@ -6,10 +12,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./doctor-view.component.scss']
 })
 export class DoctorViewComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  tableColumns: string[] = [];
+  displayedColumns: string[] = ['licence', 'firstName', 'lastName', 'sex', 'email'];
+  displayedColumnsMobile: string[] = ['licence', 'firstName', 'lastName'];
+  dataSource: MatTableDataSource<DoctorInfoResponseModel>;
+  sub: Subscription = new Subscription();
 
-  constructor() { }
+  constructor(private breakpointObserver: BreakpointObserver, private doctorService: DoctorService) { }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
+  ngOnInit(): void {
+    this.sub.add(this.breakpointObserver.observe([
+      '(max-width: 692px)'
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.tableColumns = this.displayedColumnsMobile;
+      } else {
+        this.tableColumns = this.displayedColumns;
+      }
+    }));
+    this.sub.add(this.doctorService.getDoctors().subscribe(res => {
+      this.dataSource = new MatTableDataSource(res)
+      this.dataSource.paginator = this.paginator;
+    }))
+  }
+
+  applyFilter($event) {
+    const filterValue = ($event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

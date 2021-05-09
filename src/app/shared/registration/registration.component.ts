@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {ParentErrorStateMatcher, PasswordValidator} from '../validators';
-import {Patient} from '../../interfaces/patient'
+import {Patient} from '../../models/patient'
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 
