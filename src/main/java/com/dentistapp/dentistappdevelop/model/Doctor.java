@@ -12,6 +12,9 @@ public class Doctor extends User {
     private String licence;
     private List<String> specialization;
     // TODO:
-    //  private String officeId;
+//      private String officeId;
 
+    public void toDTO(){
+        super.toDTO();
+    }
 }
