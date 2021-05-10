@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UserController {
 
 //    @PreAuthorize("has('ROLE_DOCTOR')")
     @GetMapping(value = "/{email}/roles")
-    public ResponseEntity<List<Roles>> fetUserRoles(@PathVariable String email) {
+    public ResponseEntity<List<Roles>> fetUserRoles(@PathVariable @Email String email) {
         List<Roles> roles = new ArrayList<>();
         if (patientService.patientRepository().existsByEmail(email)){
             roles.add(Roles.ROLE_PATIENT);
