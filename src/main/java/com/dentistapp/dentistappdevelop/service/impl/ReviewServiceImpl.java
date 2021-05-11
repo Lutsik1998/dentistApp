@@ -2,6 +2,7 @@ package com.dentistapp.dentistappdevelop.service.impl;
 
 import com.dentistapp.dentistappdevelop.model.Review;
 import com.dentistapp.dentistappdevelop.model.Visit;
+import com.dentistapp.dentistappdevelop.service.DoctorService;
 import com.dentistapp.dentistappdevelop.service.ReviewService;
 import com.dentistapp.dentistappdevelop.service.VisitService;
 import com.mongodb.client.result.UpdateResult;
@@ -16,35 +17,36 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
     // TODO:
-    // [ ] Update rating in doctor (save method)
-    // [ ] Update rating in doctor (update method)
+    // [X] Update rating in doctor (save method)
+    // [X] Update rating in doctor (update method)
     // [ ] Update rating in doctor (delete method)
     @Autowired
     MongoTemplate mongoTemplate;
     @Autowired
     VisitService visitService;
+    @Autowired
+    DoctorService doctorService;
 
     @Override
     public Review save(String visitId, Review review) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(visitId));
         query.fields().include("review");
+        query.fields().include("doctorId");
         Update update = new Update();
         update.set("review", review);
-        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Visit.class, "visit");
-        if (!updateResult.wasAcknowledged()) {
+        Visit visit = mongoTemplate.findAndModify(query, update, Visit.class, "visit");
+        if (visit == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return review;
+        setRatingToDoctorId(visit.getDoctorId());
+        return visit.getReview();
     }
 
     @Override
@@ -82,12 +84,35 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteByVisitId(String visitId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(visitId));
-        query.fields().include("review");
+        query.fields().include("doctorId");
         Update update = new Update();
         update.unset("review");
-        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Visit.class, "visit");
-        if (!updateResult.wasAcknowledged()) {
+        Visit visit = mongoTemplate.findAndModify(query, update, Visit.class, "visit");
+        if (visit == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        setRatingToDoctorId(visit.getDoctorId());
+    }
+
+    private void setRatingToDoctorId(String doctorId) {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                doctorService.updateRatingById(doctorId, calculateRatingByDoctorId(doctorId));
+            }
+        };
+        thread.start();
+    }
+
+    private float calculateRatingByDoctorId(String doctorId) {
+        Aggregation aggregation = Aggregation.newAggregation(
+                Aggregation.match(Criteria.where("doctorId").is(doctorId)),
+//                Aggregation.project()
+//                        .and("review.rating").as("rating"),
+                Aggregation.group()
+                        .avg("review.rating").as("avgRating")
+        );
+        List<Map> result = mongoTemplate.aggregate(aggregation, "visit", Map.class).getMappedResults();
+        return ((Double) result.get(0).get("avgRating")).floatValue();
     }
 }

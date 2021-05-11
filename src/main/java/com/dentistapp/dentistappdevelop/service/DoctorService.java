@@ -14,4 +14,5 @@ public interface DoctorService{
     public Doctor save(Doctor doctor);
     public boolean existsById(String id);
     public Doctor findById(String id);
+    public boolean updateRatingById(String id, float rating);
 }
