@@ -25,7 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
     // TODO:
     // [X] Update rating in doctor (save method)
     // [X] Update rating in doctor (update method)
-    // [ ] Update rating in doctor (delete method)
+    // [X] Update rating in doctor (delete method)
     @Autowired
     MongoTemplate mongoTemplate;
     @Autowired
