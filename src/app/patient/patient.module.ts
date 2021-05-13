@@ -11,14 +11,16 @@ import { ReceiptViewComponent } from './receipt-view/receipt-view.component';
 import { AccountViewComponent } from './account-view/account-view.component';
 import { OfficeInfoComponent } from './office-view/office-info/office-info.component';
 import { TeethMapComponent } from './health-view/teeth-map/teeth-map.component';
-
+import { AngularMaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [PatientComponent, OfficeViewComponent, DoctorViewComponent, HealthViewComponent, HistoryViewComponent, ReceiptViewComponent, AccountViewComponent, OfficeInfoComponent, TeethMapComponent],
   imports: [
+    AngularMaterialModule,
     CommonModule,
     PatientRoutingModule,
     SharedModule
   ]
+
 })
 export class PatientModule { }

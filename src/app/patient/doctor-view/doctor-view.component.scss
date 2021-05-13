@@ -18,3 +18,17 @@
 .no-patient {
     color: $warn;
 }
+
+
+  #time{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+  }
+  
+  .example-large-box {
+    height: 500px;
+    width: 500px;
+  }

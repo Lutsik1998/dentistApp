@@ -22,9 +22,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorIntlCro } from './shared/custom-paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MatTabsModule } from '@angular/material/tabs';
 @NgModule({
    imports: [
+      MatTabsModule,
       CommonModule,
       MatButtonModule,
       MatToolbarModule,
@@ -48,6 +49,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       MatSnackBarModule
       ],
    exports: [
+      MatTabsModule,
       MatButtonModule,
       MatToolbarModule,
       MatIconModule,
