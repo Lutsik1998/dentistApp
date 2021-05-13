@@ -9,26 +9,24 @@
         </button>
       </div>
       <div class="modal-body">
-        <mat-tab-group mat-align-tabs="center">
-
-          <mat-tab label="Date">
-            <mat-calendar [dateClass]="dateClass()" [selected]="selectedDate" (selectedChange)="onSelect($event)">
+        <mat-tab-group mat-align-tabs="center" #tabGroup>
+          <mat-tab label="Date" #date>
+            <mat-calendar [dateClass]="dateClass()"  [selected]="selectedDate" (selectedChange)="onSelect($event,this.tabGroup)">
             </mat-calendar>
 
           </mat-tab>
-          <mat-tab label="Time" [disabled]>
+          <mat-tab label="Time" [disabled]="true">
             <mat-selection-list #time [multiple]="false"
-              (selectionChange)="onGroupsChange(time.selectedOptions.selected)">
+              (selectionChange)="onGroupsChange(time.selectedOptions.selected,this.tabGroup)">
               <mat-list-option id="time" *ngFor="let time of typesOfTime" [value]="time">
                 {{time}}
               </mat-list-option>
             </mat-selection-list>
           </mat-tab>
-          <mat-tab label="Info" [disabled]>
-            <mat-form-field class="example-full-width">
+          <mat-tab label="Info"  [disabled]="true">
+        
               <mat-label>Leave a information</mat-label>
-              <textarea matInput #text  placeholder="Ex. It makes me feel..."></textarea>
-            </mat-form-field>
+              <textarea matInput rows="4" cols="100" id="text_info" #text  placeholder="Ex. It makes me feel..."></textarea>
             <button type="button" class="btn btn-outline-dark" (click)="onchange(text.value)">Confirm</button>
           </mat-tab>
         </mat-tab-group>
@@ -36,7 +34,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+        <button type="button" id="save" disabled="true" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
       </div>
     </ng-template>
     <!--modal close-->
@@ -60,23 +58,25 @@
       </ng-container>
       <ng-container matColumnDef="sex">
         <th mat-header-cell *matHeaderCellDef> Płeć </th>
-        <td mat-cell *matCellDef="let element"> {{element.sex | gender}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.sex | gender}}
+           </td>
       </ng-container>
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
         <td mat-cell *matCellDef="let element"> {{element.email}} 
-          <button type="button" (click)="open(content,element.id)" class="btn btn-green mr-2" data-toggle="modal"
+          <button type="button" id="rez"(click)="open(content,element.id)" class="btn mr-1" data-toggle="modal"
           data-target="#exampleModal" data-backdrop="static" data-keyboard="false">rezerwuj
           </button>
-        </td>
+      </td>
       </ng-container>
+
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell no-patient" colspan="4">Brak lekarza: "{{input.value}}"</td>
       </tr>
       <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
-
     </table>
+
     <mat-paginator class="mat-elevation-z8" #paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons>
     </mat-paginator>
   </div>

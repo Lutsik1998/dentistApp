@@ -1,13 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import {
-  MatCalendar,
   MatCalendarCellCssClasses,
 } from '@angular/material/datepicker';
 import { MatListOption } from '@angular/material/list';
@@ -15,10 +14,10 @@ import { Visit } from 'src/app/models/visit';
 import { OfficeService } from 'src/app/services/office.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
-import { OfficeInfoResponseModel } from 'src/app/models/office.model';
+
 import { PatientService } from 'src/app/services/patient.service';
-import { Patient } from 'src/app/models/patient';
 import { VisitService } from 'src/app/services/visit.service';
+import {  MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-doctor-view',
@@ -173,15 +172,22 @@ export class DoctorViewComponent implements OnInit {
   ];
   selectedDate = new Date();
   selectedTime: string;
-  onSelect(event) {
+
+  onSelect(event,tabGroup:MatTabGroup) {
     this.selectedDate = event;
+    tabGroup._tabs.toArray()[1].disabled = false;
+    tabGroup.selectedIndex = 1;
   }
-  onGroupsChange(options: MatListOption[]) {
+  onGroupsChange(options: MatListOption[],tabGroup:MatTabGroup) {
     // map these MatListOptions to their values
+    tabGroup._tabs.toArray()[2].disabled = false;
+    tabGroup.selectedIndex = 2;
     options.map((o) => (this.selectedTime = o.value));
   }
 
   onchange(text) {
+    var element =  <HTMLInputElement> document.getElementById("save");
+    element.disabled = false;
     console.log(text);
     this.visitForm.information = text;
   }
