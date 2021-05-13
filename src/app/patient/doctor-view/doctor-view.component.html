@@ -64,6 +64,11 @@
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
         <td mat-cell *matCellDef="let element"> {{element.email}} 
+      </td>
+      </ng-container>
+      <ng-container matColumnDef="visit">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element"> 
           <button type="button" id="rez"(click)="open(content,element.id)" class="btn mr-1" data-toggle="modal"
           data-target="#exampleModal" data-backdrop="static" data-keyboard="false">rezerwuj
           </button>

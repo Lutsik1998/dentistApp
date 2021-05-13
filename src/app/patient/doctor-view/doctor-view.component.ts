@@ -33,6 +33,7 @@ export class DoctorViewComponent implements OnInit {
     'lastName',
     'sex',
     'email',
+    'visit',
   ];
   displayedColumnsMobile: string[] = ['licence', 'firstName', 'lastName'];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
