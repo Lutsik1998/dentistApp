@@ -30,7 +30,7 @@ export class AuthService {
   
     register(userRegister: Patient){
       const headers1 = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json').set('Authorization', 'my_token');
-      return this.http.post('http://localhost:8080/api/auth/patient/signup', JSON.stringify(userRegister), {headers: headers1}).pipe(catchError(this.handleError));
+      return this.http.post('http://localhost:8080/api/patient/auth/signup', JSON.stringify(userRegister), {headers: headers1}).pipe(catchError(this.handleError));
     }
     
     login(userLogin: any){
