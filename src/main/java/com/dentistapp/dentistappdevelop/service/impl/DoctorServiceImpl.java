@@ -2,9 +2,15 @@ package com.dentistapp.dentistappdevelop.service.impl;
 
 import com.dentistapp.dentistappdevelop.model.Doctor;
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Visit;
 import com.dentistapp.dentistappdevelop.repository.DoctorRepository;
 import com.dentistapp.dentistappdevelop.service.DoctorService;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +25,8 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+    @Autowired
+    private MongoTemplate mongoTemplate;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -87,6 +95,20 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = optionalDoctor.get();
         doctor.toDTO();
         return doctor;
+    }
+
+    @Override
+    public boolean updateRatingById(String id, float rating) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        query.fields().include("rating");
+        Update update = new Update();
+        update.set("rating", rating);
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Visit.class, "doctor");
+        if (!updateResult.wasAcknowledged()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        return true;
     }
 
     @Override

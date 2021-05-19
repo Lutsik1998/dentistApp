@@ -25,7 +25,5 @@ public class Visit extends BaseEntity {
     private String officeId;
     @NotNull
     private String patientId;
-
-    public Visit() {
-    }
+    private Review review;
 }
