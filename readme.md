@@ -1,3 +1,5 @@
+# This branch is a merge of the last stable backend and frontend branches
+
 ### Documentation:
 - Backend - swagger_v2: http://127.0.0.1:8080/swagger-ui/index.html
 
