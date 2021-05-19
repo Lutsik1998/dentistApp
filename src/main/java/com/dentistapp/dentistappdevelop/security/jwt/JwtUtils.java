@@ -2,16 +2,27 @@ package com.dentistapp.dentistappdevelop.security.jwt;
 
 import com.dentistapp.dentistappdevelop.security.redis.config.RedisUtil;
 import com.dentistapp.dentistappdevelop.service.impl.UserDetailsImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import io.jsonwebtoken.*;
+import net.minidev.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.mapping.Language;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -42,6 +53,22 @@ public class JwtUtils {
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public List<String> getUserIdFromJwtToken(String token) {
+        String data = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getId();
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<String>>(){}.getType();
+        List<String> idList = gson.fromJson(data, type );
+        return idList;
+    }
+
+    public List<String> getRoles(Authentication authentication) {
+        String data = authentication.getAuthorities().toString();
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<String>>(){}.getType();
+        List<String> rolesList = gson.fromJson(data, type );
+        return rolesList;
     }
 
     public boolean validateJwtToken(String authToken) {
