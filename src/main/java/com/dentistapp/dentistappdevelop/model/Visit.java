@@ -6,16 +6,17 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 public class Visit extends BaseEntity {
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd-HH-mm")
-    @Schema(pattern = "yyyy-MM-dd-HH-mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Schema(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateTimeStart;
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd-HH-mm")
-    @Schema(pattern = "yyyy-MM-dd-HH-mm")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @Schema(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dateTimeEnd;
     @NotNull
     private String information;
