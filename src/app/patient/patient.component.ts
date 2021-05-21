@@ -12,7 +12,7 @@ export class PatientComponent implements OnInit {
     {path: 'office', text: 'Gabinet'},
     {path: 'doctor', text: 'Lekarz'},
     {path: 'health', text: 'Zęby'},
-    {path: 'history', text: 'Historia zabiegów'},
+    {path: 'history', text: 'Zabiegi'},
     {path: 'receipt', text: 'Recepty'},
     {path: 'account', text: 'Konto'},
   ]
