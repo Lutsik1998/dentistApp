@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class VisitServiceImpl implements VisitService {
+    ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
     @Autowired
     VisitRepository visitRepository;
     @Autowired
@@ -45,6 +46,10 @@ public class VisitServiceImpl implements VisitService {
         }
         if (!patientService.existsById(visit.getPatientId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + visit.getPatientId() + "\"");
+        }
+        if (visit.getDateTimeStart().getHour() < 8 || visit.getDateTimeEnd().getHour() >= 20
+                || visit.getDateTimeEnd().toEpochSecond(zoneOffset) - visit.getDateTimeStart().toEpochSecond(zoneOffset) < 60){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong Time");
         }
         if (this.existsInIntervalByDateTimeStartAndDateTimeEndAndDoctorId(visit.getDateTimeStart(), visit.getDateTimeEnd(), visit.getDoctorId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This time is already taken");
@@ -103,7 +108,6 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public List<LocalDate> findFreeDatesByDateTimeStartAndDateTimeEndAndDoctorIdTaskDurationSortedByDateStart(LocalDate dateStart, LocalDate dateEnd, long taskDuration, String doctorId) {
         taskDuration = taskDuration * 60;
-        ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now());
         long timeDayStart = dateStart.toEpochSecond(LocalTime.of(8, 0),zoneOffset ); // change time start
         long timeDayEnd = dateStart.toEpochSecond(LocalTime.of(20, 0), zoneOffset); // change time start
         long currentTimeEnd = dateStart.toEpochSecond(LocalTime.of(8, 0), zoneOffset);
@@ -116,6 +120,8 @@ public class VisitServiceImpl implements VisitService {
         for (Visit visit : visits) {
             while (visit.getDateTimeStart().toEpochSecond(zoneOffset) > timeDayEnd) {
                 if (currentTimeEnd + taskDuration < timeDayEnd) {
+                    System.out.println(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
+            System.out.println("if  w");
                     dateList.add(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
                 }
                 timeDayStart += 86400;
@@ -127,12 +133,18 @@ public class VisitServiceImpl implements VisitService {
                 continue;
             }
             if (currentTimeEnd + taskDuration < visit.getDateTimeStart().toEpochSecond(zoneOffset)) {
+            System.out.println("if");
+                    System.out.println(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
                 dateList.add(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
                 currentTimeEnd = visit.getDateTimeEnd().toEpochSecond(zoneOffset);
             }
         }
         while (dateEnd.toEpochSecond(LocalTime.of(20, 0), OffsetTime.now().getOffset()) > timeDayEnd) {
-            dateList.add(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
+            if (currentTimeEnd + taskDuration < timeDayEnd) {
+                System.out.println("w");
+                System.out.println(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
+                dateList.add(LocalDateTime.ofInstant(Instant.ofEpochSecond(currentTimeEnd), ZoneId.systemDefault()).toLocalDate());
+            }
             timeDayStart += 86400;
             timeDayEnd += 86400;
             currentTimeEnd = timeDayStart;
