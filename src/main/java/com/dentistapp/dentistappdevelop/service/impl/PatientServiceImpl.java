@@ -5,8 +5,10 @@ import com.dentistapp.dentistappdevelop.repository.PatientRepository;
 import com.dentistapp.dentistappdevelop.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -71,5 +73,13 @@ public class PatientServiceImpl implements PatientService {
             patient.toDTO();
         }
         return patients;
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        if (id == null || id.equals("") || id.length() != 24) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + id + "\"");
+        }
+        return patientRepository.existsById(id);
     }
 }

@@ -3,7 +3,6 @@ package com.dentistapp.dentistappdevelop.controller;
 import com.dentistapp.dentistappdevelop.dto.LoginDto;
 import com.dentistapp.dentistappdevelop.security.jwt.JwtUtils;
 import com.dentistapp.dentistappdevelop.security.payload.JwtResponse;
-import com.dentistapp.dentistappdevelop.service.DoctorService;
 import com.dentistapp.dentistappdevelop.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

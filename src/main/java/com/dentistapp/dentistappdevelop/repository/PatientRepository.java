@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 
 
 public interface PatientRepository extends MongoRepository<Patient,String> {
-    Boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
+    boolean existsById(String id);
     public Patient findByEmail(String email);
     public Patient findByEmailAndPassword(String email,String password);
 

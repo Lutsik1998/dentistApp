@@ -19,7 +19,6 @@ public class Address {
     private String street;
     @NotNull
     private String houseNr;
-
     private String roomNr;
     private String information;
 

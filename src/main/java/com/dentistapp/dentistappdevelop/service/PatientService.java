@@ -12,6 +12,6 @@ public interface PatientService {
     public Patient update(Patient patientsDetails);
     public Patient save(Patient patient);
     public List<Patient> findAll();
-
+    public boolean existsById(String id);
 
 }
