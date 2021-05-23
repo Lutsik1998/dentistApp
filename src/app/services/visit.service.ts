@@ -25,13 +25,8 @@ import { Visit, VisitResponseModel } from '../models/visit';
     }
 
     dateObject(value: string): Date {
-      const arr = value.split('-');
       return new Date(
-        Number.parseInt(arr[0]),
-        Number.parseInt(arr[1]),
-        Number.parseInt(arr[2]),
-        Number.parseInt(arr[3]),
-        Number.parseInt(arr[4])
+        value
       );
     }
 

@@ -61,6 +61,7 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
         return {...ele, dateTimeEnd: this.visitService.dateObject(ele.dateTimeEnd), dateTimeStart: this.visitService.dateObject(ele.dateTimeStart)}
       })
       itemList = this.sortVisits(itemList);
+   
       res = itemList.map((ele: VisitListItemModel) => {
         return {...ele, dateTimeEnd: ele.dateTimeEnd.toLocaleString(), dateTimeStart: ele.dateTimeStart.toLocaleString()}
       })

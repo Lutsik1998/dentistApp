@@ -60,6 +60,7 @@ export class VisitsComponent implements OnInit, OnDestroy {
       let itemList: VisitListItemModel[] = res.map((ele: VisitResponseModel) => {
         return {...ele, dateTimeEnd: this.visitService.dateObject(ele.dateTimeEnd), dateTimeStart: this.visitService.dateObject(ele.dateTimeStart)}
       })
+
       itemList = this.sortVisits(itemList);
       res = itemList.map((ele: VisitListItemModel) => {
         return {...ele, dateTimeEnd: ele.dateTimeEnd.toLocaleString(), dateTimeStart: ele.dateTimeStart.toLocaleString()}

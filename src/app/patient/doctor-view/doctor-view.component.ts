@@ -1,14 +1,18 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {  Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import {
-  MatCalendarCellCssClasses,
-} from '@angular/material/datepicker';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatListOption } from '@angular/material/list';
 import { Visit } from 'src/app/models/visit';
 import { OfficeService } from 'src/app/services/office.service';
@@ -17,7 +21,7 @@ import { User } from 'src/app/models/user';
 
 import { PatientService } from 'src/app/services/patient.service';
 import { VisitService } from 'src/app/services/visit.service';
-import {  MatTabGroup } from '@angular/material/tabs';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-doctor-view',
@@ -35,7 +39,12 @@ export class DoctorViewComponent implements OnInit {
     'email',
     'visit',
   ];
-  displayedColumnsMobile: string[] = ['licence', 'firstName', 'lastName'];
+  displayedColumnsMobile: string[] = [
+    'licence',
+    'firstName',
+    'lastName',
+    'visit',
+  ];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
   sub: Subscription = new Subscription();
   closeResult = '';
@@ -105,30 +114,20 @@ export class DoctorViewComponent implements OnInit {
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
-          this.visitForm.dateTimeStart =
-            this.selectedDate.getFullYear().toString() +
-            '-' +
-            ('0' + Number(this.selectedDate.getMonth() + 1).toString()).slice(
-              -2
-            ) +
-            '-' +
-            ('0' + this.selectedDate.getDate()).slice(-2) +
-            '-' +
-            this.selectedTime.substring(0, 2) +
-            '-' +
-            this.selectedTime.substring(3, 5);
-          this.visitForm.dateTimeEnd =
-            this.selectedDate.getFullYear().toString() +
-            '-' +
-            ('0' + Number(this.selectedDate.getMonth() + 1).toString()).slice(
-              -2
-            ) +
-            '-' +
-            ('0' + this.selectedDate.getDate()).slice(-2) +
-            '-' +
-            this.selectedTime.substring(0, 2) +
-            '-' +
-            (Number(this.selectedTime.substring(3, 5)) + 20).toString();
+          this.selectedDate.setHours(Number(this.selectedTime.substring(0, 2)));
+          this.selectedDate.setMinutes(
+            Number(this.selectedTime.substring(3, 5))
+          );
+
+          this.visitForm.dateTimeStart = this.selectedDate
+            .toISOString()
+            .substring(0, 16);
+          this.selectedDate.setMinutes(
+            Number(this.selectedTime.substring(3, 5)) + 20
+          );
+          this.visitForm.dateTimeEnd = this.selectedDate
+            .toISOString()
+            .substring(0, 16);
           console.log(this.visitForm);
           this.visitService.addVisit(this.visitForm).subscribe(() => {
             console.log(this.visitForm);
@@ -174,12 +173,12 @@ export class DoctorViewComponent implements OnInit {
   selectedDate = new Date();
   selectedTime: string;
 
-  onSelect(event,tabGroup:MatTabGroup) {
+  onSelect(event, tabGroup: MatTabGroup) {
     this.selectedDate = event;
     tabGroup._tabs.toArray()[1].disabled = false;
     tabGroup.selectedIndex = 1;
   }
-  onGroupsChange(options: MatListOption[],tabGroup:MatTabGroup) {
+  onGroupsChange(options: MatListOption[], tabGroup: MatTabGroup) {
     // map these MatListOptions to their values
     tabGroup._tabs.toArray()[2].disabled = false;
     tabGroup.selectedIndex = 2;
@@ -187,7 +186,7 @@ export class DoctorViewComponent implements OnInit {
   }
 
   onchange(text) {
-    var element =  <HTMLInputElement> document.getElementById("save");
+    var element = <HTMLInputElement>document.getElementById('save');
     element.disabled = false;
     console.log(text);
     this.visitForm.information = text;
