@@ -4,18 +4,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { VisitListItemModel, VisitResponseModel } from 'src/app/models/visit';
+import { VisitResponseModel, VisitListItemModel } from 'src/app/models/visit';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-history-view',
-  templateUrl: './history-view.component.html',
-  styleUrls: ['./history-view.component.scss']
+  selector: 'app-visits',
+  templateUrl: './visits.component.html',
+  styleUrls: ['./visits.component.scss']
 })
-export class HistoryViewComponent implements OnInit, OnDestroy {
+export class VisitsComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
@@ -24,7 +24,7 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<VisitResponseModel>;
 
   sub = new Subscription();
-  patientId: string;
+  doctorId: string;
 
   constructor(private visitService: VisitService,
               private authService: AuthService,
@@ -49,14 +49,14 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
         })
     );
     this.sub.add(this.authService.currentUser.subscribe(res => {
-      this.patientId = res.id.slice(1,-1);
+      this.doctorId = res.id.slice(1,-1);
     }))
     this.getData();
   }
 
   getData() {
     this.sub.add(this.visitService.getVisits().subscribe((res: VisitResponseModel[]) => {
-      res = res.filter(ele => ele.patientId === this.patientId);
+      res = res.filter(ele => ele.doctorId === this.doctorId);
       let itemList: VisitListItemModel[] = res.map((ele: VisitResponseModel) => {
         return {...ele, dateTimeEnd: this.visitService.dateObject(ele.dateTimeEnd), dateTimeStart: this.visitService.dateObject(ele.dateTimeStart)}
       })

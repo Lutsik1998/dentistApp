@@ -19,8 +19,8 @@
               <td mat-cell *matCellDef="let element"> {{element.information}} </td>
             </ng-container>
             <ng-container matColumnDef="delete">
-              <th mat-header-cell *matHeaderCellDef> Usuń wizytę </th>
-              <td mat-cell *matCellDef="let element"><button (click)="deleteVisit(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
+                <th mat-header-cell *matHeaderCellDef> Usuń wizytę </th>
+                <td mat-cell *matCellDef="let element"><button (click)="deleteVisit(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
             </ng-container>
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell no-patient" colspan="4">Brak wizyty: "{{input.value}}"</td>

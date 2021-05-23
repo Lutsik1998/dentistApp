@@ -8,6 +8,7 @@ import { OfficeViewDoctorComponent } from './office-view-doctor/office-view-doct
 import { AddPatientComponent } from './patients-view/add-patient/add-patient.component';
 import { PatientDetailsComponent } from './patients-view/patient-details/patient-details.component';
 import { PatientsViewComponent } from './patients-view/patients-view.component';
+import { VisitsComponent } from './visits/visits.component';
 
 const routes: Routes = [
   {path: '', component: DoctorComponent, children: [
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path: 'doctors', component: DoctorsListComponent},
     {path: 'add-doctor', component: AddDoctorComponent},
     {path: 'add-patient', component: AddPatientComponent},
+    {path: 'visits', component: VisitsComponent},
     {path: 'patient-details/:id', component: PatientDetailsComponent},
   ]}
 ];
