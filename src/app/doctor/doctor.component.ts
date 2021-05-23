@@ -12,6 +12,7 @@ export class DoctorComponent implements OnInit {
     {path: 'office', text: 'Gabinet'},
     {path: 'doctors', text: 'Lekarze'},
     {path: 'patients', text: 'Pacjenci'},
+    {path: 'visits', text: 'Zabiegi'},
     {path: 'account', text: 'Konto'},
   ]
 

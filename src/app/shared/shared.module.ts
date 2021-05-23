@@ -12,10 +12,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SubheaderEditComponent } from './subheader-edit/subheader-edit.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -31,7 +32,8 @@ import { PipesModule } from '../pipes/pipes.module';
     SpinnerComponent,
     SubheaderEditComponent,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule { }

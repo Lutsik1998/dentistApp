@@ -20,6 +20,10 @@ import { Visit, VisitResponseModel } from '../models/visit';
       return this.http.get<VisitResponseModel[]>(`${this.baseUrl}/all`).pipe(catchError(this.handleError))
     }
 
+    deleteVisit(id: string) {
+      return this.http.delete(`${this.baseUrl}/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError))
+    }
+
     dateObject(value: string): Date {
       const arr = value.split('-');
       return new Date(
