@@ -22,4 +22,9 @@ public class HelperController {
         return new RedirectView("/swagger-ui.html");
     }
 
+    @GetMapping(value = "favicon.ico")
+    public ResponseEntity<?> favicon () {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
