@@ -14,13 +14,12 @@ import { AddPatientComponent } from './patients-view/add-patient/add-patient.com
 import { PatientDetailsComponent } from './patients-view/patient-details/patient-details.component';
 import { VisitsComponent } from './visits/visits.component';
 
-
 @NgModule({
   declarations: [DoctorComponent, PatientsViewComponent, OfficeViewDoctorComponent, AccountViewDoctorComponent, OfficeInfoComponent, DoctorsListComponent, AddDoctorComponent, AddPatientComponent, PatientDetailsComponent, VisitsComponent],
   imports: [
     CommonModule,
     DoctorRoutingModule,
-    SharedModule,
+    SharedModule
   ]
 })
 export class DoctorModule { }

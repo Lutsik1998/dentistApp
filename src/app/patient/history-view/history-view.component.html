@@ -5,6 +5,27 @@
             <mat-label>Szukaj wizyty</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Szukaj wizyty" #input>
         </mat-form-field>
+                         <!-- modal -->
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <mat-label>Leave a information</mat-label>
+            <textarea matInput rows="4" cols="100" id="text_info" #text  placeholder="Ex. It makes me feel..."></textarea>
+            <ngb-rating [max]=5 [(rate)]="currentRate" id="star"></ngb-rating>
+            <hr>
+            <pre>Rate: <b>{{currentRate}}</b></pre>
+            <button type="button" class="btn btn-outline-dark" (click)="onchange(text.value)">Confirm</button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="save" disabled="true" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+      </div>
+    </ng-template>
+    <!--modal close-->
         <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="start">
               <th mat-header-cell *matHeaderCellDef> Czas rozpoczęcia </th>
@@ -22,6 +43,10 @@
               <th mat-header-cell *matHeaderCellDef> Usuń wizytę </th>
               <td mat-cell *matCellDef="let element"><button (click)="deleteVisit(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
             </ng-container>
+            <ng-container matColumnDef="comment">
+              <th mat-header-cell *matHeaderCellDef> Dodaj ocene </th>
+              <td mat-cell *matCellDef="let element"><button (click)="addComment(content,element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">grade</mat-icon></button></td>
+          </ng-container>
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell no-patient" colspan="4">Brak wizyty: "{{input.value}}"</td>
             </tr>
