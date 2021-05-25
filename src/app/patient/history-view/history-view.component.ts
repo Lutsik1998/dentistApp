@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { RateVisitComponent } from './rate-visit/rate-visit.component';
 
 @Component({
   selector: 'app-history-view',
@@ -87,8 +88,15 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
     })
   }
 
-  openDetails(id: string) {
-    console.log(id)
+  rateVisit(visit: VisitResponseModel) {
+    const dialogRef = this.dialog.open(RateVisitComponent, {
+      data: {
+        visit
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      this.getData();
+    }))
   }
 
   deleteVisit(id: string) {

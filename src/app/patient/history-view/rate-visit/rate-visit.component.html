@@ -1,0 +1,20 @@
+<form [formGroup]="form" class="rate">
+  <h4 id="subheader" class="mb-5">Oceń lekarza</h4>
+  <div>
+    <ngb-rating formControlName="rating">
+      <ng-template let-fill="fill" let-index="index">
+        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+      </ng-template>
+    </ngb-rating>
+  </div>
+  <mat-form-field class="w-100 mt-3">
+      <mat-label>Opinia</mat-label>
+      <textarea formControlName="text" matInput></textarea>
+  </mat-form-field>
+  <div class="d-flex justify-content-around">
+      <button (click)="close()" mat-stroked-button color="accent">Anuluj</button>
+      <button (click)="delete()" mat-stroked-button color="accent">Usuń ocenę</button>
+      <button (click)="save()" mat-raised-button color="primary">Potwierdź</button>
+  </div>
+  <app-spinner *ngIf="isLoading"></app-spinner>
+</form>
