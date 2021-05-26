@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RateVisitComponent } from './rate-visit/rate-visit.component';
+
 @Component({
   selector: 'app-history-view',
   templateUrl: './history-view.component.html',
@@ -19,21 +20,17 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
-  displayedColumns: string[] =['start', 'end', 'info', 'delete','comment'];
+  displayedColumns: string[] =['start', 'end', 'info', 'delete'];
   displayedColumnsMobile: string[] = ['start', 'delete','comment'];
   dataSource: MatTableDataSource<VisitResponseModel>;
 
   sub = new Subscription();
   patientId: string;
   visits: VisitResponseModel[];
-  currentRate: number;
-  closeResult = '';
-  currentVisit: VisitResponseModel;
   constructor(private visitService: VisitService,
               private authService: AuthService,
               private snackBar: SnackbarService,
               public dialog: MatDialog,
-              private modalService: NgbModal,
               private breakpointObserver: BreakpointObserver) { }
 
   ngOnDestroy(): void {
@@ -93,32 +90,17 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
     })
   }
 
-  openDetails(id: string) {
-    console.log(id)
-  }
-  addComment(content,id: string){
-    this.currentVisit = this.visits.filter(x=> x.id == id)[0];
-    this.currentRate= this.currentVisit.review.rating;
-    this.modalService
-    .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
-    .result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  rateVisit(visit: VisitResponseModel) {
+    const dialogRef = this.dialog.open(RateVisitComponent, {
+      data: {
+        visit
       }
-    );
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      this.getData();
+    }))
   }
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+
   deleteVisit(id: string) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -135,19 +117,5 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
         }))
       }
     }))
-  }
-  onchange(text) {
-    var element = <HTMLInputElement>document.getElementById('save');
-    element.disabled = false;
-
-    this.currentVisit.review.text = text;
-    this.currentVisit.review.rating = this.currentRate;
-    console.log( this.currentVisit);
-    this.visitService.addReview(this.currentVisit.id,this.currentVisit.review).subscribe(res =>{
-      this.snackBar.success('Dziękuję za ocenę')
-      this.getData();
-    }, err => {
-      this.snackBar.error('Nie udało się ocenić')
-    })
   }
 }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AngularMaterialModule } from '../material.module';
@@ -13,10 +14,11 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { SubheaderEditComponent } from './subheader-edit/subheader-edit.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -24,7 +26,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    PipesModule
+    PipesModule,
+    NgbModule
   ],
   exports: [
     PipesModule,
@@ -33,7 +36,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     SubheaderEditComponent,
     ReactiveFormsModule,
     AngularMaterialModule,
-    ConfirmationDialogComponent
+    NgbModule,
+    ConfirmationDialogComponent,
+    DoctorReviewsComponent
   ]
 })
 export class SharedModule { }

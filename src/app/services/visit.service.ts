@@ -16,6 +16,10 @@ import { Review, Visit, VisitResponseModel } from '../models/visit';
         return this.http.post(`${this.baseUrl}/save`, visit).pipe(catchError(this.handleError))
     }
 
+    getVisit(id: string): Observable<VisitResponseModel> {
+      return this.http.get<VisitResponseModel>(`${this.baseUrl}/${id}`).pipe(catchError(this.handleError))
+    }
+
     getVisits(): Observable<VisitResponseModel[]> {
       return this.http.get<VisitResponseModel[]>(`${this.baseUrl}/all`).pipe(catchError(this.handleError))
     }
