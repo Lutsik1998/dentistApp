@@ -20,13 +20,15 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
-  displayedColumns: string[] =['start', 'end', 'info', 'delete'];
-  displayedColumnsMobile: string[] = ['start', 'delete'];
+  displayedColumns: string[] =['start', 'end', 'info', 'delete','comment'];
+  displayedColumnsMobile: string[] = ['start', 'delete','comment'];
   dataSource: MatTableDataSource<VisitResponseModel>;
 
   sub = new Subscription();
   patientId: string;
-
+  visits: VisitResponseModel[];
+  currentRate: number;
+  currentVisit: VisitResponseModel;
   constructor(private visitService: VisitService,
               private authService: AuthService,
               private snackBar: SnackbarService,
@@ -57,16 +59,18 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
 
   getData() {
     this.sub.add(this.visitService.getVisits().subscribe((res: VisitResponseModel[]) => {
+      this.visits =res;
+      console.log(res);
       res = res.filter(ele => ele.patientId === this.patientId);
       let itemList: VisitListItemModel[] = res.map((ele: VisitResponseModel) => {
         return {...ele, dateTimeEnd: this.visitService.dateObject(ele.dateTimeEnd), dateTimeStart: this.visitService.dateObject(ele.dateTimeStart)}
       })
       itemList = this.sortVisits(itemList);
-   
       res = itemList.map((ele: VisitListItemModel) => {
         return {...ele, dateTimeEnd: ele.dateTimeEnd.toLocaleString(), dateTimeStart: ele.dateTimeStart.toLocaleString()}
-      })
-      this.dataSource = new MatTableDataSource(res)
+      });
+     
+      this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
     }))
   }

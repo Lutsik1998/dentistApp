@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Visit, VisitResponseModel } from '../models/visit';
+import { Review, Visit, VisitResponseModel } from '../models/visit';
 
 
 @Injectable({
@@ -27,7 +27,14 @@ import { Visit, VisitResponseModel } from '../models/visit';
     deleteVisit(id: string) {
       return this.http.delete(`${this.baseUrl}/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError))
     }
-
+    addReview(
+      id: string,
+      review: Review
+    ): Observable<any> {
+      return this.http
+        .post(`${this.baseUrl}/${id}/review`, review)
+        .pipe(catchError(this.handleError));
+    }
     dateObject(value: string): Date {
       return new Date(
         value

@@ -72,6 +72,10 @@ export class DoctorViewComponent implements OnInit {
       doctorId: '',
       patientId: '',
       officeId: '',
+      review:{
+        text: '',
+        rating:0
+      }
     };
 
     this.officeService.getOffice().subscribe((res) => {
@@ -123,8 +127,7 @@ export class DoctorViewComponent implements OnInit {
             .toISOString()
             .substring(0, 16);
           this.selectedDate.setMinutes(
-            Number(this.selectedTime.substring(3, 5)) + 20
-          );
+            Number(this.selectedTime.substring(3, 5)) + 20);
           this.visitForm.dateTimeEnd = this.selectedDate
             .toISOString()
             .substring(0, 16);

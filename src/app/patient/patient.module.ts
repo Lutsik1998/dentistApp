@@ -13,6 +13,7 @@ import { OfficeInfoComponent } from './office-view/office-info/office-info.compo
 import { TeethMapComponent } from './health-view/teeth-map/teeth-map.component';
 import { AngularMaterialModule } from '../material.module';
 import { RateVisitComponent } from './history-view/rate-visit/rate-visit.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [PatientComponent, OfficeViewComponent, DoctorViewComponent, HealthViewComponent, HistoryViewComponent, ReceiptViewComponent, AccountViewComponent, OfficeInfoComponent, TeethMapComponent, RateVisitComponent],
@@ -20,7 +21,8 @@ import { RateVisitComponent } from './history-view/rate-visit/rate-visit.compone
     AngularMaterialModule,
     CommonModule,
     PatientRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ]
 
 })
