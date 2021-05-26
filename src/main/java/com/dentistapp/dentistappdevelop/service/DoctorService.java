@@ -15,4 +15,5 @@ public interface DoctorService{
     public boolean existsById(String id);
     public Doctor findById(String id);
     public boolean updateRatingById(String id, float rating);
+    public void updatePassword(String doctorId, String newPassword);
 }

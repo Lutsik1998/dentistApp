@@ -35,6 +35,17 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepository;
     }
 
+    @Override
+    public void updatePassword(String doctorId, String newPassword) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(doctorId));
+        Update update = new Update();
+        update.set("password", passwordEncoder.encode(newPassword));
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Doctor.class, "doctor");
+        if (updateResult.getModifiedCount() <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @Override
     public Doctor update(Doctor doctorDetails) {
@@ -75,6 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
     public Doctor save(Doctor doctor) {
         doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         doctorRepository.save(doctor);
+        System.out.println("saved");
         return doctor;
     }
 

@@ -13,5 +13,6 @@ public interface PatientService {
     public Patient save(Patient patient);
     public List<Patient> findAll();
     public boolean existsById(String id);
+    public void updatePassword(String patientId, String newPassword);
 
 }
