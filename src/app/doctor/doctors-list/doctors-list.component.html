@@ -13,6 +13,12 @@
               <th mat-header-cell *matHeaderCellDef> Numer licencji </th>
               <td class="card-number" mat-cell *matCellDef="let element" (click)="openDetails(element.id)"> {{element.licence}} </td>
             </ng-container>
+            <ng-container matColumnDef="reviews">
+              <th mat-header-cell *matHeaderCellDef> Oceny lekarza </th>
+              <td class="card-number" mat-cell *matCellDef="let element"> 
+                <button (click)="seeReviews(element)" mat-stroked-button color="primary"><mat-icon aria-hidden="false" aria-label="Example home icon">grade</mat-icon></button> 
+              </td>
+            </ng-container>
             <ng-container matColumnDef="firstName">
               <th mat-header-cell *matHeaderCellDef> Imię </th>
               <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>

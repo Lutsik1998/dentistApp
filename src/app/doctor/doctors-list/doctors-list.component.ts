@@ -1,11 +1,13 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-reviews.component';
 
 @Component({
   selector: 'app-doctors-list',
@@ -15,12 +17,12 @@ import { DoctorService } from 'src/app/services/doctor.service';
 export class DoctorsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
-  displayedColumns: string[] = ['licence', 'firstName', 'lastName', 'sex', 'email'];
-  displayedColumnsMobile: string[] = ['licence', 'firstName', 'lastName'];
+  displayedColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email'];
+  displayedColumnsMobile: string[] = ['reviews', 'firstName', 'lastName'];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
   sub: Subscription = new Subscription();
 
-  constructor(private breakpointObserver: BreakpointObserver, private doctorService: DoctorService, private router: Router) { }
+  constructor(private breakpointObserver: BreakpointObserver, private doctorService: DoctorService, private router: Router, public dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -40,6 +42,15 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
       this.dataSource = new MatTableDataSource(res)
       this.dataSource.paginator = this.paginator;
     }))
+  }
+
+  seeReviews(doctor: DoctorInfoResponseModel) {
+    const dialogRef = this.dialog.open(DoctorReviewsComponent, {
+      data: {
+        doctor
+      },
+      maxHeight: '90vh',
+    });
   }
 
   applyFilter($event) {
