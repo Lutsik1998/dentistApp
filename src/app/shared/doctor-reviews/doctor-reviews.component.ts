@@ -23,7 +23,6 @@ export class DoctorReviewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.doctor = this.data.doctor;
-    console.log(this.doctor)
     this.sub.add(this.reviewService.getReviews(this.doctor.id).subscribe(res => {
       this.reviews = res;
       if(this.reviews.length) {
