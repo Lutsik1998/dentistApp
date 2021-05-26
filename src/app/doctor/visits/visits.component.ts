@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-visits',
@@ -26,11 +28,15 @@ export class VisitsComponent implements OnInit, OnDestroy {
   sub = new Subscription();
   doctorId: string;
 
+
   constructor(private visitService: VisitService,
               private authService: AuthService,
               private snackBar: SnackbarService,
               public dialog: MatDialog,
-              private breakpointObserver: BreakpointObserver) { }
+              private breakpointObserver: BreakpointObserver,
+
+              private router: Router
+              ) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -65,6 +71,7 @@ export class VisitsComponent implements OnInit, OnDestroy {
       res = itemList.map((ele: VisitListItemModel) => {
         return {...ele, dateTimeEnd: ele.dateTimeEnd.toLocaleString(), dateTimeStart: ele.dateTimeStart.toLocaleString()}
       })
+  
       this.dataSource = new MatTableDataSource(res)
       this.dataSource.paginator = this.paginator;
     }))
@@ -90,6 +97,10 @@ export class VisitsComponent implements OnInit, OnDestroy {
   openDetails(id: string) {
     console.log(id)
   }
+  addVisit(){
+    this.router.navigate(['doctor/add-visit']);
+  }
+
 
   deleteVisit(id: string) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {

@@ -12,6 +12,7 @@ import { AccountViewComponent } from './account-view/account-view.component';
 import { OfficeInfoComponent } from './office-view/office-info/office-info.component';
 import { TeethMapComponent } from './health-view/teeth-map/teeth-map.component';
 import { AngularMaterialModule } from '../material.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [PatientComponent, OfficeViewComponent, DoctorViewComponent, HealthViewComponent, HistoryViewComponent, ReceiptViewComponent, AccountViewComponent, OfficeInfoComponent, TeethMapComponent],
@@ -19,7 +20,8 @@ import { AngularMaterialModule } from '../material.module';
     AngularMaterialModule,
     CommonModule,
     PatientRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ]
 
 })

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Doctor, DoctorAddRequestModel, DoctorInfoResponseModel} from '../models/doctor'
 import { HttpClient,HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +15,16 @@ export class DoctorService {
   }
   getDoctors(): Observable<DoctorInfoResponseModel[]>{
     return this.http.get<DoctorInfoResponseModel[]>(`${this.getUrl}/all`).pipe(catchError(this.handleError))
+  }
+  getDoctorByEmail(email: string): Observable<DoctorInfoResponseModel> {
+    return this.http.get<DoctorInfoResponseModel[]>(`${this.getUrl}/all`).pipe(
+      map((data:DoctorInfoResponseModel[] )=> {
+        let result = data.filter((element: DoctorInfoResponseModel) => {
+          return element.email == email;
+        });
+        return  result[0];
+      })
+      );
   }
   getDoctorById(id: string): Observable<DoctorInfoResponseModel>{
     return this.http.get<DoctorInfoResponseModel>(`${this.getUrl}/${id}`).pipe(catchError(this.handleError))

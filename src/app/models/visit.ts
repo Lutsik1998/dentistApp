@@ -5,7 +5,8 @@ export interface Visit {
     information: string,
     doctorId: string,
     officeId: string,
-    patientId: string 
+    patientId: string,
+    review: Review
 }
 
 export interface VisitResponseModel {
