@@ -3,12 +3,12 @@ package com.dentistapp.dentistappdevelop.service.impl;
 import com.dentistapp.dentistappdevelop.model.Recipe;
 import com.dentistapp.dentistappdevelop.model.Review;
 import com.dentistapp.dentistappdevelop.model.Visit;
-import com.dentistapp.dentistappdevelop.service.DoctorService;
-import com.dentistapp.dentistappdevelop.service.RecipeService;
-import com.dentistapp.dentistappdevelop.service.ReviewService;
-import com.dentistapp.dentistappdevelop.service.VisitService;
+import com.dentistapp.dentistappdevelop.security.jwt.JwtUtils;
+import com.dentistapp.dentistappdevelop.service.*;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -31,13 +31,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
-
+    private static final Logger logger = LoggerFactory.getLogger(RecipeServiceImpl.class);
     @Autowired
     MongoTemplate mongoTemplate;
     @Autowired
     VisitService visitService;
     @Autowired
     DoctorService doctorService;
+    @Autowired
+    ImageService imageService;
 
     @Override
     public Recipe save(String visitId, Recipe recipe) {
@@ -48,7 +50,7 @@ public class RecipeServiceImpl implements RecipeService {
         Update update = new Update();
         update.push("recipes", recipe);
         UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Visit.class, "visit");
-        if (updateResult.getModifiedCount() <=0) {
+        if (updateResult.getModifiedCount() <= 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         return recipe;
@@ -94,7 +96,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findByRecipeIdAndVisitId(String id, String visitId) {
         List<Recipe> recipeList = findAllByVisitId(visitId);
         for (Recipe rec : recipeList) {
-            if (rec.getId().equals(id)) {
+            if (rec != null && rec.getId().equals(id)) {
                 return rec;
             }
         }
@@ -111,35 +113,76 @@ public class RecipeServiceImpl implements RecipeService {
         update.unset("recipes.$");
         Visit visit = mongoTemplate.findAndModify(query, update, Visit.class, "visit");
         if (visit == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-//        for (Recipe rec : visit.getRecipes()) {
-//            if (rec.getId().equals(id)) {
-//                deleteImage(rec.getFileName());
-//                break;
-//            }
-//        }
-    }
-
-    private void saveImage(MultipartFile multipartFile, String fileName) throws IOException {
-        if (multipartFile != null && !fileName.equals("")) {
-            File targetFile = new File("img_db/" + fileName);
-            OutputStream outputStream = new FileOutputStream(targetFile);
-            outputStream.write(multipartFile.getBytes());
-            outputStream.close();
+        for (Recipe rec : visit.getRecipes()) {
+            if (rec != null && rec.getId().equals(id)) {
+                imageService.deleteImage(rec.getFileName());
+                break;
+            }
         }
     }
 
-    private void deleteImage(String fileName) {
-        if (!fileName.equals("")) {
-            File targetFile = new File("img_db/" + fileName);
-            targetFile.delete();
+    @Override
+    public String saveImage(String visitId, String recipeId, MultipartFile multipartFile) {
+        String fileName = recipeId + multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().length() - 4, multipartFile.getOriginalFilename().length());
+        try {
+            imageService.saveImage(multipartFile, fileName);
+        } catch (IOException e) {
+            logger.error("File isn't save", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(visitId)
+                .and("recipes._id").is(recipeId));
+        query.fields().include("recipes");
+        Update update = new Update();
+        update.set("recipes.$.fileName", fileName);
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Visit.class, "visit");
+        if (updateResult.getModifiedCount() <= 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
+        }
+        return fileName;
     }
 
-    private Path getImage(String fileName) {
-        Path path = Paths.get("img_db/" + fileName);
-        return path;
+    @Override
+    public Path findImage(String visitId, String recipeId) throws FileNotFoundException {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(visitId)
+                .and("recipes._id").is(recipeId));
+        query.fields().include("recipes");
+        Visit visit = mongoTemplate.findOne(query, Visit.class, "visit");
+        if (visit == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
+        }
+        List<Recipe> recipes = visit.getRecipes();
+        for (Recipe recipe : recipes) {
+            if (recipe != null && recipe.getId().equals(recipeId)) {
+                return imageService.getImage(recipe.getFileName());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteImage(String visitId, String recipeId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(visitId)
+                .and("recipes._id").is(recipeId));
+        query.fields().include("recipes");
+        Update update = new Update();
+        update.set("recipes.$.fileName", "");
+        Visit visit = mongoTemplate.findAndModify(query, update, Visit.class, "visit");
+        if (visit == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found");
+        }
+        List<Recipe> recipes = visit.getRecipes();
+        for (Recipe recipe : recipes) {
+            if (recipe != null && recipe.getId().equals(recipeId)) {
+                return imageService.deleteImage(recipe.getFileName());
+            }
+        }
+        return false;
     }
 
 }
