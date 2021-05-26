@@ -2,6 +2,7 @@ package com.dentistapp.dentistappdevelop.controller;
 
 import com.dentistapp.dentistappdevelop.dto.LoginDto;
 import com.dentistapp.dentistappdevelop.model.Doctor;
+import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Roles;
 import com.dentistapp.dentistappdevelop.model.Visit;
 import com.dentistapp.dentistappdevelop.security.payload.MessageResponse;
@@ -49,6 +50,7 @@ public class DoctorController {
         loginUser.setPassword(doctor.getPassword());
         loginUser.setRoles(doctor.getRoles());
         loginUser.setId(doctor.getId());
+
         doctorService.save(doctor);
         return authController.login(loginUser);
     }
@@ -90,6 +92,25 @@ public class DoctorController {
         Doctor doctor = doctorService.update(doctorDetails);
         final Doctor updatedDoctor = doctorService.doctorRepository().save(doctor);
         return ResponseEntity.ok(updatedDoctor);
+    }
+
+
+    @PutMapping("/updatePassword/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable(value = "id") String doctorId, Authentication authentication,
+                                            @RequestHeader (name="Authorization") String token, @RequestBody LoginUser loginUser) {
+        List<String> rolesList = authController.jwtUtils.getRoles(authentication);
+        if(!rolesList.contains("ROLE_ADMIN")){
+            List<String> userIdFromJWT = authController.jwtUtils.getUserIdFromJwtToken(token.substring(7,token.length()));
+            if(!userIdFromJWT.contains(doctorId)) {
+                return new ResponseEntity("Cannot update password another user", HttpStatus.NOT_ACCEPTABLE);
+            }
+        }
+        try {
+            doctorService.updatePassword(doctorId,loginUser.getPassword());
+            return new ResponseEntity<>("Password updated", HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity(e.getMessage(), e.getStatus());
+        }
     }
 
     //    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")

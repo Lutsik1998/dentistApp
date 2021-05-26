@@ -2,7 +2,9 @@ package com.dentistapp.dentistappdevelop.controller;
 
 
 import com.dentistapp.dentistappdevelop.dto.LoginDto;
+import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Review;
 import com.dentistapp.dentistappdevelop.model.Roles;
 import com.dentistapp.dentistappdevelop.security.payload.MessageResponse;
 import com.dentistapp.dentistappdevelop.service.PatientService;
@@ -15,7 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerErrorException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -93,6 +97,24 @@ public class PatientController {
         patient.toDTO();
         return ResponseEntity.ok(updatedPatient);
 
+    }
+
+    @PutMapping("/updatePassword/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable(value = "id") String doctorId, Authentication authentication,
+                                            @RequestHeader (name="Authorization") String token, @RequestBody LoginUser loginUser) {
+        List<String> rolesList = authController.jwtUtils.getRoles(authentication);
+        if(!rolesList.contains("ROLE_ADMIN")){
+            List<String> userIdFromJWT = authController.jwtUtils.getUserIdFromJwtToken(token.substring(7,token.length()));
+            if(!userIdFromJWT.contains(doctorId)) {
+                return new ResponseEntity("Cannot update password another user", HttpStatus.NOT_ACCEPTABLE);
+            }
+        }
+        try {
+            patientService.updatePassword(doctorId,loginUser.getPassword());
+            return new ResponseEntity<>("Password updated", HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity(e.getMessage(), e.getStatus());
+        }
     }
 
 

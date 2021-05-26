@@ -1,9 +1,16 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Review;
+import com.dentistapp.dentistappdevelop.model.Visit;
 import com.dentistapp.dentistappdevelop.repository.PatientRepository;
 import com.dentistapp.dentistappdevelop.service.PatientService;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,10 +28,25 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
 
     @Override
     public PatientRepository patientRepository() {
         return this.patientRepository;
+    }
+
+
+    @Override
+    public void updatePassword(String patientId, String newPassword) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(patientId));
+        Update update = new Update();
+        update.set("password", passwordEncoder.encode(newPassword));
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Patient.class, "patient");
+        if (updateResult.getModifiedCount() <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
