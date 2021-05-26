@@ -22,6 +22,8 @@ import { User } from 'src/app/models/user';
 import { PatientService } from 'src/app/services/patient.service';
 import { VisitService } from 'src/app/services/visit.service';
 import { MatTabGroup } from '@angular/material/tabs';
+import { MatDialog } from '@angular/material/dialog';
+import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-reviews.component';
 
 @Component({
   selector: 'app-doctor-view',
@@ -32,7 +34,7 @@ export class DoctorViewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
   displayedColumns: string[] = [
-    'licence',
+    'reviews',
     'firstName',
     'lastName',
     'sex',
@@ -40,7 +42,7 @@ export class DoctorViewComponent implements OnInit {
     'visit',
   ];
   displayedColumnsMobile: string[] = [
-    'licence',
+    'reviews',
     'firstName',
     'lastName',
     'visit',
@@ -57,7 +59,8 @@ export class DoctorViewComponent implements OnInit {
     private officeService: OfficeService,
     private modalService: NgbModal,
     private breakpointObserver: BreakpointObserver,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    public dialog: MatDialog,
   ) {}
 
   ngOnDestroy(): void {
@@ -107,6 +110,16 @@ export class DoctorViewComponent implements OnInit {
       })
     );
   }
+
+  seeReviews(doctor: DoctorInfoResponseModel) {
+    const dialogRef = this.dialog.open(DoctorReviewsComponent, {
+      data: {
+        doctor
+      },
+      maxHeight: '90vh',
+    });
+  }
+
   applyFilter($event) {
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

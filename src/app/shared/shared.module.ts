@@ -14,10 +14,11 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { SubheaderEditComponent } from './subheader-edit/subheader-edit.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -36,7 +37,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ReactiveFormsModule,
     AngularMaterialModule,
     NgbModule,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    DoctorReviewsComponent
   ]
 })
 export class SharedModule { }
