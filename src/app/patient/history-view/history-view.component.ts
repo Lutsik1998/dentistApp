@@ -20,15 +20,13 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
-  displayedColumns: string[] =['start', 'end', 'info', 'delete','comment'];
+  displayedColumns: string[] =['start', 'end', 'info', 'delete'];
   displayedColumnsMobile: string[] = ['start', 'delete','comment'];
   dataSource: MatTableDataSource<VisitResponseModel>;
 
   sub = new Subscription();
   patientId: string;
   visits: VisitResponseModel[];
-  currentRate: number;
-  currentVisit: VisitResponseModel;
   constructor(private visitService: VisitService,
               private authService: AuthService,
               private snackBar: SnackbarService,

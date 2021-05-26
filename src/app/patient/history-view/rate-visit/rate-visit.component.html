@@ -1,7 +1,12 @@
 <form [formGroup]="form" class="rate">
-  <h4 id="subheader" class="mb-5">Oceń lekarza</h4>
+  <div class="d-flex justify-content-between mb-4">
+    <h4 id="subheader" class="mb-0">Oceń lekarza</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <div>
-    <ngb-rating formControlName="rating">
+    <ngb-rating [max]=5 formControlName="rating">
       <ng-template let-fill="fill" let-index="index">
         <span class="star" [class.filled]="fill === 100">&#9733;</span>
       </ng-template>
@@ -12,7 +17,6 @@
       <textarea formControlName="text" matInput></textarea>
   </mat-form-field>
   <div class="d-flex justify-content-around">
-      <button (click)="close()" mat-stroked-button color="accent">Anuluj</button>
       <button (click)="delete()" mat-stroked-button color="accent">Usuń ocenę</button>
       <button (click)="save()" mat-raised-button color="primary">Potwierdź</button>
   </div>

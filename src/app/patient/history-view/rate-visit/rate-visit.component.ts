@@ -19,8 +19,8 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class RateVisitComponent implements OnInit {
 
   form = this.fb.group({
-    text: [this.data.visit.review?.text],
-    rating: [this.data.visit.review?.rating]
+    text: [this.data.visit.review?.text, [Validators.required]],
+    rating: [this.data.visit.review?.rating, [Validators.required]]
   })
 
   isLoading: boolean = false;
@@ -51,6 +51,10 @@ export class RateVisitComponent implements OnInit {
   }
 
   save() {
+    if(this.form.invalid) {
+      this.snackbar.error('Ocena i opinia nie mogą być puste')
+      return;
+    }
     this.isLoading = true;
     this.reviewService.rateVisit(this.data.visit.id, this.form.getRawValue()).subscribe(res => {
       this.snackbar.success('Wizyta oceniona')
