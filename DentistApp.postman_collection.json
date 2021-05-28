@@ -278,14 +278,7 @@
 					"name": "getRoles",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzX3Rlc3RAdGVzdC50IiwiaWF0IjoxNjE4MTQ2NDU1LCJleHAiOjE2MTgyMzI4NTV9.b9GXzlVNdB0v3Au6sTjJlEkwBlSfy4d3Cf63-btSMX6GP7_MyDN_5j9u0ssTdH_D8Hr44uznpy-rojfijLAcfA",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
@@ -557,7 +550,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTYwMjk0OCwiZXhwIjoxNjIxNjg5MzQ4fQ.UbOn53L_DPFoBzNygvKusvVx1uvUvZqCMd4Gil5PHhm6UU1MNMX0Wu_IfvsNhdOnLiyMIRHKfSw1gTiF8IMEzQ",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTcxMjAzMSwiZXhwIjoxNjIxNzk4NDMxfQ.eoo4EAc1oU8jAQtxwZ5udkQk75661mfs7lM9f02zlyLC2WB3WHPMB4xpNmi-3xF4LMOHbOtV_C7gWjbE2b3j_w",
 									"type": "string"
 								}
 							]
@@ -566,7 +559,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"dateTimeStart\": \"2021-05-22T11:57\",\n  \"dateTimeEnd\": \"2021-05-22T12:58\",\n  \"information\": \"string\",\n  \"doctorId\": \"6072f6d9be924626109ceb94\",\n  \"officeId\": \"608ea6f7bd02225822cdc2f7\",\n  \"patientId\": \"60915ef6744297454267404e\"\n}",
+							"raw": "{\n  \"dateTimeStart\": \"2021-05-23T19:59\",\n  \"dateTimeEnd\": \"2021-05-23T20:59\",\n  \"information\": \"string\",\n  \"doctorId\": \"6072f6d9be924626109ceb94\",\n  \"officeId\": \"608ea6f7bd02225822cdc2f7\",\n  \"patientId\": \"60915ef6744297454267404e\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -730,7 +723,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTYwMjk0OCwiZXhwIjoxNjIxNjg5MzQ4fQ.UbOn53L_DPFoBzNygvKusvVx1uvUvZqCMd4Gil5PHhm6UU1MNMX0Wu_IfvsNhdOnLiyMIRHKfSw1gTiF8IMEzQ",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTcxMjAzMSwiZXhwIjoxNjIxNzk4NDMxfQ.eoo4EAc1oU8jAQtxwZ5udkQk75661mfs7lM9f02zlyLC2WB3WHPMB4xpNmi-3xF4LMOHbOtV_C7gWjbE2b3j_w",
 									"type": "string"
 								}
 							]
@@ -738,7 +731,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/visit/filter1?doctorId=6072f6d9be924626109ceb94&startDateTime=2021-06-02T00:00&endDateTime=2021-06-03T00:00",
+							"raw": "http://localhost:8080/api/visit/filter1?doctorId=6072f6d9be924626109ceb94&startDateTime=2021-05-23T00:00&endDateTime=2021-06-23T23:59",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -756,11 +749,11 @@
 								},
 								{
 									"key": "startDateTime",
-									"value": "2021-06-02T00:00"
+									"value": "2021-05-23T00:00"
 								},
 								{
 									"key": "endDateTime",
-									"value": "2021-06-03T00:00"
+									"value": "2021-06-23T23:59"
 								}
 							]
 						}
@@ -775,7 +768,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTYwMjk0OCwiZXhwIjoxNjIxNjg5MzQ4fQ.UbOn53L_DPFoBzNygvKusvVx1uvUvZqCMd4Gil5PHhm6UU1MNMX0Wu_IfvsNhdOnLiyMIRHKfSw1gTiF8IMEzQ",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTcxMjAzMSwiZXhwIjoxNjIxNzk4NDMxfQ.eoo4EAc1oU8jAQtxwZ5udkQk75661mfs7lM9f02zlyLC2WB3WHPMB4xpNmi-3xF4LMOHbOtV_C7gWjbE2b3j_w",
 									"type": "string"
 								}
 							]
@@ -783,7 +776,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/visit/freeDays?doctorId=6072f6d9be924626109ceb94&startDate=2021-05-18&durationDate=6&durationTime=10",
+							"raw": "http://localhost:8080/api/visit/freeDays?doctorId=6072f6d9be924626109ceb94&startDate=2021-05-18&durationDate=7&durationTime=100",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -805,11 +798,11 @@
 								},
 								{
 									"key": "durationDate",
-									"value": "6"
+									"value": "7"
 								},
 								{
 									"key": "durationTime",
-									"value": "10"
+									"value": "100"
 								}
 							]
 						}
@@ -1031,6 +1024,413 @@
 								"visit",
 								"6091458c7792092ffdaa576e",
 								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "images",
+			"item": [
+				{
+					"name": "download",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/image/download/6091458c7792092ffdaa576e60ace56cacb4e4077405c28a.png?token=eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMjIxMzQzMCwiZXhwIjoxNjIyMjk5ODMwfQ.UAMfGkA8CzJAk5xEzXy3rZfbTxOnCpzP-FSLGU4hDdZbDue_1k6I72Mlivf-QOxsO9wq_WdoXSccs69ExnD9kg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"image",
+								"download",
+								"6091458c7792092ffdaa576e60ace56cacb4e4077405c28a.png"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMjIxMzQzMCwiZXhwIjoxNjIyMjk5ODMwfQ.UAMfGkA8CzJAk5xEzXy3rZfbTxOnCpzP-FSLGU4hDdZbDue_1k6I72Mlivf-QOxsO9wq_WdoXSccs69ExnD9kg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/mnt/Other/Downloads/GitLab.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/image/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"image",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "recipe",
+			"item": [
+				{
+					"name": "save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dateTime\": \"2021-05-25T11:29\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dateTime\": \"2021-07-25T11:29\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe",
+								"6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dateTime\": \"2021-07-25T11:29\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe",
+								"6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findRecipeByVisitIdAndId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe",
+								"6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findRecipeByVisitId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findRecipeByDoctorId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/doctor/6072f6d9be924626109ceb94/recipe/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"doctor",
+								"6072f6d9be924626109ceb94",
+								"recipe",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveImage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMjIxMzQzMCwiZXhwIjoxNjIyMjk5ODMwfQ.UAMfGkA8CzJAk5xEzXy3rZfbTxOnCpzP-FSLGU4hDdZbDue_1k6I72Mlivf-QOxsO9wq_WdoXSccs69ExnD9kg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/mnt/Other/Downloads/Telegram Desktop/Sea of Thieves Screenshot 2021.04.11 - 01.21.59.51.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace56cacb4e4077405c28a/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe",
+								"6091458c7792092ffdaa576e60ace56cacb4e4077405c28a",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findImage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTk4NDM0NiwiZXhwIjoxNjIyMDcwNzQ2fQ.jLF69wCZiTb5jZ1BpFgWDwcxu9wKgZJbbCEZntN659pOkpb7ZqqTrANemURvEVAxbbuECMBPw7b53ea0TMMBUQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace56cacb4e4077405c28a/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe",
+								"6091458c7792092ffdaa576e60ace56cacb4e4077405c28a",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteImage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTk4NDM0NiwiZXhwIjoxNjIyMDcwNzQ2fQ.jLF69wCZiTb5jZ1BpFgWDwcxu9wKgZJbbCEZntN659pOkpb7ZqqTrANemURvEVAxbbuECMBPw7b53ea0TMMBUQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace56cacb4e4077405c28a/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"visit",
+								"6091458c7792092ffdaa576e",
+								"recipe",
+								"6091458c7792092ffdaa576e60ace56cacb4e4077405c28a",
+								"image"
 							]
 						}
 					},

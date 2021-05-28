@@ -57,7 +57,6 @@ public class ImageController {
         try {
             Path path = imageService.getImage(fileName);
             resource = new UrlResource(path.toUri());
-            System.out.println("wtf");
         }catch (FileNotFoundException e){
             logger.warn(e.getMessage());
             return new ResponseEntity("File not found", HttpStatus.NOT_FOUND);

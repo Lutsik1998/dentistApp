@@ -95,9 +95,9 @@ public class VisitController {
 
     @GetMapping(value = "/freeDays")
     public ResponseEntity<List<LocalDate>> getFreeTimeDates(@RequestParam("doctorId") String doctorId,
-                                                          @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                          @RequestParam("durationDate")  long durationDate,
-                                                          @RequestParam("durationTime") long durationTime) {
+                                                            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                            @RequestParam("durationDate")  long durationDate,
+                                                            @RequestParam("durationTime") long durationTime) {
         try {
             List<LocalDate> visitList = visitService.findFreeDatesByDateTimeStartAndDateTimeEndAndDoctorIdTaskDurationSortedByDateStart(startDate, startDate.plusDays(durationDate), durationTime, doctorId);
             return new ResponseEntity<List<LocalDate>>(visitList, HttpStatus.OK);
@@ -108,8 +108,8 @@ public class VisitController {
 
     @GetMapping(value = "/filter1")
     public ResponseEntity<List<Visit>> FilterVisits(@RequestParam("doctorId") String doctorId,
-                                                            @RequestParam("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
-                                                            @RequestParam("endDateTime")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime) {
+                                                    @RequestParam("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
+                                                    @RequestParam("endDateTime")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime) {
         try {
             List<Visit> visitList = visitService.findByDateTimeStartAndDateTimeEndAndDoctorIdSortedByDateTimeStart(startDateTime, endDateTime,  doctorId);
             return new ResponseEntity<List<Visit>>(visitList, HttpStatus.OK);

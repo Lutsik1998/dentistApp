@@ -2,17 +2,24 @@ package com.dentistapp.dentistappdevelop.controller;
 
 
 import com.dentistapp.dentistappdevelop.dto.LoginDto;
+import com.dentistapp.dentistappdevelop.model.LoginUser;
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Review;
 import com.dentistapp.dentistappdevelop.model.Roles;
 import com.dentistapp.dentistappdevelop.security.payload.MessageResponse;
 import com.dentistapp.dentistappdevelop.service.PatientService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerErrorException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -74,20 +81,48 @@ public class PatientController {
 
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable(value = "id") String patientId, @RequestBody @Valid Patient patientDetails) throws ResourceNotFoundException {
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Patient> updatePatient(@PathVariable(value = "id") String patientId, Authentication authentication, @RequestHeader (name="Authorization") String token, @RequestBody @Valid Patient patientDetails) throws ResourceNotFoundException {
+        List<String> rolesList = authController.jwtUtils.getRoles(authentication);
+        if(!rolesList.contains("ROLE_ADMIN") && !rolesList.contains("ROLE_DOCTOR")){
+            List<String> userIdFromJWT = authController.jwtUtils.getUserIdFromJwtToken(token.substring(7,token.length()));
+            if(!userIdFromJWT.contains(patientId)) {
+                return new ResponseEntity("Cannot update another user", HttpStatus.NOT_ACCEPTABLE);
+            }
+        }
         patientDetails.setId(patientId);
         Patient patient = patientService.update(patientDetails);
         final Patient updatedPatient =  patientService.patientRepository().save(patient);
         patient.toDTO();
         return ResponseEntity.ok(updatedPatient);
+
+    }
+
+    @PutMapping("/updatePassword/{id}")
+    public ResponseEntity<?> updatePassword(@PathVariable(value = "id") String doctorId, Authentication authentication,
+                                            @RequestHeader (name="Authorization") String token, @RequestBody LoginUser loginUser) {
+        List<String> rolesList = authController.jwtUtils.getRoles(authentication);
+        if(!rolesList.contains("ROLE_ADMIN")){
+            List<String> userIdFromJWT = authController.jwtUtils.getUserIdFromJwtToken(token.substring(7,token.length()));
+            if(!userIdFromJWT.contains(doctorId)) {
+                return new ResponseEntity("Cannot update password another user", HttpStatus.NOT_ACCEPTABLE);
+            }
+        }
+        try {
+            patientService.updatePassword(doctorId,loginUser.getPassword());
+            return new ResponseEntity<>("Password updated", HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity(e.getMessage(), e.getStatus());
+        }
     }
 
 
 //    @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @GetMapping (value = "/all")
-    public ResponseEntity<List<Patient>> getAllUsers() {
+    public ResponseEntity<List<Patient>> getAllUsers(@RequestHeader (name="Authorization") String token) {
+        String userNameFromJWT = authController.jwtUtils.getUserNameFromJwtToken(token.substring(7,token.length()));
+        System.out.println(userNameFromJWT);
         List<Patient> patients = patientService.findAll();
         if(patients == null){
             return new ResponseEntity( null, HttpStatus.NO_CONTENT);
