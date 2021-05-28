@@ -2,11 +2,13 @@ package com.dentistapp.dentistappdevelop.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 public class Visit extends BaseEntity {
@@ -27,4 +29,6 @@ public class Visit extends BaseEntity {
     @NotNull
     private String patientId;
     private Review review;
+    private boolean finished = false;
+    private List<Recipe> recipes;
 }

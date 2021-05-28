@@ -82,9 +82,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/patient/auth/signup").permitAll()
                 .antMatchers("/api/doctor/auth/signup").permitAll()
                 .antMatchers("/api/user/auth/signin").permitAll()
-                .antMatchers("/api/admin/*").permitAll()
+                .antMatchers("/api/image/**").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/api/admin/**").permitAll()
 
-                //.antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
                 .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

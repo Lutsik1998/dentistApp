@@ -65,10 +65,4 @@ public class AuthController {
         jwtUtils.invalidateRelatedTokens(httpServletRequest);
         return new ResponseEntity(null, HttpStatus.OK);
     }
-
-
-
-
-
-
 }
