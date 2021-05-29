@@ -1,0 +1,52 @@
+@import 'var';
+
+.table-container {
+    table {
+        width: 100%;
+    }
+}
+
+.card-number {
+    color: $primary;
+    cursor: pointer;
+    &:hover {
+        color: $accent;
+        font-weight: bolder;
+    }
+}
+
+.no-patient {
+    color: $warn;
+}
+
+
+  #time{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+  }
+  
+  .example-large-box {
+    height: 500px;
+    width: 500px;
+  }
+  #rez {
+    background-color:$primary; /* Green */
+    border: none;
+    color: white;  
+    text-align: center;
+    text-decoration: none;
+    flex:0 0 100px;
+  }
+.mat-column-sex{
+  flex:0 0 100px;
+ }
+ .mat-column-email{
+  flex:0 0 100px;
+}
+#text_info{
+  width:100%; /* Ширина поля в процентах */
+  resize: none;
+}

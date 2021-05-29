@@ -1,12 +1,21 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
 import com.dentistapp.dentistappdevelop.model.Patient;
+import com.dentistapp.dentistappdevelop.model.Review;
+import com.dentistapp.dentistappdevelop.model.Visit;
 import com.dentistapp.dentistappdevelop.repository.PatientRepository;
 import com.dentistapp.dentistappdevelop.service.PatientService;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,10 +28,25 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
 
     @Override
     public PatientRepository patientRepository() {
         return this.patientRepository;
+    }
+
+
+    @Override
+    public void updatePassword(String patientId, String newPassword) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("_id").is(patientId));
+        Update update = new Update();
+        update.set("password", passwordEncoder.encode(newPassword));
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, Patient.class, "patient");
+        if (updateResult.getModifiedCount() <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -48,8 +72,8 @@ public class PatientServiceImpl implements PatientService {
         if (patientsDetails.getCardNumber() != 0) {
             patient.setCardNumber(patientsDetails.getCardNumber());
         }
-        if (patientsDetails.getAddres() != null && !patientsDetails.getAddres().equals("")) {
-            patient.setAddres(patientsDetails.getAddres());
+        if (patientsDetails.getAddress() != null && !patientsDetails.getAddress().equals("")) {
+            patient.setAddress(patientsDetails.getAddress());
         }
         if (patientsDetails.getPhoneNumber() != null && !patientsDetails.getPhoneNumber().equals("")) {
             patient.setPhoneNumber(patientsDetails.getPhoneNumber());
@@ -71,5 +95,13 @@ public class PatientServiceImpl implements PatientService {
             patient.toDTO();
         }
         return patients;
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        if (id == null || id.equals("") || id.length() != 24) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + id + "\"");
+        }
+        return patientRepository.existsById(id);
     }
 }

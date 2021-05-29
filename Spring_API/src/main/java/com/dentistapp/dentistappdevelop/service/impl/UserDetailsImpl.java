@@ -43,7 +43,7 @@ public class UserDetailsImpl implements UserDetails {
 //        List<GrantedAuthority> authorities = loginUser.getRoles().stream()
 //                .map(role -> new SimpleGrantedAuthority(role.name()))
 //                .collect(Collectors.toList());
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        LinkedHashSet<GrantedAuthority> authorities = new LinkedHashSet<>();
         for (Roles role: loginUser.getRoles()) {
             authorities.add(new SimpleGrantedAuthority(role.name()));
 //            role.getPrivileges().stream()
@@ -61,6 +61,7 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
+
 
     public String getId() {
         return id;

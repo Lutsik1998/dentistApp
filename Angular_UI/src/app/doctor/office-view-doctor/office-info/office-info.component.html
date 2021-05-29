@@ -1,27 +1,58 @@
-<app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" header="Informacje i kontakt"></app-subheader-edit>
-<form [formGroup]="infoForm" class="grid mt-lg-3">
-    <div>Nazwa:</div>
-    <mat-form-field class="example-full-width">
-        <input matInput formControlName="name">
-    </mat-form-field>
-    <div>ADRES:</div>
-    <mat-form-field class="example-full-width">
-        <input matInput formControlName="address">
-    </mat-form-field>
-    <div>TELEFON:</div>
-    <mat-form-field class="example-full-width">
-        <input type="number" matInput formControlName="phone">
-    </mat-form-field>
-    <div>EMAIL:</div>
-    <mat-form-field class="example-full-width">
-        <input type="email" matInput formControlName="email">
-    </mat-form-field>
-    <div>NIP:</div>
-    <mat-form-field class="example-full-width">
-        <input matInput formControlName="nip">
-    </mat-form-field>
-    <div>REGON:</div>
-    <mat-form-field class="example-full-width">
-        <input matInput formControlName="regon">
-    </mat-form-field>
-</form>
+<ng-container *ngIf="isLoaded">
+    <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Informacje i kontakt"></app-subheader-edit>
+    <form [formGroup]="infoForm" class="row">
+        <mat-form-field class="col-12">
+            <mat-label>Nazwa</mat-label>
+            <input formControlName="name" type="text" matInput>
+            <mat-error *ngIf="infoForm.get('name').hasError('required')">
+                Nazwa jest wymagana!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>Telefon</mat-label>
+            <input formControlName="phone" type="number" matInput>
+            <mat-error *ngIf="infoForm.get('phone').hasError('required')">
+                Telefon jest wymagany!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12">
+            <mat-label>NIP</mat-label>
+            <input formControlName="nip" type="number" matInput>
+            <mat-error *ngIf="infoForm.get('nip').hasError('required')">
+                NIP jest wymagany!
+            </mat-error>
+        </mat-form-field>
+        <form formGroupName="address">
+            <mat-form-field class="col-12">
+                <mat-label>Miasto</mat-label>
+                <input formControlName="city" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('city').hasError('required')">
+                    Miasto jest wymagane!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-12">
+                <mat-label>Kod pocztowy</mat-label>
+                <input formControlName="postalCode" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('postalCode').hasError('required')">
+                    Kod pocztowy jest wymagany!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-12">
+                <mat-label>Ulica</mat-label>
+                <input formControlName="street" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('street').hasError('required')">
+                    Ulica jest wymagana!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-12">
+                <mat-label>Numer domu</mat-label>
+                <input formControlName="houseNr" type="text" matInput>
+                <mat-error *ngIf="infoForm.get('address').get('houseNr').hasError('required')">
+                    Numer domu jest wymagany!
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </form>
+</ng-container>
+<app-spinner *ngIf="!isLoaded"></app-spinner>
+

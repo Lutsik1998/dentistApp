@@ -12,7 +12,7 @@ export class DoctorGuard implements CanLoad, OnDestroy {
   userRole: UserRole;
   constructor(private auth: AuthService, private router: Router) {
     this.sub.add(this.auth.currentUser.subscribe(res => {
-      this.userRole = res.role;
+      this.userRole = res?.role;
     }))
   }
 

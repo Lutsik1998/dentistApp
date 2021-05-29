@@ -1,17 +1,19 @@
 package com.dentistapp.dentistappdevelop.controller;
 
 import com.dentistapp.dentistappdevelop.dto.LoginDto;
+import com.dentistapp.dentistappdevelop.model.Patient;
 import com.dentistapp.dentistappdevelop.security.jwt.JwtUtils;
 import com.dentistapp.dentistappdevelop.security.payload.JwtResponse;
-import com.dentistapp.dentistappdevelop.service.DoctorService;
 import com.dentistapp.dentistappdevelop.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +55,7 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
+                userDetails.getId().toString(),
                 userDetails.getEmail(),
                 roles.toString()));
     }
@@ -63,6 +65,4 @@ public class AuthController {
         jwtUtils.invalidateRelatedTokens(httpServletRequest);
         return new ResponseEntity(null, HttpStatus.OK);
     }
-
-
 }

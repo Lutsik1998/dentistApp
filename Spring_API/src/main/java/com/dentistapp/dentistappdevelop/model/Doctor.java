@@ -11,6 +11,9 @@ public class Doctor extends User {
     @NotNull
     private String licence;
     private List<String> specialization;
+    private float rating;
 
-
+    public void toDTO(){
+        super.toDTO();
+    }
 }

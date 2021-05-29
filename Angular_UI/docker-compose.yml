@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: despenrado/dentist-angular-webui:dev
     container_name: dentist-angular-webui
+    image: dentist-angular-webui:dev.1
     ports:
-      - "4200:4200"
+      - "80:80"

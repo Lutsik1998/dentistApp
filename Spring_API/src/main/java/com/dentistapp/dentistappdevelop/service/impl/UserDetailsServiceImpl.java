@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Service
@@ -26,23 +27,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Set<Roles> rolesSet = new HashSet<>();
+        LinkedHashSet<Roles> rolesSet = new LinkedHashSet<>();
+        LinkedHashSet<String> stringSetId = new LinkedHashSet<>();
         LoginUser user = null;
-        if(patientService.patientRepository().existsByEmail(email)){
+        if (doctorService.doctorRepository().existsByEmail(email)) {
+            rolesSet.add(Roles.ROLE_DOCTOR);
+            user = doctorService.doctorRepository().findByEmail(email);
+            stringSetId.add(user.getId());
+        }
+        if (patientService.patientRepository().existsByEmail(email)) {
             rolesSet.add(Roles.ROLE_PATIENT);
             user = patientService.patientRepository().findByEmail(email);
+            stringSetId.add(user.getId());
         }
-        if(doctorService.doctorRepository().existsByEmail(email)){
-            rolesSet.add(Roles.ROLE_DOCTOR);
-            if (user == null){
-                user = doctorService.doctorRepository().findByEmail(email);
-            }
-        }
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User Not Found with email: " + email);
         }
         user.setRoles(rolesSet);
-        return UserDetailsImpl.build(user);
+        user.setId(stringSetId.toString());
+        UserDetailsImpl userDetails = UserDetailsImpl.build(user);
+        return userDetails;
     }
 
 }

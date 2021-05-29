@@ -1,0 +1,11 @@
+@import 'var';
+
+ngb-rating {
+    .star {
+        font-size: 2rem;
+        color: $accent-lighter;
+      }
+      .filled {
+        color: #d4af37;
+      }
+}

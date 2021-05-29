@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {ParentErrorStateMatcher, PasswordValidator} from '../validators';
-import {Patient} from '../../interfaces/patient'
+import {Patient} from '../../models/patient'
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -40,6 +40,10 @@ export class RegistrationComponent implements OnInit {
       { type: 'required', message: 'Date of birth is required' },
       { type: 'pattern', message: 'Enter a valid Date of birth' }
     ],
+    'phoneNumber': [
+      { type: 'required', message: 'Phone number is required' },
+      { type: 'pattern', message: 'Enter a valid phone number' }
+    ],
     'confirm_password': [
       { type: 'required', message: 'Confirm password is required' },
       { type: 'areEqual', message: 'Password mismatch' }
@@ -72,9 +76,6 @@ export class RegistrationComponent implements OnInit {
       return PasswordValidator.areEqual(formGroup);
     });
 
-    // user details form validations
-
-    // user links form validations
     this.accountDetailsForm = this.fb.group({
       firstName: new FormControl('', Validators.compose([
         Validators.required,
@@ -100,15 +101,39 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      phoneNumber: new FormControl('', Validators.compose([
+      phoneNumber:new FormControl('', Validators.compose([
         Validators.pattern(''),
        ])),
+
       cardNumber: new FormControl('', Validators.compose([
         Validators.pattern(''),
        ])),
-      addres: new FormControl('', Validators.compose([
-        Validators.pattern(''),
-       ])),
+      address: this.fb.group({
+        country:new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        region: new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        city: new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        postalCode: new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        street: new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        houseNr: new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        roomNr: new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+        information:new FormControl('', Validators.compose([
+          Validators.pattern(''),
+         ])),
+      }),
       matching_passwords: this.matching_passwords_group,
       terms: new FormControl(false, Validators.pattern('true'))
     })
@@ -124,8 +149,8 @@ export class RegistrationComponent implements OnInit {
   onSubmitAccountDetails(value){
     this.user = value;
     this.user.password= value.matching_passwords.password;
-    this.user.addres = Object;
-    this.user.phoneNumber = Object
+    this.user.phoneNumber = ['+24312312124'];
+    this.user.roles = [];
     var role = this.register(this.user);
     console.log(this.user);
   }

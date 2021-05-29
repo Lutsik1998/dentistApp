@@ -1,9 +1,12 @@
+@import "var";
+
 :host {
     display: inline-block;
-    .grid {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        row-gap: 1em;
-        column-gap: 1em;
+    button {
+        height: 40px;
+    }
+    .mat-input-element:disabled {
+        color: currentColor;
     }
 }
+

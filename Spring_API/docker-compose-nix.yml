@@ -25,6 +25,8 @@ services:
       - cache-db
     ports:
       - 8080:8080
+    volumes:
+      - ./img_db/:/img_db
     links: # list mapping: service_name:name_how_will_see_your_program
       - main-db
       - cache-db

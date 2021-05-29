@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../services/auth.service';
-import { User } from '../../interfaces/user'
+import { User } from '../../models/user'
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserRole } from 'src/app/enums/various.enum';
+
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
+  
   constructor(private router: Router,private authService: AuthService, private snackbar: SnackbarService) { }
 
   ngOnInit(): void {

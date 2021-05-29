@@ -27,6 +27,9 @@ services:
       - 8080:8080
     links: # list mapping: service_name:name_how_will_see_your_program
       - main-db
+      - cache-db
+    volumes:
+      - ./img_db/:/img_db
   angular-WebUI:
     build:
       context: ./Angular_UI
