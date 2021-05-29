@@ -1109,7 +1109,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMjMwNDgxNiwiZXhwIjoxNjIyMzkxMjE2fQ.YljdRgcJpNGSsc6qBW3R2U8F19nerVK1fumEOM89xX8alQUsLERzxBqT2efbYAYOMhyxqpSkMIW8DYmLEaRmpw",
 									"type": "string"
 								}
 							]
@@ -1118,7 +1118,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"dateTime\": \"2021-05-25T11:29\"\n}",
+							"raw": "{\n  \"recipeNumber\": \"string\",\n  \"codeMFI\": \"01\",\n  \"drugs\": \"string\",\n  \"dateTime\": \"2021-05-29T16:12\",\n  \"lastDate\": \"2021-05-29\",\n  \"additionalProperties\": \"RO\",\n  \"payment\": \"10%\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1150,7 +1150,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMjMwNDgxNiwiZXhwIjoxNjIyMzkxMjE2fQ.YljdRgcJpNGSsc6qBW3R2U8F19nerVK1fumEOM89xX8alQUsLERzxBqT2efbYAYOMhyxqpSkMIW8DYmLEaRmpw",
 									"type": "string"
 								}
 							]
@@ -1159,7 +1159,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"recipeNumber\": \"string\",\n  \"codeMFI\": \"01\",\n  \"drugs\": \"string\",\n  \"dateTime\": \"2021-05-29T16:12\",\n  \"lastDate\": \"2021-05-29\"\n}",
+							"raw": "{\n  \"recipeNumber\": \"string\",\n  \"codeMFI\": \"01\",\n  \"drugs\": \"string\",\n  \"dateTime\": \"2021-05-29T16:12\",\n  \"lastDate\": \"2021-05-29\",\n  \"additionalProperties\": \"RO\",\n  \"payment\": \"B\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1167,7 +1167,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b",
+							"raw": "http://localhost:8080/api/visit/6091458c7792092ffdaa576e/recipe/6091458c7792092ffdaa576e60b27a07f7066509f4f400ac",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1178,7 +1178,7 @@
 								"visit",
 								"6091458c7792092ffdaa576e",
 								"recipe",
-								"6091458c7792092ffdaa576e60ace7e7acb4e4077405c28b"
+								"6091458c7792092ffdaa576e60b27a07f7066509f4f400ac"
 							]
 						}
 					},
@@ -1267,7 +1267,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMTg5NDQ2MywiZXhwIjoxNjIxOTgwODYzfQ.AAk__dXoCaDCpT9j5HM6Pk-6bIO0CZQri4vDhsmfWq6OSKi4tB0QtJTQQM4y91f-mzAEr30py7NOiPXF1x1KOw",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJbNjA3MmY2ZDliZTkyNDYyNjEwOWNlYjk0LCA2MDc0MmEzMzAyNTNiNjA5ZjQxOTMxYzBdIiwic3ViIjoiM190ZXN0QHRlc3QudCIsImlhdCI6MTYyMjMwNDgxNiwiZXhwIjoxNjIyMzkxMjE2fQ.YljdRgcJpNGSsc6qBW3R2U8F19nerVK1fumEOM89xX8alQUsLERzxBqT2efbYAYOMhyxqpSkMIW8DYmLEaRmpw",
 									"type": "string"
 								}
 							]

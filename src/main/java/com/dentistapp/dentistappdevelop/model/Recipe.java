@@ -25,4 +25,7 @@ public class Recipe extends BaseEntity {
     @NotNull
     @Schema(pattern = "yyyy-MM-dd")
     private LocalDate lastDate;
+    private String additionalProperties;
+    @Pattern(regexp = "^(B|R)|((100|([0-9]{1,2}(,[0-9]*)?))%)$")
+    private String payment;
 }
