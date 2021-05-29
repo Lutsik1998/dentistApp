@@ -1159,7 +1159,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"dateTime\": \"2021-07-25T11:29\"\n}",
+							"raw": "{\n  \"recipeNumber\": \"string\",\n  \"codeMFI\": \"01\",\n  \"drugs\": \"string\",\n  \"dateTime\": \"2021-05-29T16:12\",\n  \"lastDate\": \"2021-05-29\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
