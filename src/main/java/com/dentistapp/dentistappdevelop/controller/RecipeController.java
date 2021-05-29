@@ -126,7 +126,7 @@ public class RecipeController {
 //        if (!jwtUtils.validateJwtToken(token)){
 //            return new ResponseEntity("401 - Unauthorized".getBytes(), HttpStatus.UNAUTHORIZED);
 //        }
-        
+
         String fileName = recipeService.saveImage(visitId, recipeId, multipartFile);
         if (fileName == null || fileName.equals("")) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
