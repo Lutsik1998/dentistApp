@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, NgModule, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { MatListOption } from '@angular/material/list';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,6 +19,7 @@ import { OfficeService } from 'src/app/services/office.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 @Component({
   selector: 'app-patients-view',
   templateUrl: './patients-view.component.html',
@@ -50,7 +52,8 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     private doctorService: DoctorService,
     private modalService: NgbModal,
     private router: Router,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    public dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
@@ -107,11 +110,21 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   }
 
   deletePatient(id: string) {
-    this.sub.add(this.patientService.deletePatient(id).subscribe(res => {
-      this.snackbar.success('Pacjent usunięty')
-      this.getData();
-    }, err => {
-      this.snackbar.error('Pacjent nie został usunięty')
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        text: "Czy na pewno chcesz usunąć pacjenta?"
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.patientService.deletePatient(id).subscribe(res => {
+          this.snackbar.success('Pacjent usunięty')
+          this.getData();
+        }, err => {
+          this.snackbar.error('Pacjent nie został usunięty')
+        }))
+      }
     }))
   }
 

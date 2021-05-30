@@ -10,6 +10,7 @@ import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-reviews.component';
 
 @Component({
@@ -74,11 +75,20 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
   }
 
   deleteDoctor(id: string) {
-    this.sub.add(this.doctorService.deleteDoctor(id).subscribe(res => {
-      this.snackBar.success('Lekarz usunięty')
-      this.getData();
-    }, err => {
-      this.snackBar.error('Lekarz nie został usunięty')
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        text: "Czy na pewno chcesz usunąć lekarza?"
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.doctorService.deleteDoctor(id).subscribe(res => {
+          this.snackBar.success('Lekarz usunięty')
+          this.getData();
+        }, err => {
+          this.snackBar.error('Lekarz nie został usunięty')
+        }))
+      }
     }))
   }
 
