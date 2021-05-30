@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AngularMaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
@@ -40,7 +40,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     NgbModule,
     ConfirmationDialogComponent,
     DoctorReviewsComponent,
-    ChangePasswordComponent
-  ]
+    ChangePasswordComponent,
+    DoctorReviewsComponent
+  ],
+  providers: [DatePipe]
 })
 export class SharedModule { }

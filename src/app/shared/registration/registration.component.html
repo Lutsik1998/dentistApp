@@ -45,7 +45,7 @@
                         </mat-form-field>
                         <mat-form-field class="col-12 mb-2">
                             <mat-label>Data urodzenia</mat-label>
-                            <input type="date" formControlName="birthDate" matInput placeholder="Data urodzenia" required>
+                            <input type="date"  [min]="min" [max]="max" formControlName="birthDate" matInput placeholder="Data urodzenia" required>
                             <mat-error *ngFor="let validation of account_validation_messages.birthDate">
                                 <mat-error class="error-message"
                                     *ngIf="accountDetailsForm.get('birthDate').hasError(validation.type) && (accountDetailsForm.get('birthDate').dirty || accountDetailsForm.get('birthDate').touched)">

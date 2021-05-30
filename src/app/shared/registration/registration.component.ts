@@ -4,6 +4,7 @@ import {ParentErrorStateMatcher, PasswordValidator} from '../validators';
 import {Patient} from '../../models/patient'
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-registration',
@@ -57,10 +58,18 @@ export class RegistrationComponent implements OnInit {
       { type: 'pattern', message: 'You must accept terms and conditions' }
     ]
   }
+  maxDate: Date;
+  minDate: Date;
+  max: string;
+  min:string;
 
-
-  constructor(private fb: FormBuilder,private authService: AuthService,private router: Router) { }
+  constructor(private fb: FormBuilder,private authService: AuthService,private router: Router,private datePipe:DatePipe) { }
   ngOnInit(): void {
+    this.maxDate = new Date();
+    this.minDate = new Date(1921,0,1);
+    this.max = this.datePipe.transform(this.maxDate,'yyyy-MM-dd');
+    this.min = this.datePipe.transform(this.minDate,'yyyy-MM-dd');
+    console.log(this.max,this.min);
     this.createForms();
   }
   createForms() {
@@ -147,9 +156,11 @@ export class RegistrationComponent implements OnInit {
     )
   }
   onSubmitAccountDetails(value){
+    
     this.user = value;
     this.user.password= value.matching_passwords.password;
-    this.user.phoneNumber = ['+24312312124'];
+
+    this.user.phoneNumber = [this.user.phoneNumber.toString()];
     this.user.roles = [];
     var role = this.register(this.user);
     console.log(this.user);
