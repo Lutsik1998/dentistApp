@@ -2,7 +2,7 @@
     <div class="table-container mt-5 pb-3">
         <div class="d-flex justify-content-between">
             <h4 id="subheader">Lekarze</h4>
-            <button (click)="addDoctor()" mat-raised-button color="primary">Dodaj lekarza</button>
+            <button *ngIf="isAdmin" (click)="addDoctor()" mat-raised-button color="primary">Dodaj lekarza</button>
         </div>
         <mat-form-field class="w-100">
             <mat-label>Szukaj lekarza</mat-label>
@@ -35,6 +35,12 @@
                 <th mat-header-cell *matHeaderCellDef> Email </th>
                 <td mat-cell *matCellDef="let element"> {{element.email}} </td>
               </ng-container>
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef> Usuń lekarza </th>
+              <td mat-cell *matCellDef="let element"> 
+                <button *ngIf="!isLoggedIn(element)" (click)="deleteDoctor(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>  
+              </td>
+            </ng-container>
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell no-patient" colspan="4">Brak lekarza: "{{input.value}}"</td>
             </tr>

@@ -17,7 +17,7 @@ import { MatListOption } from '@angular/material/list';
 import { Visit } from 'src/app/models/visit';
 import { OfficeService } from 'src/app/services/office.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/user';
+import { CurrentUser, User } from 'src/app/models/user';
 
 import { PatientService } from 'src/app/services/patient.service';
 import { VisitService } from 'src/app/services/visit.service';
@@ -51,7 +51,7 @@ export class DoctorViewComponent implements OnInit {
   sub: Subscription = new Subscription();
   closeResult = '';
   visitForm: Visit;
-  user: User;
+  user: CurrentUser;
   constructor(
     private visitService: VisitService,
     private authService: AuthService,

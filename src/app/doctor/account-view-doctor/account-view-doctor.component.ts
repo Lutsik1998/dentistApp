@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { DoctorAddRequestModel } from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ChangePasswordComponent } from 'src/app/shared/change-password/change-password.component';
 
 @Component({
   selector: 'app-account-view-doctor',
@@ -17,9 +19,9 @@ export class AccountViewDoctorComponent implements OnInit, OnDestroy {
     password: [''],
     roles: [''],
     firstName: ['', [Validators.required]],
-    secondName: ['', [Validators.required]],
+    secondName: ['', ],
     lastName: ['', [Validators.required]],
-    pesel: ['', [Validators.required]],
+    pesel: ['', ],
     birthDate: ['', [Validators.required]],
     sex: ['', [Validators.required]],
     address: this.fb.group({
@@ -29,19 +31,23 @@ export class AccountViewDoctorComponent implements OnInit, OnDestroy {
       postalCode: ['', [Validators.required]],
       street: ['', [Validators.required]],
       houseNr: ['', [Validators.required]],
-      roomNr: ['', [Validators.required]],
-      information: ['', [Validators.required]],
+      roomNr: ['', ],
+      information: ['', ],
     }),
     phoneNumber: ['', [Validators.required]],
     licence: ['', [Validators.required]],
-    specialization: ['', [Validators.required]],
+    specialization: ['',],
   })
 
   isEditing: boolean = false;
   sub: Subscription = new Subscription();
   docId: string;
   isLoading: boolean = true;
-  constructor(private fb: FormBuilder, private docService: DoctorService, private auth: AuthService, private snackBar: SnackbarService) { }
+  constructor(private fb: FormBuilder,
+              private docService: DoctorService, 
+              private auth: AuthService, 
+              private snackBar: SnackbarService, 
+              public dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -59,8 +65,8 @@ export class AccountViewDoctorComponent implements OnInit, OnDestroy {
       this.sub.add(this.docService.getDoctorById(this.docId).subscribe(res => {
         this.docForm.patchValue({
           ...res,
-          phoneNumber: res.phoneNumber[0].number,
-          specialization: res.specialization[0],
+          phoneNumber: res.phoneNumber ? res.phoneNumber[0]?.number : '',
+          specialization: res.specialization ? res.specialization[0] : '',
         })
         this.isLoading = false;
       }))
@@ -84,6 +90,7 @@ export class AccountViewDoctorComponent implements OnInit, OnDestroy {
         number: this.docForm.get('phoneNumber').value
       }],
       specialization: [this.docForm.get('specialization').value],
+      password: ''
     }
     this.docService.updateDoctor(this.docId, data).subscribe(res => {
       this.snackBar.success('Aktualizacja danych powiodła się')
@@ -99,5 +106,19 @@ export class AccountViewDoctorComponent implements OnInit, OnDestroy {
   cancel($event) {
     this.getData();
     this.isEditing = false;
+  }
+
+  changePassword() {
+    const dialogRef = this.dialog.open(ChangePasswordComponent);
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.docService.changePassword(this.docId, res).subscribe(res => {
+          this.snackBar.success('Hasło zmienione');
+          this.getData();
+        }, err => {
+          this.snackBar.error('Hasło nie zostało zmienione');
+        }))
+      }
+    }))
   }
 }
