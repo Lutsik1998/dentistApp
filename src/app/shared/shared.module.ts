@@ -15,10 +15,11 @@ import { SubheaderEditComponent } from './subheader-edit/subheader-edit.componen
 import { PipesModule } from '../pipes/pipes.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -38,7 +39,8 @@ import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.componen
     AngularMaterialModule,
     NgbModule,
     ConfirmationDialogComponent,
-    DoctorReviewsComponent
+    DoctorReviewsComponent,
+    ChangePasswordComponent
   ]
 })
 export class SharedModule { }

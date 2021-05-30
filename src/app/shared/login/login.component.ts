@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(this.loginForm.value).subscribe(
       (user: User) =>{
-        console.log(user);
         if(user.role === UserRole.patient){
           this.router.navigate(['/patient/office'])
         }

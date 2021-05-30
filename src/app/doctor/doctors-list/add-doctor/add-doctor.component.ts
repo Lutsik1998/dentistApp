@@ -23,7 +23,7 @@ export class AddDoctorComponent implements OnInit, OnDestroy {
     }, {validator: StringsMatch('pass', 'confirmPass')}),
     roles: ['ROLE_DOCTOR'],
     firstName: ['', [Validators.required]],
-    secondName: ['', [Validators.required]],
+    secondName: ['',],
     lastName: ['', [Validators.required]],
     pesel: ['', [Validators.required]],
     birthDate: ['', [Validators.required]],

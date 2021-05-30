@@ -58,6 +58,9 @@ export class PatientService {
       .delete(this.getUrl + '/' + id)
       .pipe(catchError(this.handleError));
   }
+  changePassword(id: string, data: {password: string;}) {
+    return this.http.put(`${this.getUrl}/updatePassword/${id}`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
+  }
 
   handleError(error: HttpErrorResponse) {
     return throwError(error);

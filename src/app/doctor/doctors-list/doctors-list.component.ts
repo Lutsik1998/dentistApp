@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-reviews.component';
 
 @Component({
@@ -17,12 +18,16 @@ import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-rev
 export class DoctorsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   tableColumns: string[] = [];
-  displayedColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email'];
+  displayedColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email', 'delete'];
   displayedColumnsMobile: string[] = ['reviews', 'firstName', 'lastName'];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
   sub: Subscription = new Subscription();
 
-  constructor(private breakpointObserver: BreakpointObserver, private doctorService: DoctorService, private router: Router, public dialog: MatDialog) { }
+  constructor(private breakpointObserver: BreakpointObserver, 
+              private doctorService: DoctorService, 
+              private router: Router, 
+              public dialog: MatDialog,
+              private snackBar: SnackbarService) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -38,6 +43,10 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
         this.tableColumns = this.displayedColumns;
       }
     }));
+    this.getData();
+  }
+
+  getData() {
     this.sub.add(this.doctorService.getDoctors().subscribe(res => {
       this.dataSource = new MatTableDataSource(res)
       this.dataSource.paginator = this.paginator;
@@ -60,6 +69,15 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
 
   addDoctor() {
     this.router.navigate(['/doctor/add-doctor'])
+  }
+
+  deleteDoctor(id: string) {
+    this.sub.add(this.doctorService.deleteDoctor(id).subscribe(res => {
+      this.snackBar.success('Lekarz usunięty')
+      this.getData();
+    }, err => {
+      this.snackBar.error('Lekarz nie został usunięty')
+    }))
   }
 
   openDetails(id: string) {
