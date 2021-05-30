@@ -8,13 +8,15 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { UserRole } from 'src/app/enums/various.enum';
 import { PatientInfoResponseModel } from 'src/app/models/patient';
-import { User } from 'src/app/models/user';
+import { CurrentUser, User } from 'src/app/models/user';
 import { Visit } from 'src/app/models/visit';
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { OfficeService } from 'src/app/services/office.service';
 import { PatientService } from 'src/app/services/patient.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
 @Component({
   selector: 'app-patients-view',
@@ -43,7 +45,10 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   closeResult = '';
   visitForm: Visit;
-  user: User;
+  user: CurrentUser;
+  get isAdmin(): boolean {
+    return this.authService.getRole() == UserRole.admin;
+  }
   constructor(
     private visitService: VisitService,
     private officeService: OfficeService,
@@ -52,7 +57,8 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     private patientService: PatientService,
     private doctorService: DoctorService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private snackbar: SnackbarService
   ) {}
 
   ngOnDestroy(): void {
@@ -60,6 +66,9 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    if(this.isAdmin) {
+      this.displayedColumns.push('delete')
+    }
     this.visitForm = {
       dateTimeStart: '',
       dateTimeEnd: '',
@@ -95,14 +104,16 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
           }
         })
     );
+    this.getData();
+  }
+
+  getData() {
     this.sub.add(
       this.patientService.getPatients().subscribe((res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
       })
     );
-
-
   }
 
   applyFilter($event) {
@@ -112,6 +123,15 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
 
   addPatient() {
     this.router.navigate(['doctor/add-patient']);
+  }
+
+  deletePatient(id: string) {
+    this.sub.add(this.patientService.deletePatient(id).subscribe(res => {
+      this.snackbar.success('Pacjent usunięty')
+      this.getData();
+    }, err => {
+      this.snackbar.error('Pacjent nie został usunięty')
+    }))
   }
 
   openDetails(id: string) {

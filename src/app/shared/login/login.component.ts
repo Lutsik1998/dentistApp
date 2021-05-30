@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../services/auth.service';
-import { User } from '../../models/user'
+import { CurrentUser } from '../../models/user'
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserRole } from 'src/app/enums/various.enum';
 
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.login(this.loginForm.value).subscribe(
-      (user: User) =>{
+      (user: CurrentUser) =>{
         if(user.role === UserRole.patient){
           this.router.navigate(['/patient/office'])
         }
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/doctor/office'])
         }
         if(user.role === UserRole.admin){
-          this.router.navigate(['/patient/office'])
+          this.router.navigate(['/doctor/office'])
         }
       },
       (exc)=>{
