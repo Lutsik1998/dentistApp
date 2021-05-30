@@ -45,47 +45,51 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Szukaj pacjenta" #input>
             
         </mat-form-field>
-        <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="cardNumber">
-              <th mat-header-cell *matHeaderCellDef> Numer karty </th>
-              <td class="card-number" mat-cell *matCellDef="let element" (click)="openDetails(element.id)"> {{element.cardNumber}} </td>
-            </ng-container>
-            <ng-container matColumnDef="firstName">
-              <th mat-header-cell *matHeaderCellDef> Imię </th>
-              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-            </ng-container>
-            <ng-container matColumnDef="lastName">
-              <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
-              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-            </ng-container>
-            <ng-container matColumnDef="sex">
-              <th mat-header-cell *matHeaderCellDef> Płeć </th>
-              <td mat-cell *matCellDef="let element"> {{element.sex | gender}} </td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef> Email </th>
-                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        <div class="table-scroll">
+          <div class="table-container">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="cardNumber">
+                <th mat-header-cell *matHeaderCellDef> Numer karty </th>
+                <td class="card-number" mat-cell *matCellDef="let element" (click)="openDetails(element.id)"> {{element.cardNumber}} </td>
               </ng-container>
-              <ng-container matColumnDef="visit">
-                <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element"> 
-                  <button type="button" id="rez"(click)="open(content,element.id)" class="btn mr-1" data-toggle="modal"
-                  data-target="#exampleModal" data-backdrop="static" data-keyboard="false">wizyta
-                  </button>
-              </td>
+              <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Imię </th>
+                <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> {{element.firstName}} </td>
               </ng-container>
-            <ng-container matColumnDef="delete">
-              <th mat-header-cell *matHeaderCellDef> Usuń pacjenta </th>
-              <td mat-cell *matCellDef="let element"> 
-                <button (click)="deletePatient(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>  
-              </td>
-            </ng-container>
-            <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell no-patient" colspan="4">Brak pacjenta: "{{input.value}}"</td>
-            </tr>
-            <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
-          </table>
-          <mat-paginator class="mat-elevation-z8" #paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+              <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Nazwisko </th>
+                <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> {{element.lastName}} </td>
+              </ng-container>
+              <ng-container matColumnDef="sex">
+                <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Płeć </th>
+                <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> {{element.sex | gender}} </td>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Email </th>
+                  <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> {{element.email}} </td>
+                </ng-container>
+                <ng-container matColumnDef="visit">
+                  <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> </th>
+                  <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> 
+                    <button type="button" id="rez"(click)="open(content,element.id)" class="btn mr-1" data-toggle="modal"
+                    data-target="#exampleModal" data-backdrop="static" data-keyboard="false">wizyta
+                    </button>
+                </td>
+                </ng-container>
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Usuń pacjenta </th>
+                <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> 
+                  <button (click)="deletePatient(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button>  
+                </td>
+              </ng-container>
+              <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell no-patient" colspan="4">Brak pacjenta: "{{input.value}}"</td>
+              </tr>
+              <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+            </table>
+            <mat-paginator class="mat-elevation-z8" #paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
     </div>
 </div>

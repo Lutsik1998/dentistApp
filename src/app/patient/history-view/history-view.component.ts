@@ -19,9 +19,7 @@ import { RateVisitComponent } from './rate-visit/rate-visit.component';
 export class HistoryViewComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] =['start', 'end', 'info', 'delete'];
-  displayedColumnsMobile: string[] = ['start', 'delete','comment'];
+  tableColumns: string[] =['start', 'end', 'info', 'delete'];
   dataSource: MatTableDataSource<VisitResponseModel>;
 
   sub = new Subscription();
@@ -30,25 +28,13 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
   constructor(private visitService: VisitService,
               private authService: AuthService,
               private snackBar: SnackbarService,
-              public dialog: MatDialog,
-              private breakpointObserver: BreakpointObserver) { }
+              public dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.sub.add(
-      this.breakpointObserver
-        .observe(['(max-width: 692px)'])
-        .subscribe((result) => {
-          if (result.matches) {
-            this.tableColumns = this.displayedColumnsMobile;
-          } else {
-            this.tableColumns = this.displayedColumns;
-          }
-        })
-    );
     this.sub.add(this.authService.currentUser.subscribe(res => {
       this.patientId = res.id.slice(1,-1);
     }))

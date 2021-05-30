@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, NgModule, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { MatListOption } from '@angular/material/list';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,6 +19,7 @@ import { OfficeService } from 'src/app/services/office.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 @Component({
   selector: 'app-patients-view',
   templateUrl: './patients-view.component.html',
@@ -26,19 +28,12 @@ import { VisitService } from 'src/app/services/visit.service';
 
 export class PatientsViewComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] = [
+  tableColumns: string[] = [
     'cardNumber',
     'firstName',
     'lastName',
     'sex',
     'email',
-    'visit',
-  ];
-  displayedColumnsMobile: string[] = [
-    'cardNumber',
-    'firstName',
-    'lastName',
     'visit',
   ];
   dataSource: MatTableDataSource<PatientInfoResponseModel>;
@@ -53,12 +48,12 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     private visitService: VisitService,
     private officeService: OfficeService,
     private authService: AuthService,
-    private breakpointObserver: BreakpointObserver,
     private patientService: PatientService,
     private doctorService: DoctorService,
     private modalService: NgbModal,
     private router: Router,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    public dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
@@ -67,7 +62,7 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.isAdmin) {
-      this.displayedColumns.push('delete')
+      this.tableColumns.push('delete')
     }
     this.visitForm = {
       dateTimeStart: '',
@@ -93,17 +88,6 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     .subscribe((doctor) => {
       this.visitForm.doctorId = doctor.id;
     });
-    this.sub.add(
-      this.breakpointObserver
-        .observe(['(max-width: 692px)'])
-        .subscribe((result) => {
-          if (result.matches) {
-            this.tableColumns = this.displayedColumnsMobile;
-          } else {
-            this.tableColumns = this.displayedColumns;
-          }
-        })
-    );
     this.getData();
   }
 
@@ -126,11 +110,21 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   }
 
   deletePatient(id: string) {
-    this.sub.add(this.patientService.deletePatient(id).subscribe(res => {
-      this.snackbar.success('Pacjent usunięty')
-      this.getData();
-    }, err => {
-      this.snackbar.error('Pacjent nie został usunięty')
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        text: "Czy na pewno chcesz usunąć pacjenta?"
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.patientService.deletePatient(id).subscribe(res => {
+          this.snackbar.success('Pacjent usunięty')
+          this.getData();
+        }, err => {
+          this.snackbar.error('Pacjent nie został usunięty')
+        }))
+      }
     }))
   }
 
