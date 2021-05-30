@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { PatientUpdateRequestModel } from 'src/app/models/patient';
 import { AuthService } from 'src/app/services/auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ChangePasswordComponent } from 'src/app/shared/change-password/change-password.component';
 
 @Component({
   selector: 'app-account-view',
@@ -17,9 +19,9 @@ export class AccountViewComponent implements OnInit, OnDestroy {
     password: [''],
     roles: [''],
     firstName: ['', [Validators.required]],
-    secondName: ['', [Validators.required]],
+    secondName: [''],
     lastName: ['', [Validators.required]],
-    pesel: ['', [Validators.required]],
+    pesel: ['',],
     birthDate: ['', [Validators.required]],
     sex: ['', [Validators.required]],
     address: this.fb.group({
@@ -29,8 +31,8 @@ export class AccountViewComponent implements OnInit, OnDestroy {
       postalCode: ['', [Validators.required]],
       street: ['', [Validators.required]],
       houseNr: ['', [Validators.required]],
-      roomNr: ['', [Validators.required]],
-      information: ['', [Validators.required]],
+      roomNr: ['',],
+      information: ['',],
     }),
     phoneNumber: ['', [Validators.required]],
     cardNumber: ['', [Validators.required]],
@@ -40,7 +42,11 @@ export class AccountViewComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   patientId: string;
   isLoading: boolean = true;
-  constructor(private fb: FormBuilder, private patientService: PatientService, private auth: AuthService, private snackBar: SnackbarService) { }
+  constructor(private fb: FormBuilder, 
+              private patientService: PatientService, 
+              private auth: AuthService, 
+              private snackBar: SnackbarService, 
+              public dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -58,7 +64,7 @@ export class AccountViewComponent implements OnInit, OnDestroy {
       this.sub.add(this.patientService.getPatientById(this.patientId).subscribe(res => {
         this.patientForm.patchValue({
           ...res,
-          phoneNumber: res.phoneNumber[0].number,
+          phoneNumber: res.phoneNumber ? res.phoneNumber[0]?.number : '',
         })
         this.isLoading = false;
       }))
@@ -92,6 +98,20 @@ export class AccountViewComponent implements OnInit, OnDestroy {
       this.snackBar.error('Aktualizacja danych nie powiodła się')
       this.isLoading = false;
     })
+  }
+
+  changePassword() {
+    const dialogRef = this.dialog.open(ChangePasswordComponent);
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.patientService.changePassword(this.patientId, res).subscribe(res => {
+          this.snackBar.success('Hasło zmienione');
+          this.getData();
+        }, err => {
+          this.snackBar.error('Hasło nie zostało zmienione');
+        }))
+      }
+    }))
   }
 
   cancel($event) {

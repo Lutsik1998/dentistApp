@@ -17,7 +17,7 @@ import { MatListOption } from '@angular/material/list';
 import { Visit } from 'src/app/models/visit';
 import { OfficeService } from 'src/app/services/office.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/user';
+import { CurrentUser,User } from 'src/app/models/user';
 
 import { PatientService } from 'src/app/services/patient.service';
 import { VisitService } from 'src/app/services/visit.service';
@@ -51,20 +51,8 @@ export class DoctorViewComponent implements OnInit {
   sub: Subscription = new Subscription();
   closeResult = '';
   visitForm: Visit;
-  user: User;
-  listFreeDays: Date[]=[
-    new Date(2021,6,14),
-    new Date(2021,6,22),
-    new Date(2021,6,30),
-    new Date(2021,6,24),
-    new Date(2021,6,16),
-  ];
-  myFilter = (d: Date): boolean => {
-    // Prevent Saturday and Sunday from being selected.
-    // saturday is comming from the outter context
-    console.log(this.listFreeDays.some(e=> e.getDate() ===d.getDate()));
-    return d.getDay() !== 0 && d.getDay() !== 6 && d >= new Date() && this.listFreeDays.some(e=> e.getDate() ===d.getDate());
-  }
+  user: CurrentUser;
+ 
 
   constructor(
     private visitService: VisitService,
@@ -99,7 +87,7 @@ export class DoctorViewComponent implements OnInit {
       this.visitForm.officeId = res[0].id;
     });
     this.authService.currentUser.subscribe((res) => {
-      this.user = res;
+      this.user= res;
     });
     this.patientService
       .getPatientByEmail(this.user.email)

@@ -33,7 +33,10 @@ export class DoctorService {
     return this.http.put(`${this.getUrl}/update/${id}`, doctor).pipe(catchError(this.handleError))
   }
   deleteDoctor( id: string): Observable<any>{
-    return this.http.delete(this.getUrl + '/' + id).pipe(catchError(this.handleError))
+    return this.http.delete(`${this.getUrl}/delete/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError))
+  }
+  changePassword(id: string, data: {password: string;}) {
+    return this.http.put(`${this.getUrl}/updatePassword/${id}`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
   }
 
   handleError(error: HttpErrorResponse) {

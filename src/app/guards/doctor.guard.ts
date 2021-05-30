@@ -21,7 +21,7 @@ export class DoctorGuard implements CanLoad, OnDestroy {
   }
 
   canLoad() {
-    if(this.userRole == UserRole.doctor) {
+    if(this.userRole == UserRole.doctor || this.userRole == UserRole.admin) {
       return true;
     }
     this.router.navigate(['login'])
