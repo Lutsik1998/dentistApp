@@ -11,9 +11,8 @@
       <div class="modal-body">
         <mat-tab-group mat-align-tabs="center" #tabGroup>
           <mat-tab label="Date" #date>
-            <mat-calendar [dateClass]="dateClass()"  [selected]="selectedDate" (selectedChange)="onSelect($event,this.tabGroup)">
+            <mat-calendar [dateFilter]="myFilter" [dateClass]="dateClass()" [selected]="selectedDate" (selectedChange)="onSelect($event,this.tabGroup)">
             </mat-calendar>
-
           </mat-tab>
           <mat-tab label="Time" [disabled]="true">
             <mat-selection-list #time [multiple]="false"
@@ -24,9 +23,10 @@
             </mat-selection-list>
           </mat-tab>
           <mat-tab label="Info"  [disabled]="true">
-        
+            <mat-form-field class="w-100 mt-3">
               <mat-label>Leave a information</mat-label>
-              <textarea matInput rows="4" cols="100" id="text_info" #text  placeholder="Ex. It makes me feel..."></textarea>
+              <textarea matInput  id="text_info" #text  placeholder="Ex. It makes me feel..."></textarea>
+            </mat-form-field>
             <button type="button" class="btn btn-outline-dark" (click)="onchange(text.value)">Confirm</button>
           </mat-tab>
         </mat-tab-group>

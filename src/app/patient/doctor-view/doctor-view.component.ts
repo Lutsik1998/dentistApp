@@ -52,6 +52,20 @@ export class DoctorViewComponent implements OnInit {
   closeResult = '';
   visitForm: Visit;
   user: User;
+  listFreeDays: Date[]=[
+    new Date(2021,6,14),
+    new Date(2021,6,22),
+    new Date(2021,6,30),
+    new Date(2021,6,24),
+    new Date(2021,6,16),
+  ];
+  myFilter = (d: Date): boolean => {
+    // Prevent Saturday and Sunday from being selected.
+    // saturday is comming from the outter context
+    console.log(this.listFreeDays.some(e=> e.getDate() ===d.getDate()));
+    return d.getDay() !== 0 && d.getDay() !== 6 && d >= new Date() && this.listFreeDays.some(e=> e.getDate() ===d.getDate());
+  }
+
   constructor(
     private visitService: VisitService,
     private authService: AuthService,
