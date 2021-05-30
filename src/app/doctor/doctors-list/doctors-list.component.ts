@@ -19,9 +19,7 @@ import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-rev
 })
 export class DoctorsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email'];
-  displayedColumnsMobile: string[] = ['reviews', 'firstName', 'lastName'];
+  tableColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email'];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
   sub: Subscription = new Subscription();
 
@@ -33,8 +31,7 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
     return ele.id == this.auth.getId().slice(1,-1);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver, 
-              private doctorService: DoctorService, 
+  constructor(private doctorService: DoctorService, 
               private router: Router, 
               public dialog: MatDialog,
               private snackBar: SnackbarService,
@@ -46,17 +43,8 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.isAdmin) {
-      this.displayedColumns.push('delete');
+      this.tableColumns.push('delete');
     }
-    this.sub.add(this.breakpointObserver.observe([
-      '(max-width: 692px)'
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.tableColumns = this.displayedColumnsMobile;
-      } else {
-        this.tableColumns = this.displayedColumns;
-      }
-    }));
     this.getData();
   }
 

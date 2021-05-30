@@ -26,19 +26,12 @@ import { VisitService } from 'src/app/services/visit.service';
 
 export class PatientsViewComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] = [
+  tableColumns: string[] = [
     'cardNumber',
     'firstName',
     'lastName',
     'sex',
     'email',
-    'visit',
-  ];
-  displayedColumnsMobile: string[] = [
-    'cardNumber',
-    'firstName',
-    'lastName',
     'visit',
   ];
   dataSource: MatTableDataSource<PatientInfoResponseModel>;
@@ -53,7 +46,6 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     private visitService: VisitService,
     private officeService: OfficeService,
     private authService: AuthService,
-    private breakpointObserver: BreakpointObserver,
     private patientService: PatientService,
     private doctorService: DoctorService,
     private modalService: NgbModal,
@@ -67,7 +59,7 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.isAdmin) {
-      this.displayedColumns.push('delete')
+      this.tableColumns.push('delete')
     }
     this.visitForm = {
       dateTimeStart: '',
@@ -93,17 +85,6 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     .subscribe((doctor) => {
       this.visitForm.doctorId = doctor.id;
     });
-    this.sub.add(
-      this.breakpointObserver
-        .observe(['(max-width: 692px)'])
-        .subscribe((result) => {
-          if (result.matches) {
-            this.tableColumns = this.displayedColumnsMobile;
-          } else {
-            this.tableColumns = this.displayedColumns;
-          }
-        })
-    );
     this.getData();
   }
 

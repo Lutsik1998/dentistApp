@@ -1,0 +1,19 @@
+.table-scroll {
+    .table-container {
+        table {
+            width: 100%;
+        }
+    }
+    @media only screen and (max-width: 692px) {
+        overflow: auto;
+        .table-container {
+            width: max-content;
+            table {
+                width: 100%;
+                @media only screen and (max-width: 692px) {
+                    width: max-content;
+                }
+            }
+        }
+    }
+}
