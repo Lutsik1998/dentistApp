@@ -86,7 +86,7 @@ public class DoctorServiceImpl implements DoctorService {
     public Doctor save(Doctor doctor) {
         doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         doctorRepository.save(doctor);
-        System.out.println("saved");
+        doctor.toDTO();
         return doctor;
     }
 

@@ -19,7 +19,7 @@ services:
       context: . # Location of Dockerfile
       dockerfile: Dockerfile
     container_name: dentist-spring-WebAPI
-    image: despenrado/dentist-spring-webapi:dev
+    image: dentist-spring-webapi:dev
     depends_on: # start after
       - main-db
       - cache-db

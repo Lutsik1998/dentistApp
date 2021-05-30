@@ -33,6 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (doctorService.doctorRepository().existsByEmail(email)) {
             rolesSet.add(Roles.ROLE_DOCTOR);
             user = doctorService.doctorRepository().findByEmail(email);
+            if (user.getRoles().contains(Roles.ROLE_ADMIN)){
+                rolesSet.add(Roles.ROLE_ADMIN);
+            }
             stringSetId.add(user.getId());
         }
         if (patientService.patientRepository().existsByEmail(email)) {
