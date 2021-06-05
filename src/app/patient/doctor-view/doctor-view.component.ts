@@ -1,9 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -52,7 +55,8 @@ export class DoctorViewComponent implements OnInit {
   closeResult = '';
   visitForm: Visit;
   user: CurrentUser;
- 
+  listFreeDays: string[]=[];
+
 
   constructor(
     private visitService: VisitService,
@@ -63,6 +67,7 @@ export class DoctorViewComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private doctorService: DoctorService,
     public dialog: MatDialog,
+    private rf: ChangeDetectorRef
   ) {}
 
   ngOnDestroy(): void {
@@ -128,25 +133,32 @@ export class DoctorViewComponent implements OnInit {
   }
   open(content, doctorId) {
     this.visitForm.doctorId = doctorId;
+    this.visitService.getFreeDays(doctorId,new Date().toISOString().split('T')[0],90,20).subscribe((res) =>{
+      console.log(res);
+      this.listFreeDays = res;
+      this.rf.markForCheck();
+    });
+
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
+          var tzoffset = (new Date()).getTimezoneOffset() * 60000;
           this.selectedDate.setHours(Number(this.selectedTime.substring(0, 2)));
           this.selectedDate.setMinutes(
             Number(this.selectedTime.substring(3, 5))
           );
-
-          this.visitForm.dateTimeStart = this.selectedDate
+          this.visitForm.dateTimeStart = (new Date(this.selectedDate.getTime() - tzoffset)) 
             .toISOString()
             .substring(0, 16);
+  
           this.selectedDate.setMinutes(
             Number(this.selectedTime.substring(3, 5)) + 20);
-          this.visitForm.dateTimeEnd = this.selectedDate
+          
+        this.visitForm.dateTimeEnd =  (new Date(this.selectedDate.getTime() - tzoffset)) 
             .toISOString()
             .substring(0, 16);
-          console.log(this.visitForm);
           this.visitService.addVisit(this.visitForm).subscribe(() => {
             console.log(this.visitForm);
           });
@@ -155,8 +167,15 @@ export class DoctorViewComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-  }
 
+    
+  }
+  myFilter = (d: Date): boolean => {
+    // Prevent Saturday and Sunday from being selected.
+    // saturday is comming from the outter context
+
+    return d.getDay() !== 0 && d.getDay() !== 6 && d >= new Date() && this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)) ;
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -206,7 +225,6 @@ export class DoctorViewComponent implements OnInit {
   onchange(text) {
     var element = <HTMLInputElement>document.getElementById('save');
     element.disabled = false;
-    console.log(text);
     this.visitForm.information = text;
   }
 }
