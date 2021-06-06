@@ -16,7 +16,11 @@ export class RecipeService {
   }
 
   addImage(visitId: string, recipeId: string,  file: File): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${visitId}/recipe/${recipeId}/image`, file).pipe(catchError(this.handleError));
+
+    const endpoint = `${this.baseUrl}/${visitId}/recipe/${recipeId}/image`;
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post(endpoint, formData).pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {
