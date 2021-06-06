@@ -1,5 +1,42 @@
 <div class="container">
-    <button (click)="back()" mat-stroked-button color="accent" class="mb-3">Powrót</button>
-    <h4 id="subheader">Recepty</h4>
-    <button (click)="addRecipe()" mat-stroked-button color="accent" class="mb-3 w-100">Add</button>
+    <button (click)="back()" mat-stroked-button color="accent" class="mb-3 mt-5">Powrót</button>
+    <div class="table-container pb-3">
+        <div class="d-flex justify-content-between">
+          <h4 id="subheader">Recepty</h4>
+        </div>
+          <mat-form-field class="w-100">
+              <mat-label>Szukaj wizyty</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Szukaj wizyty" #input>
+          </mat-form-field>
+          <div class="table-scroll">
+            <div class="table-container">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="nr">
+                  <th mat-header-cell *matHeaderCellDef> Numer recepty </th>
+                  <td mat-cell class="card-number" (click)="openVisit(element)" *matCellDef="let element"> {{element.recipeNumber}} </td>
+                </ng-container>
+                <ng-container matColumnDef="lastDate">
+                  <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Data ważności </th>
+                  <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"> {{element.lastDate}} </td>
+                </ng-container>
+                <ng-container matColumnDef="edit">
+                  <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Edytuj </th>
+                  <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"><button (click)="editRecipe(element)" mat-stroked-button color="primary"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button></td>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef class="pl-3 pl-md-0"> Usuń wizytę </th>
+                    <td mat-cell *matCellDef="let element" class="pl-3 pl-md-0"><button (click)="deleteRecipe(element.id)" mat-stroked-button color="warn"><mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon></button></td>
+                </ng-container>
+               
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell no-patient" colspan="4">Brak recepty: {{input.value}}</td>
+                </tr>
+                <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+              </table>
+              <mat-paginator class="mat-elevation-z8" #paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+      </div>
+    <button (click)="addRecipe()" mat-raised-button color="primary" class="mb-3 w-100">Dodaj receptę</button>
 </div>

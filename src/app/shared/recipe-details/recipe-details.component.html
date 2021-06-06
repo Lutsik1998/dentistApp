@@ -54,13 +54,15 @@
         </mat-error>
     </mat-form-field>
     
-    <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="mb-3 mt-3">
-        <ngx-dropzone-label>Dodaj zdjęcie</ngx-dropzone-label>
-        <ngx-dropzone-preview *ngIf="file" [file]="file" [removable]="true" (removed)="onRemove()">
-        </ngx-dropzone-preview>
+    <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="mb-3 mt-3 justify-content-center">
+        <ngx-dropzone-label *ngIf="!file && !imageUrl">Dodaj zdjęcie</ngx-dropzone-label>
+        <ngx-dropzone-image-preview *ngIf="file" [file]="file" [removable]="true" (removed)="onRemove()">
+        </ngx-dropzone-image-preview>
+        <img class="image-preview" *ngIf="!file && imageUrl" [src]=imageUrl>
     </ngx-dropzone>
 
     <div class="d-flex justify-content-end">
-        <button (click)="save()" mat-raised-button color="primary">Potwierdź</button>
+        <button *ngIf="!edit" (click)="save()" mat-raised-button color="primary">Potwierdź</button>
+        <button *ngIf="edit" (click)="editRecipe()" mat-raised-button color="primary">Potwierdź</button>
     </div>
 </form>

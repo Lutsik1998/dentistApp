@@ -1,16 +1,20 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { Recipe } from 'src/app/models/recipe';
 import { RateVisitComponent } from 'src/app/patient/history-view/rate-visit/rate-visit.component';
 import { RecipeService } from 'src/app/services/recipe.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-recipe-details',
   templateUrl: './recipe-details.component.html',
   styleUrls: ['./recipe-details.component.scss']
 })
-export class RecipeDetailsComponent implements OnInit {
+export class RecipeDetailsComponent implements OnInit, OnDestroy {
 
 
   form = this.fb.group({
@@ -22,19 +26,64 @@ export class RecipeDetailsComponent implements OnInit {
     additionalProperties: ['', Validators.required],
     payment: ['', [Validators.required, Validators.pattern('[0-9][0-9]?$|^100')]],
   })
-
+  sub = new Subscription();
+  file: File | null = null;
+  imageUrl: SafeUrl;
+  edit: boolean = false;
+  recipe: Recipe;
   constructor(private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data, 
               public dialogRef: MatDialogRef<RateVisitComponent>,
-              private recipeService: RecipeService) { }
+              private recipeService: RecipeService,
+              private sanitizer:DomSanitizer,
+              private snackbar: SnackbarService) { }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
   ngOnInit(): void {
+    if(this.data.recipe) {
+      this.recipe = this.data.recipe;
+      this.recipeService.getImage(this.data.visitId, this.recipe.id).subscribe(res => {
+        const unsafeImageUrl = URL.createObjectURL(res);
+        this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
+      })
+      this.edit = true;
+      this.form.patchValue({
+        ...this.recipe,
+        payment: this.recipe.payment.slice(0,-1)
+      })
+    }
   }
 
   close() {
     this.dialogRef.close();
   }
 
+  editRecipe() {
+    if(this.form.invalid) {
+      console.log(this.form)
+      return;
+    }
+    const data = {
+      ...this.recipe,
+      ...this.form.getRawValue(),
+      payment: this.form.get('payment').value.toString().concat('%'),
+    }
+    this.sub.add(this.recipeService.editRecipe(this.data.visitId, this.recipe.id, data).subscribe(res => {
+      if(this.file) {
+        this.sub.add(this.recipeService.addImage(this.data.visitId, this.recipe.id, this.file).subscribe(res => {
+          this.snackbar.success('Recepta zmieniona')
+          this.dialogRef.close();
+        }))      
+      } else {
+        this.snackbar.success('Recepta zmieniona')
+        this.dialogRef.close();
+      }
+    }))
+    
+  }
 
   save() {
     if(this.form.invalid || !this.file) {
@@ -47,18 +96,15 @@ export class RecipeDetailsComponent implements OnInit {
       payment: this.form.get('payment').value.toString().concat('%')
     }
     
-    this.recipeService.addRecipe(this.data.visitId, data).subscribe(res => {
-      console.log(res)
-      this.recipeService.addImage(this.data.visitId, res.id, this.file).subscribe(res => {
-        console.log(res)
-      })
-    })
+    this.sub.add(this.recipeService.addRecipe(this.data.visitId, data).subscribe(res => {
+      this.sub.add(this.recipeService.addImage(this.data.visitId, res.id, this.file).subscribe(res => {
+        this.snackbar.success('Recepta dodana')
+        this.dialogRef.close();
+      }))
+    }))
   }
 
-  file: File | null = null;
-
   onSelect(event) {
-    console.log(event);
     this.file = event.addedFiles[0];
   }
   
