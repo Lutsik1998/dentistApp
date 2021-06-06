@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-between mb-4">
+    <h4 id="subheader" class="mb-0">Dodaj receptę</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<form [formGroup]="form">
+    <mat-form-field class="col-12">
+        <mat-label>Numer recepty</mat-label>
+        <input formControlName="recipeNumber" type="text" matInput>
+        <mat-error *ngIf="form.get('recipeNumber').hasError('required')">
+            Pole jest wymagane!
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+        <mat-label>Kod MFI</mat-label>
+        <input formControlName="codeMFI" type="text" matInput>
+        <mat-error *ngIf="form.get('codeMFI').hasError('required')">
+            Pole jest wymagane!
+        </mat-error>
+        <mat-error *ngIf="form.get('codeMFI').hasError('pattern')">
+            Proszę podać kod "01" - "16"
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+        <mat-label>Leki</mat-label>
+        <input formControlName="drugs" type="text" matInput>
+        <mat-error *ngIf="form.get('drugs').hasError('required')">
+            Pole jest wymagane!
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+        <mat-label>Termin ważności</mat-label>
+        <input formControlName="lastDate" type="date" matInput>
+        <mat-error *ngIf="form.get('lastDate').hasError('required')">
+            Pole jest wymagane!
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+        <mat-label>Dodatkowe informacje</mat-label>
+        <input formControlName="additionalProperties" type="text" matInput>
+        <mat-error *ngIf="form.get('additionalProperties').hasError('required')">
+            Pole jest wymagane!
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-12">
+        <mat-label>Dopłata</mat-label>
+        <input formControlName="payment" type="number" matInput>
+        <mat-error *ngIf="form.get('payment').hasError('required')">
+            Pole jest wymagane!
+        </mat-error>
+        <mat-error *ngIf="form.get('payment').hasError('pattern')">
+            Proszę podać liczbę w zakresie 0 - 100
+        </mat-error>
+    </mat-form-field>
+    
+    <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="mb-3 mt-3">
+        <ngx-dropzone-label>Dodaj zdjęcie</ngx-dropzone-label>
+        <ngx-dropzone-preview *ngIf="file" [file]="file" [removable]="true" (removed)="onRemove()">
+        </ngx-dropzone-preview>
+    </ngx-dropzone>
+
+    <div class="d-flex justify-content-end">
+        <button (click)="save()" mat-raised-button color="primary">Potwierdź</button>
+    </div>
+</form>

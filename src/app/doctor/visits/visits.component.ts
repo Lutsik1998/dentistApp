@@ -80,9 +80,10 @@ export class VisitsComponent implements OnInit, OnDestroy {
     })
   }
 
-  openDetails(id: string) {
-    console.log(id)
+  openVisit(element: VisitListItemModel) {
+    this.router.navigate([`doctor/visit/${element.id}`]);
   }
+  
   addVisit(){
     this.router.navigate(['doctor/add-visit']);
   }
