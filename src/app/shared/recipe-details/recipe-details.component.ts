@@ -75,11 +75,16 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
       if(this.file) {
         this.sub.add(this.recipeService.addImage(this.data.visitId, this.recipe.id, this.file).subscribe(res => {
           this.snackbar.success('Recepta zmieniona')
-          this.dialogRef.close();
+          this.dialogRef.close(true);
+        }, err => {
+          if(err.statusText === "OK") {
+            this.snackbar.success('Recepta zmieniona')
+            this.dialogRef.close(true);
+          }
         }))      
       } else {
         this.snackbar.success('Recepta zmieniona')
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       }
     }))
     
@@ -99,7 +104,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
     this.sub.add(this.recipeService.addRecipe(this.data.visitId, data).subscribe(res => {
       this.sub.add(this.recipeService.addImage(this.data.visitId, res.id, this.file).subscribe(res => {
         this.snackbar.success('Recepta dodana')
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       }))
     }))
   }

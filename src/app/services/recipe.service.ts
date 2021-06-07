@@ -17,7 +17,7 @@ export class RecipeService {
   }
 
   editRecipe(visitId: string, recipeId: string,  recipe: Recipe) {
-    return this.http.put(`${this.baseUrl}/${visitId}/recipe/${recipeId}`, recipe)
+    return this.http.put(`${this.baseUrl}/${visitId}/recipe/${recipeId}`, recipe, {responseType: 'text'})
   }
 
   deleteRecipe(visitId: string, recipeId: string) {
@@ -29,7 +29,7 @@ export class RecipeService {
     const endpoint = `${this.baseUrl}/${visitId}/recipe/${recipeId}/image`;
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return this.http.post(endpoint, formData).pipe(catchError(this.handleError));
+    return this.http.post(endpoint, formData, {responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
   getImage(visitId: string, recipeId: string): Observable<any> {

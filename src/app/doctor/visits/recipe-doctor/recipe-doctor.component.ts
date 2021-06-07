@@ -58,6 +58,11 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
         visitId: this.visitId
       }
     });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.getData();
+      }
+    }))
   }
   
   applyFilter($event) {
@@ -90,6 +95,11 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
         recipe
       }
     });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.getData();
+      }
+    }))
   }
 
   back() {
