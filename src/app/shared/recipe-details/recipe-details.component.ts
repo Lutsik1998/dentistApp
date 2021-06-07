@@ -30,6 +30,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   file: File | null = null;
   imageUrl: SafeUrl;
   edit: boolean = false;
+  show: boolean = false;
   recipe: Recipe;
   constructor(private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data, 
@@ -55,6 +56,10 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
         payment: this.recipe.payment.slice(0,-1)
       })
     }
+    if(this.data.show) {
+      this.show = true;
+      this.form.disable();
+    }
   }
 
   close() {
@@ -62,8 +67,12 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   }
 
   editRecipe() {
+    if(this.show) {
+      this.dialogRef.close();
+      return;
+    }
     if(this.form.invalid) {
-      console.log(this.form)
+      this.snackbar.error('Formularz nieprawidłowo wypełniony')
       return;
     }
     const data = {

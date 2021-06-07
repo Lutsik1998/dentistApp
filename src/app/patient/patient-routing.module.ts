@@ -15,7 +15,7 @@ const routes: Routes = [
     { path: 'health', component: HealthViewComponent },
     { path: 'history', component: HistoryViewComponent },
     { path: 'office', component: OfficeViewComponent },
-    { path: 'receipt', component: ReceiptViewComponent }
+    { path: 'visit/:id', component: ReceiptViewComponent }
   ]},
 ];
 

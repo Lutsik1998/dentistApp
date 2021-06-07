@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { VisitListItemModel, VisitResponseModel } from 'src/app/models/visit';
 import { AuthService } from 'src/app/services/auth.service';
@@ -28,7 +29,8 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
   constructor(private visitService: VisitService,
               private authService: AuthService,
               private snackBar: SnackbarService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private router: Router) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -85,6 +87,10 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
     this.sub.add(dialogRef.afterClosed().subscribe(res => {
       this.getData();
     }))
+  }
+
+  openDetails(id: string) {
+    this.router.navigate([`patient/visit/${id}`]);
   }
 
   deleteVisit(id: string) {

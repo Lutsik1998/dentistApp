@@ -1,5 +1,17 @@
 .image-preview {
     border-radius: 5px;
     max-height: 80%;
-    opacity: .8;
+    opacity: 1;
+    &:disabled {
+        opacity: 1;
+    }
 }
+
+.mat-input-element:disabled {
+    color: currentColor;
+}
+
+.dr {
+    opacity: 1 !important;
+}
+

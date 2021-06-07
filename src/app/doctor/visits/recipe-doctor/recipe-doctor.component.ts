@@ -46,6 +46,9 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
   getData() {
     this.sub.add(this.visitService.getVisit(this.visitId).subscribe(res => {
       this.visit = res;
+      if(!res.recipes) {
+        return;
+      }
       this.recipeList = res.recipes.filter(ele => ele != null);
       this.dataSource = new MatTableDataSource(this.recipeList)
       this.dataSource.paginator = this.paginator;

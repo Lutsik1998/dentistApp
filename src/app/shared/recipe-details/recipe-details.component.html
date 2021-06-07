@@ -54,7 +54,7 @@
         </mat-error>
     </mat-form-field>
     
-    <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="mb-3 mt-3 justify-content-center" accept="image/jpeg,image/jpg,image/png">
+    <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="mb-3 mt-3 justify-content-center dr" accept="image/jpeg,image/jpg,image/png" [disabled]="show">
         <ngx-dropzone-label *ngIf="!file && !imageUrl">Dodaj zdjęcie</ngx-dropzone-label>
         <ngx-dropzone-image-preview *ngIf="file" [file]="file" [removable]="true" (removed)="onRemove()">
         </ngx-dropzone-image-preview>
