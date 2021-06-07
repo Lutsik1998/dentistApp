@@ -18,10 +18,11 @@ import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.componen
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ImageShowComponent } from './image-show/image-show.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent, RecipeDetailsComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent, RecipeDetailsComponent, ImageShowComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -45,7 +46,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     DoctorReviewsComponent,
     ChangePasswordComponent,
     DoctorReviewsComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
+    ImageShowComponent,
   ],
   providers: [DatePipe]
 })

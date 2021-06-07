@@ -7,8 +7,6 @@ export class StringDatePipe implements PipeTransform {
 
   transform(value: string): string {
     const temp = new Date(value);
-    console.log(temp)
     return temp.toLocaleString();
   }
-
 }

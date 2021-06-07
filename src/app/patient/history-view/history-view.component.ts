@@ -46,7 +46,6 @@ export class HistoryViewComponent implements OnInit, OnDestroy {
   getData() {
     this.sub.add(this.visitService.getVisits().subscribe((res: VisitResponseModel[]) => {
       this.visits =res;
-      console.log(res);
       res = res.filter(ele => ele.patientId === this.patientId);
       let itemList: VisitListItemModel[] = res.map((ele: VisitResponseModel) => {
         return {...ele, dateTimeEnd: this.visitService.dateObject(ele.dateTimeEnd), dateTimeStart: this.visitService.dateObject(ele.dateTimeStart)}

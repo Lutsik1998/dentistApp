@@ -1,13 +1,14 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { Recipe } from 'src/app/models/recipe';
 import { RateVisitComponent } from 'src/app/patient/history-view/rate-visit/rate-visit.component';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ImageShowComponent } from '../image-show/image-show.component';
 
 @Component({
   selector: 'app-recipe-details',
@@ -37,7 +38,8 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
               public dialogRef: MatDialogRef<RateVisitComponent>,
               private recipeService: RecipeService,
               private sanitizer:DomSanitizer,
-              private snackbar: SnackbarService) { }
+              private snackbar: SnackbarService,
+              private dialog: MatDialog) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -97,6 +99,17 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
       }
     }))
     
+  }
+
+  showImage() {
+    if(!this.show) {
+      return;
+    }
+    const dialogRef = this.dialog.open(ImageShowComponent, {
+      data: {
+        url: this.imageUrl
+      }
+    });
   }
 
   save() {
