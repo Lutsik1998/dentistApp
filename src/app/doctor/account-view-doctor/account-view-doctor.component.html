@@ -1,5 +1,5 @@
 <div *ngIf="!isLoading" class="container mt-5">
-    <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Informacje i kontakt"></app-subheader-edit>
+    <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Konto"></app-subheader-edit>
     <h5 id="subheader" class="mt-2">Dane osobowe</h5>
     <form [formGroup]="docForm" class="row form">
         <mat-form-field class="col-md-6 col-lg-4">

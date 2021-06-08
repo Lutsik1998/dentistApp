@@ -16,10 +16,13 @@ import { PipesModule } from '../pipes/pipes.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ImageShowComponent } from './image-show/image-show.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent, RecipeDetailsComponent, ImageShowComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -28,7 +31,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ReactiveFormsModule,
     RouterModule,
     PipesModule,
-    NgbModule
+    NgbModule,
+    NgxDropzoneModule
   ],
   exports: [
     PipesModule,
@@ -41,7 +45,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ConfirmationDialogComponent,
     DoctorReviewsComponent,
     ChangePasswordComponent,
-    DoctorReviewsComponent
+    DoctorReviewsComponent,
+    RecipeDetailsComponent,
+    ImageShowComponent,
   ],
   providers: [DatePipe]
 })

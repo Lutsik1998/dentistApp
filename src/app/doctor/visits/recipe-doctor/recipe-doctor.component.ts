@@ -4,9 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PatientInfoResponseModel } from 'src/app/models/patient';
 import { Recipe } from 'src/app/models/recipe';
 import { VisitResponseModel } from 'src/app/models/visit';
-import { DoctorService } from 'src/app/services/doctor.service';
+import { PatientService } from 'src/app/services/patient.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
@@ -14,25 +15,28 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 import { RecipeDetailsComponent } from 'src/app/shared/recipe-details/recipe-details.component';
 
 @Component({
-  selector: 'app-receipt-view',
-  templateUrl: './receipt-view.component.html',
-  styleUrls: ['./receipt-view.component.scss']
+  selector: 'app-recipe-doctor',
+  templateUrl: './recipe-doctor.component.html',
+  styleUrls: ['./recipe-doctor.component.scss']
 })
-export class ReceiptViewComponent implements OnInit, OnDestroy {
+export class RecipeDoctorComponent implements OnInit, OnDestroy {
 
   visitId: string;
-  visit: VisitResponseModel
+  visit: VisitResponseModel;
+  patient: PatientInfoResponseModel;
   recipeList: Recipe[] = [];
   sub = new Subscription();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] =['nr', 'dateTime', 'lastDate', 'view'];
+  tableColumns: string[] =['nr', 'dateTime', 'lastDate', 'edit', 'delete'];
   dataSource: MatTableDataSource<Recipe>;
 
   constructor(private route: ActivatedRoute,
               private visitService: VisitService,
               private router: Router,
               private dialog: MatDialog,
-              private doctorService: DoctorService,) { }
+              private snackBar: SnackbarService,
+              private recipeService: RecipeService,
+              private patientService: PatientService,) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -46,10 +50,10 @@ export class ReceiptViewComponent implements OnInit, OnDestroy {
   getData() {
     this.sub.add(this.visitService.getVisit(this.visitId).subscribe(res => {
       this.visit = res;
-      console.log(this.visit)
-      // this.sub.add(this.doctorService.getDoctorById(this.visit.doctorId).subscribe(res => {
-      //   console.log(res)
-      // }))
+      this.sub.add(this.patientService.getPatientById(this.visit.patientId).subscribe(res => {
+        this.patient = res;
+        console.log(this.patient)
+      }))
       if(!res.recipes) {
         return;
       }
@@ -59,23 +63,57 @@ export class ReceiptViewComponent implements OnInit, OnDestroy {
     }))
   }
 
+  addRecipe() {
+    const dialogRef = this.dialog.open(RecipeDetailsComponent, {
+      data: {
+        visitId: this.visitId
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.getData();
+      }
+    }))
+  }
   
   applyFilter($event) {
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  showRecipe(recipe: Recipe) {
+  deleteRecipe(id: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        text: "Czy na pewno chcesz usunąć receptę?"
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.recipeService.deleteRecipe(this.visitId, id).subscribe(res => {
+          this.snackBar.success('Recepta usunięta');
+          this.getData();
+        }, err => {
+          this.snackBar.error('Recepta nie została usunięta');
+        }))
+      }
+    }))
+  }
+
+  editRecipe(recipe: Recipe) {
     const dialogRef = this.dialog.open(RecipeDetailsComponent, {
       data: {
         visitId: this.visitId,
-        show: true,
-        recipe,
+        recipe
       }
     });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.getData();
+      }
+    }))
   }
 
   back() {
-    this.router.navigate(['patient/history'])
+    this.router.navigate(['doctor/visits'])
   }
 }
