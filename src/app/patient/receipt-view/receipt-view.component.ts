@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Recipe } from 'src/app/models/recipe';
 import { VisitResponseModel } from 'src/app/models/visit';
+import { DoctorService } from 'src/app/services/doctor.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
@@ -30,7 +31,8 @@ export class ReceiptViewComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private visitService: VisitService,
               private router: Router,
-              private dialog: MatDialog,) { }
+              private dialog: MatDialog,
+              private doctorService: DoctorService,) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -44,6 +46,10 @@ export class ReceiptViewComponent implements OnInit, OnDestroy {
   getData() {
     this.sub.add(this.visitService.getVisit(this.visitId).subscribe(res => {
       this.visit = res;
+      console.log(this.visit)
+      // this.sub.add(this.doctorService.getDoctorById(this.visit.doctorId).subscribe(res => {
+      //   console.log(res)
+      // }))
       if(!res.recipes) {
         return;
       }

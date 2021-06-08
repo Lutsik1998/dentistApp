@@ -31,7 +31,7 @@
     </mat-form-field>
     <mat-form-field class="col-12">
         <mat-label>Termin ważności</mat-label>
-        <input formControlName="lastDate" type="date" matInput>
+        <input formControlName="lastDate" type="date" [min]="dateMax" matInput>
         <mat-error *ngIf="form.get('lastDate').hasError('required')">
             Pole jest wymagane!
         </mat-error>
@@ -64,8 +64,8 @@
     </div>
 
 
-    <div class="d-flex justify-content-between">
-        <a [href]="imageUrl" download="recepta.png">Pobierz zdjęcie</a>
+    <div class="d-flex" [ngClass]="imageUrl ? 'justify-content-between' : 'justify-content-end'">
+        <a *ngIf="imageUrl" [href]="imageUrl" download="recepta.png">Pobierz zdjęcie</a>
         <button *ngIf="!edit" (click)="save()" mat-raised-button color="primary">Potwierdź</button>
         <button *ngIf="edit" (click)="editRecipe()" mat-raised-button color="primary">Potwierdź</button>
     </div>

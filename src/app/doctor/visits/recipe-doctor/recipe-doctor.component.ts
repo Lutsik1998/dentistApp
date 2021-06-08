@@ -4,8 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { PatientInfoResponseModel } from 'src/app/models/patient';
 import { Recipe } from 'src/app/models/recipe';
 import { VisitResponseModel } from 'src/app/models/visit';
+import { PatientService } from 'src/app/services/patient.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { VisitService } from 'src/app/services/visit.service';
@@ -20,11 +22,12 @@ import { RecipeDetailsComponent } from 'src/app/shared/recipe-details/recipe-det
 export class RecipeDoctorComponent implements OnInit, OnDestroy {
 
   visitId: string;
-  visit: VisitResponseModel
+  visit: VisitResponseModel;
+  patient: PatientInfoResponseModel;
   recipeList: Recipe[] = [];
   sub = new Subscription();
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] =['nr', 'lastDate', 'edit', 'delete'];
+  tableColumns: string[] =['nr', 'dateTime', 'lastDate', 'edit', 'delete'];
   dataSource: MatTableDataSource<Recipe>;
 
   constructor(private route: ActivatedRoute,
@@ -32,7 +35,8 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
               private router: Router,
               private dialog: MatDialog,
               private snackBar: SnackbarService,
-              private recipeService: RecipeService) { }
+              private recipeService: RecipeService,
+              private patientService: PatientService,) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -46,6 +50,10 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
   getData() {
     this.sub.add(this.visitService.getVisit(this.visitId).subscribe(res => {
       this.visit = res;
+      this.sub.add(this.patientService.getPatientById(this.visit.patientId).subscribe(res => {
+        this.patient = res;
+        console.log(this.patient)
+      }))
       if(!res.recipes) {
         return;
       }

@@ -1,8 +1,13 @@
 <div class="container">
     <button (click)="back()" mat-stroked-button color="accent" class="mb-3 mt-5">Powrót</button>
-    <div class="table-container pb-3">
+    <h4 id="subheader">Wizyta</h4>
+
+    <h5 id="subheader">Informacje</h5>
+    <p>{{visit?.information || '-'}}</p>
+
+    <div class="table-container pb-3 mt-3">
         <div class="d-flex justify-content-between">
-          <h4 id="subheader">Recepty</h4>
+          <h5 id="subheader">Recepty</h5>
         </div>
           <mat-form-field class="w-100">
               <mat-label>Szukaj recepty</mat-label>

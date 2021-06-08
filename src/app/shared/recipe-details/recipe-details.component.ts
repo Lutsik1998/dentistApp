@@ -33,6 +33,7 @@ export class RecipeDetailsComponent implements OnInit, OnDestroy {
   edit: boolean = false;
   show: boolean = false;
   recipe: Recipe;
+  dateMax = new Date().toISOString().split("T")[0];
   constructor(private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data, 
               public dialogRef: MatDialogRef<RateVisitComponent>,
