@@ -34,6 +34,8 @@
                     <li *ngFor="let tab of navTabs"><a routerLink="{{tab.path}}" routerLinkActive="active">{{tab.text}}</a></li>
                 </ul>
             </nav>
+            <mat-divider></mat-divider>
+            <div (click)="logout()" class="mt-4 logout-mobile">Wyloguj</div>
         </div>
     </div>
 </div>

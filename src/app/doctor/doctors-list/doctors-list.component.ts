@@ -10,6 +10,7 @@ import { DoctorInfoResponseModel } from 'src/app/models/doctor';
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-reviews.component';
 
 @Component({
@@ -19,9 +20,7 @@ import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-rev
 })
 export class DoctorsListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email'];
-  displayedColumnsMobile: string[] = ['reviews', 'firstName', 'lastName'];
+  tableColumns: string[] = ['reviews', 'firstName', 'lastName', 'sex', 'email'];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
   sub: Subscription = new Subscription();
 
@@ -33,8 +32,7 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
     return ele.id == this.auth.getId().slice(1,-1);
   }
 
-  constructor(private breakpointObserver: BreakpointObserver, 
-              private doctorService: DoctorService, 
+  constructor(private doctorService: DoctorService, 
               private router: Router, 
               public dialog: MatDialog,
               private snackBar: SnackbarService,
@@ -46,17 +44,8 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(this.isAdmin) {
-      this.displayedColumns.push('delete');
+      this.tableColumns.push('delete');
     }
-    this.sub.add(this.breakpointObserver.observe([
-      '(max-width: 692px)'
-    ]).subscribe(result => {
-      if (result.matches) {
-        this.tableColumns = this.displayedColumnsMobile;
-      } else {
-        this.tableColumns = this.displayedColumns;
-      }
-    }));
     this.getData();
   }
 
@@ -86,11 +75,20 @@ export class DoctorsListComponent implements OnInit, OnDestroy {
   }
 
   deleteDoctor(id: string) {
-    this.sub.add(this.doctorService.deleteDoctor(id).subscribe(res => {
-      this.snackBar.success('Lekarz usunięty')
-      this.getData();
-    }, err => {
-      this.snackBar.error('Lekarz nie został usunięty')
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        text: "Czy na pewno chcesz usunąć lekarza?"
+      }
+    });
+    this.sub.add(dialogRef.afterClosed().subscribe(res => {
+      if(res) {
+        this.sub.add(this.doctorService.deleteDoctor(id).subscribe(res => {
+          this.snackBar.success('Lekarz usunięty')
+          this.getData();
+        }, err => {
+          this.snackBar.error('Lekarz nie został usunięty')
+        }))
+      }
     }))
   }
 

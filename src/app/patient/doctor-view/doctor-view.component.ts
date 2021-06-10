@@ -35,19 +35,12 @@ import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-rev
 })
 export class DoctorViewComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] = [
+  tableColumns: string[] = [
     'reviews',
     'firstName',
     'lastName',
     'sex',
     'email',
-    'visit',
-  ];
-  displayedColumnsMobile: string[] = [
-    'reviews',
-    'firstName',
-    'lastName',
     'visit',
   ];
   dataSource: MatTableDataSource<DoctorInfoResponseModel>;
@@ -64,7 +57,6 @@ export class DoctorViewComponent implements OnInit {
     private patientService: PatientService,
     private officeService: OfficeService,
     private modalService: NgbModal,
-    private breakpointObserver: BreakpointObserver,
     private doctorService: DoctorService,
     public dialog: MatDialog
   ) {}
@@ -98,17 +90,6 @@ export class DoctorViewComponent implements OnInit {
       .subscribe((patient) => {
         this.visitForm.patientId = patient.id;
       });
-    this.sub.add(
-      this.breakpointObserver
-        .observe(['(max-width: 692px)'])
-        .subscribe((result) => {
-          if (result.matches) {
-            this.tableColumns = this.displayedColumnsMobile;
-          } else {
-            this.tableColumns = this.displayedColumns;
-          }
-        })
-    );
     this.sub.add(
       this.doctorService.getDoctors().subscribe((res) => {
         this.dataSource = new MatTableDataSource(res);

@@ -13,7 +13,6 @@ export class PatientComponent implements OnInit {
     {path: 'doctor', text: 'Lekarz'},
     {path: 'health', text: 'Zęby'},
     {path: 'history', text: 'Zabiegi'},
-    {path: 'receipt', text: 'Recepty'},
     {path: 'account', text: 'Konto'},
   ]
   constructor() { }

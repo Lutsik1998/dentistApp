@@ -20,9 +20,7 @@ import { Router } from '@angular/router';
 export class VisitsComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  tableColumns: string[] = [];
-  displayedColumns: string[] =['start', 'end', 'info', 'delete'];
-  displayedColumnsMobile: string[] = ['start', 'delete'];
+  tableColumns: string[] =['start', 'end', 'info', 'delete'];
   dataSource: MatTableDataSource<VisitResponseModel>;
 
   sub = new Subscription();
@@ -33,7 +31,6 @@ export class VisitsComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private snackBar: SnackbarService,
               public dialog: MatDialog,
-              private breakpointObserver: BreakpointObserver,
 
               private router: Router
               ) { }
@@ -43,17 +40,6 @@ export class VisitsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sub.add(
-      this.breakpointObserver
-        .observe(['(max-width: 692px)'])
-        .subscribe((result) => {
-          if (result.matches) {
-            this.tableColumns = this.displayedColumnsMobile;
-          } else {
-            this.tableColumns = this.displayedColumns;
-          }
-        })
-    );
     this.sub.add(this.authService.currentUser.subscribe(res => {
       this.doctorId = res.id.slice(1,-1);
     }))
@@ -94,9 +80,10 @@ export class VisitsComponent implements OnInit, OnDestroy {
     })
   }
 
-  openDetails(id: string) {
-    console.log(id)
+  openVisit(element: VisitListItemModel) {
+    this.router.navigate([`doctor/visit/${element.id}`]);
   }
+  
   addVisit(){
     this.router.navigate(['doctor/add-visit']);
   }
