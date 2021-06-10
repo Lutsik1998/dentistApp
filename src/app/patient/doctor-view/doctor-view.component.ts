@@ -66,8 +66,7 @@ export class DoctorViewComponent implements OnInit {
     private modalService: NgbModal,
     private breakpointObserver: BreakpointObserver,
     private doctorService: DoctorService,
-    public dialog: MatDialog,
-    private rf: ChangeDetectorRef
+    public dialog: MatDialog
   ) {}
 
   ngOnDestroy(): void {
@@ -136,9 +135,8 @@ export class DoctorViewComponent implements OnInit {
     this.visitService.getFreeDays(doctorId,new Date().toISOString().split('T')[0],90,20).subscribe((res) =>{
       console.log(res);
       this.listFreeDays = res;
-      this.rf.markForCheck();
     });
-
+   
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
@@ -156,7 +154,7 @@ export class DoctorViewComponent implements OnInit {
           this.selectedDate.setMinutes(
             Number(this.selectedTime.substring(3, 5)) + 20);
           
-        this.visitForm.dateTimeEnd =  (new Date(this.selectedDate.getTime() - tzoffset)) 
+        this.visitForm.dateTimeEnd =(new Date(this.selectedDate.getTime() - tzoffset)) 
             .toISOString()
             .substring(0, 16);
           this.visitService.addVisit(this.visitForm).subscribe(() => {
@@ -174,6 +172,7 @@ export class DoctorViewComponent implements OnInit {
     // Prevent Saturday and Sunday from being selected.
     // saturday is comming from the outter context
 
+    console.log(this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)),d.toISOString().substring(0,10));
     return d.getDay() !== 0 && d.getDay() !== 6 && d >= new Date() && this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)) ;
   }
   private getDismissReason(reason: any): string {
