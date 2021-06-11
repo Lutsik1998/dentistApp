@@ -15,6 +15,7 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
   mapIsLoaded: boolean = false;
   officeData: OfficeInfoResponseModel | null = null;
   isEditing: boolean = false;
+  initOffice: boolean = false;
   private sub = new Subscription();
 
   officeInfo = new FormControl('');
@@ -32,7 +33,7 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
     this.officeData = null;
     this.sub.add(this.officeService.getOffice().subscribe(res => {
       this.officeData = res[0];
-      this.officeInfo.patchValue(res[0].address.information)
+      this.officeInfo.patchValue(this.officeData?.address.information || '')
     }))
   }
 
@@ -42,7 +43,6 @@ export class OfficeViewDoctorComponent implements OnInit, OnDestroy {
 
   edit($event) {
     this.isEditing = true;
-    console.log(this.officeInfo.value)
   }
 
   save($event) {
