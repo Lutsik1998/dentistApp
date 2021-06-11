@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { OfficeInfoResponseModel } from 'src/app/models/office.model';
+import { OfficeInfoResponseModel, newOfficeTemplate } from 'src/app/models/office.model';
 import { OfficeService } from 'src/app/services/office.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
@@ -32,10 +32,18 @@ export class OfficeInfoComponent implements OnInit, OnDestroy {
   })
   isEditing: boolean = false;
   isLoaded: boolean = false;
+  initOffice: boolean = false;
   @Output() editingChange = new EventEmitter<boolean>();
   @Output() getData = new EventEmitter();
   @Input() set data(value: OfficeInfoResponseModel | null) {
-    if(!value) return;
+    if(value === null) return;
+    if(value === undefined) {
+      this.sub.add(this.officeService.postOffice(newOfficeTemplate).subscribe(res => {
+        this.getData.emit();
+        this.initOffice = false;
+      }))
+      return;
+    }
     this.isLoaded = true;
     this.infoForm.patchValue({
       id: value.id,
