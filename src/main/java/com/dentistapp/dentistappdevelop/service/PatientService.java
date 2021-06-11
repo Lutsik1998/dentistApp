@@ -15,4 +15,5 @@ public interface PatientService {
     public boolean existsById(String id);
     public void updatePassword(String patientId, String newPassword);
 
+
 }
