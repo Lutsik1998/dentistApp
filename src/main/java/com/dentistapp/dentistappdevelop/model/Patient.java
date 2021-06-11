@@ -36,6 +36,7 @@ public class Patient extends User {
 
     public void toDTO(){
         super.toDTO();
+        this.jaw = null;
     }
 
 }
