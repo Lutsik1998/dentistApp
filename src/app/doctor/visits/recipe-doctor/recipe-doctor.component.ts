@@ -4,9 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PatientInfoResponseModel } from 'src/app/models/patient';
+import { PatientInfoResponseModel, Tooth } from 'src/app/models/patient';
 import { Recipe } from 'src/app/models/recipe';
 import { VisitResponseModel } from 'src/app/models/visit';
+import { JawService } from 'src/app/services/jaw.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -23,6 +24,7 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
 
   visitId: string;
   visit: VisitResponseModel;
+  teeth: Tooth[];
   patient: PatientInfoResponseModel;
   recipeList: Recipe[] = [];
   sub = new Subscription();
@@ -36,7 +38,8 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               private snackBar: SnackbarService,
               private recipeService: RecipeService,
-              private patientService: PatientService,) { }
+              private patientService: PatientService,
+              private jawService: JawService) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -52,8 +55,8 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
       this.visit = res;
       this.sub.add(this.patientService.getPatientById(this.visit.patientId).subscribe(res => {
         this.patient = res;
-        console.log(this.patient)
       }))
+      this.getTeeth();
       if(!res.recipes) {
         return;
       }
@@ -73,6 +76,12 @@ export class RecipeDoctorComponent implements OnInit, OnDestroy {
       if(res) {
         this.getData();
       }
+    }))
+  }
+
+  getTeeth() {
+    this.sub.add(this.jawService.getJaw(this.visit.patientId).subscribe(res => {
+      this.teeth = res;
     }))
   }
   

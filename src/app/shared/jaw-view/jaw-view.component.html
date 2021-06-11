@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <app-teeth-map (toothClick)="toothClicked($event)" [teeth]="teeth"></app-teeth-map>
+        </div>
+        <form [formGroup]="form" class="col-md-6">
+            <app-subheader-edit (isEditing)="edit($event)" (isSaved)="save($event)" (isCanceled)="cancel($event)" [edit]="isEditing" header="Wybrany ząb"></app-subheader-edit>
+            <div class="row">
+                <mat-form-field class="col-12">
+                    <mat-label>Stan zdrowia zęba</mat-label>
+                    <select formControlName="state" matNativeControl>
+                        <option *ngFor="let op of statusSelect" [value]="op.value">{{op.display}}</option>
+                    </select>
+                </mat-form-field>
+
+            </div>
+            <h5 id="subheader">Informacje</h5>
+            <div class="row">
+                <mat-form-field class="mt-3" class="col-12">
+                    <textarea class="text-field" matInput formControlName="information" placeholder="Informacje na temat zęba"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+</div>

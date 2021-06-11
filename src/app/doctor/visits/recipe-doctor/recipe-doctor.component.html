@@ -69,4 +69,7 @@
           </div>
       </div>
     <button (click)="addRecipe()" mat-raised-button color="primary" class="mb-3 w-100">Dodaj receptę</button>
+
+    <h5 id="subheader" class="mt-4">Zęby</h5>
+    <app-jaw-view [teeth]="teeth" [patientId]="visit?.patientId" (teethChanged)="getTeeth()"></app-jaw-view>
 </div>

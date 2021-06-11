@@ -153,9 +153,7 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
           this.visitForm.dateTimeEnd = this.selectedDate
             .toISOString()
             .substring(0, 16);
-          console.log(this.visitForm);
           this.visitService.addVisit(this.visitForm).subscribe(() => {
-            console.log(this.visitForm);
           });
         },
         (reason) => {

@@ -8,3 +8,10 @@ export enum Gender {
     man = "MAN",
     woman = "WOMEN",
 }
+
+export enum ToothStatus {
+    healthy = "HEALTHY",
+    inProgress = "IN_PROGRESS",
+    removed = "REMOVED",
+    notHealthy = "NOT_HEALTHY"
+}

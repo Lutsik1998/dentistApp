@@ -1,0 +1,25 @@
+@import 'var';
+
+.tooth {
+    fill: white;
+    stroke: white;
+    cursor: pointer;
+    &.active {
+        stroke: $primary;
+    }
+    &.healthy {
+        fill: white;
+    }
+    &.not-healthy {
+        fill: #e3242b;
+    }
+    &.in-progress {
+        fill: #ff8b3d;
+    }
+    &.removed {
+        fill: black;
+    }
+    &:hover {
+        stroke: $accent-lighter !important;
+    }
+}
