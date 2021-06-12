@@ -22,6 +22,9 @@ import { Review, Visit, VisitResponseModel } from '../models/visit';
     getFreeDays(id: string,startDate:string,durationDate:number,durationTime:number): Observable<string[]> {
       return this.http.get<string[]>(`${this.baseUrl}/freeDays?doctorId=${id}&startDate=${startDate}&durationDate=${durationDate}&durationTime=${durationTime}`).pipe(catchError(this.handleError))
     }
+    getFreeTime(id: string,startDateTime:string,endDateTime:string): Observable<Visit[]> {
+      return this.http.get<Visit[]>(`${this.baseUrl}/filter1?doctorId=${id}&startDateTime=${startDateTime}&endDateTime=${endDateTime}`).pipe(catchError(this.handleError))
+    }
 
     getVisits(): Observable<VisitResponseModel[]> {
       return this.http.get<VisitResponseModel[]>(`${this.baseUrl}/all`).pipe(catchError(this.handleError))

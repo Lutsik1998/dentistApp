@@ -11,22 +11,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" *ngIf="listFreeDays.length > 0">
         <mat-tab-group mat-align-tabs="center" #tabGroup>
           <mat-tab label="Date" #date>
-            <mat-calendar [dateClass]="dateClass()" [dateFilter]="filterDates"  [selected]="selectedDate" (selectedChange)="onSelect($event,this.tabGroup)">
+            <mat-calendar [dateClass]="dateClass()"  [dateFilter]="myFilter"  [selected]="selectedDate" (selectedChange)="onSelect($event,this.tabGroup)">
             </mat-calendar>
 
           </mat-tab>
-          <mat-tab label="Time" [disabled]="true">
-            <mat-selection-list #time [multiple]="false"
-              (selectionChange)="onGroupsChange(time.selectedOptions.selected,this.tabGroup)">
-              <mat-list-option id="time" *ngFor="let time of typesOfTime" [value]="time">
-                {{time}}
-              </mat-list-option>
-            </mat-selection-list>
+          <mat-tab label="Time" [disabled]="false">
+            <div class="grid">
+              <mat-label>Start time</mat-label>
+                <input type="time"#timestart placeholder="08:00" (change)="timeStartChange(timestart.value)">       
+     
+                <mat-label>End time</mat-label>
+                <input type="time" #timeend placeholder="20:00"(change)="timeEndChange(timeend.value)">   
+              </div>
            </mat-tab>
-          <mat-tab label="Info"  [disabled]="true">
+          <mat-tab label="Info"  [disabled]="false">
               <mat-label>Leave a information</mat-label>
               <textarea matInput rows="4" cols="100" id="text_info" #text  placeholder="Ex. It makes me feel..."></textarea>
             <button type="button" class="btn btn-outline-dark" (click)="onchange(text.value)">Confirm</button>

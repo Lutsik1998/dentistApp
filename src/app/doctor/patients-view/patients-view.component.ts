@@ -41,9 +41,12 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
   closeResult = '';
   visitForm: Visit;
   user: CurrentUser;
+  listFreeTime: Visit[]=[];
   get isAdmin(): boolean {
     return this.authService.getRole() == UserRole.admin;
   }
+  listFreeDays: string[]=[];
+  tzoffset = (new Date()).getTimezoneOffset() * 60000;
   constructor(
     private visitService: VisitService,
     private officeService: OfficeService,
@@ -134,25 +137,30 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
 
   open(content, patientId) {
     this.visitForm.patientId = patientId;
+    this.visitService.getFreeDays(this.visitForm.doctorId,new Date().toISOString().split('T')[0],90,20).subscribe((res) =>{
+      this.listFreeDays = res;
+      
+    });
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
-          this.selectedDate.setHours(Number(this.selectedTime.substring(0, 2)));
+          this.selectedDate.setHours(Number(this.visitForm.dateTimeStart.substring(0, 2)));
           this.selectedDate.setMinutes(
-            Number(this.selectedTime.substring(3, 5))
+            Number(this.visitForm.dateTimeStart.substring(3, 5))
           );
 
-          this.visitForm.dateTimeStart = this.selectedDate
-            .toISOString()
-            .substring(0, 16);
+          this.visitForm.dateTimeStart = (new Date(this.selectedDate.getTime() - this.tzoffset)) 
+          .toISOString()
+          .substring(0, 16);
+          this.selectedDate.setHours(Number(this.visitForm.dateTimeEnd.substring(0, 2)));
           this.selectedDate.setMinutes(
-            Number(this.selectedTime.substring(3, 5)) + 20
+            Number(this.visitForm.dateTimeEnd.substring(3, 5))
           );
-          this.visitForm.dateTimeEnd = this.selectedDate
-            .toISOString()
-            .substring(0, 16);
+          this.visitForm.dateTimeEnd =(new Date(this.selectedDate.getTime() - this.tzoffset)) 
+          .toISOString()
+          .substring(0, 16);
           console.log(this.visitForm);
           this.visitService.addVisit(this.visitForm).subscribe(() => {
             console.log(this.visitForm);
@@ -163,7 +171,15 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
         }
       );
   }
+  myFilter = (d: Date): boolean => {
 
+    //console.log( (new Date("2021-06-10").getTime() - this.tzoffset),d.getTime(),d,(new Date("2021-06-10").getTime() - this.tzoffset) ==d.getTime());
+    //console.log(this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)),(d.getDay() !== 0 && d.getDay() !== 6),d.toISOString().substring(0,10));
+    //== d.toISOString().substring(0,10)
+    d = new Date(d.getTime() - this.tzoffset);
+    return (d.getDay() !== 0 && d.getDay() !== 6) && this.listFreeDays.some(e=> 
+    new Date(e).toISOString().substring(0,10) == d.toISOString().substring(0,10));
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -200,6 +216,33 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
 
   onSelect(event, tabGroup: MatTabGroup) {
     this.selectedDate = event;
+    var dateTimeStart = new Date(this.selectedDate);
+    var dateTimeEnd = new Date(this.selectedDate);
+    dateTimeStart.setHours(0);
+    dateTimeEnd.setDate(dateTimeStart.getDate()+1);
+    console.log(dateTimeStart.toISOString().substring(0,16), dateTimeEnd.toISOString().substring(0,16));
+    this.visitService.getFreeTime(this.visitForm.doctorId,dateTimeStart.toISOString().substring(0,16),dateTimeEnd.toISOString()).subscribe((res) =>{
+      this.listFreeTime = res;
+      console.log(this.listFreeTime);
+      for (let i = 0; i < this.listFreeTime.length; i++) {
+        for (let j = 0; j < this.typesOfTime.length; j++) {
+          var temp = new Date(this.listFreeTime[i].dateTimeStart);
+          temp.setHours(Number(this.typesOfTime[j].substring(0,2))+2);
+          temp.setMinutes(Number(this.typesOfTime[j].substring(3,5)));
+          var start =new Date(this.listFreeTime[i].dateTimeStart);
+          var end = new Date(this.listFreeTime[i].dateTimeEnd);
+          start = (new Date(start.getTime() - this.tzoffset));
+          end = (new Date(end.getTime()- this.tzoffset));
+
+          if (temp.getTime() >= start.getTime() && temp.getTime() <= end.getTime()) {
+            var element = <HTMLElement>document.getElementById('time');
+            console.log(this.typesOfTime[j]);
+            this.typesOfTime= this.typesOfTime.filter(x=> x !== this.typesOfTime[j]);
+          }
+        }
+       }
+      
+    })
     tabGroup._tabs.toArray()[1].disabled = false;
     tabGroup.selectedIndex = 1;
   }
@@ -215,6 +258,14 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     element.disabled = false;
     console.log(text);
     this.visitForm.information = text;
+  }
+  timeStartChange(timestart:string){
+    console.log(timestart);
+    this.visitForm.dateTimeStart = timestart;
+  }
+  timeEndChange(timeend:string){
+    console.log(timeend);
+    this.visitForm.dateTimeEnd = timeend;
   }
 
 }

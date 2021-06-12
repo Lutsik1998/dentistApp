@@ -27,6 +27,7 @@ import { VisitService } from 'src/app/services/visit.service';
 import { MatTabGroup } from '@angular/material/tabs';
 import { MatDialog } from '@angular/material/dialog';
 import { DoctorReviewsComponent } from 'src/app/shared/doctor-reviews/doctor-reviews.component';
+import { ElementFinder } from 'protractor';
 
 @Component({
   selector: 'app-doctor-view',
@@ -49,7 +50,8 @@ export class DoctorViewComponent implements OnInit {
   visitForm: Visit;
   user: CurrentUser;
   listFreeDays: string[]=[];
-
+  listFreeTime: Visit[]=[];
+  tzoffset = (new Date()).getTimezoneOffset() * 60000;
 
   constructor(
     private visitService: VisitService,
@@ -111,31 +113,32 @@ export class DoctorViewComponent implements OnInit {
     const filterValue = ($event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
   open(content, doctorId) {
     this.visitForm.doctorId = doctorId;
     this.visitService.getFreeDays(doctorId,new Date().toISOString().split('T')[0],90,20).subscribe((res) =>{
-      console.log(res);
       this.listFreeDays = res;
     });
-   
+ 
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
-          var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+      
           this.selectedDate.setHours(Number(this.selectedTime.substring(0, 2)));
           this.selectedDate.setMinutes(
             Number(this.selectedTime.substring(3, 5))
           );
-          this.visitForm.dateTimeStart = (new Date(this.selectedDate.getTime() - tzoffset)) 
+          this.visitForm.dateTimeStart = (new Date(this.selectedDate.getTime() - this.tzoffset)) 
             .toISOString()
             .substring(0, 16);
   
           this.selectedDate.setMinutes(
             Number(this.selectedTime.substring(3, 5)) + 20);
-          
-        this.visitForm.dateTimeEnd =(new Date(this.selectedDate.getTime() - tzoffset)) 
+            //"dateTimeStart": "2021-06-21T08:10",
+            //"dateTimeEnd": "2021-06-21T19:59",
+        this.visitForm.dateTimeEnd =(new Date(this.selectedDate.getTime() - this.tzoffset)) 
             .toISOString()
             .substring(0, 16);
           this.visitService.addVisit(this.visitForm).subscribe(() => {
@@ -150,11 +153,13 @@ export class DoctorViewComponent implements OnInit {
     
   }
   myFilter = (d: Date): boolean => {
-    // Prevent Saturday and Sunday from being selected.
-    // saturday is comming from the outter context
 
-    console.log(this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)),d.toISOString().substring(0,10));
-    return d.getDay() !== 0 && d.getDay() !== 6 && d >= new Date() && this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)) ;
+    //console.log( (new Date("2021-06-10").getTime() - this.tzoffset),d.getTime(),d,(new Date("2021-06-10").getTime() - this.tzoffset) ==d.getTime());
+    //console.log(this.listFreeDays.some(e=> e == d.toISOString().substring(0,10)),(d.getDay() !== 0 && d.getDay() !== 6),d.toISOString().substring(0,10));
+    //== d.toISOString().substring(0,10)
+    d = new Date(d.getTime() - this.tzoffset);
+    return (d.getDay() !== 0 && d.getDay() !== 6) && this.listFreeDays.some(e=> 
+    new Date(e).toISOString().substring(0,10) == d.toISOString().substring(0,10));
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -177,6 +182,10 @@ export class DoctorViewComponent implements OnInit {
   }
 
   typesOfTime: string[] = [
+    '08:00',
+    '08:30',
+    '09:00',
+    '09:30',
     '10:00',
     '10:30',
     '11:00',
@@ -186,13 +195,49 @@ export class DoctorViewComponent implements OnInit {
     '13:00',
     '13:30',
     '14:00',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+    '19:00',
+    '19:30'
   ];
   selectedDate = new Date();
   selectedTime: string;
 
   onSelect(event, tabGroup: MatTabGroup) {
     this.selectedDate = event;
+    var dateTimeStart = new Date(this.selectedDate);
+    var dateTimeEnd = new Date(this.selectedDate);
+    dateTimeStart.setHours(0);
+    dateTimeEnd.setDate(dateTimeStart.getDate()+1);
+    this.visitService.getFreeTime(this.visitForm.doctorId,dateTimeStart.toISOString().substring(0,16),dateTimeEnd.toISOString()).subscribe((res) =>{
+      this.listFreeTime = res;
+      console.log(this.listFreeTime);
+      for (let i = 0; i < this.listFreeTime.length; i++) {
+        for (let j = 0; j < this.typesOfTime.length; j++) {
+          var temp = new Date(this.listFreeTime[i].dateTimeStart);
+          temp.setHours(Number(this.typesOfTime[j].substring(0,2))+2);
+          temp.setMinutes(Number(this.typesOfTime[j].substring(3,5)));
+          var start =new Date(this.listFreeTime[i].dateTimeStart);
+          var end = new Date(this.listFreeTime[i].dateTimeEnd);
+          start = (new Date(start.getTime() - this.tzoffset));
+          end = (new Date(end.getTime()- this.tzoffset));
+          if (temp.getTime() >= start.getTime() && temp.getTime() <= end.getTime()) {
+            var element = <HTMLElement>document.getElementById('time');
+            console.log(this.typesOfTime[j]);
+            this.typesOfTime= this.typesOfTime.filter(x=> x !== this.typesOfTime[j]);
+          }
+        }
+       }
+    })
+    
     tabGroup._tabs.toArray()[1].disabled = false;
+    
     tabGroup.selectedIndex = 1;
   }
   onGroupsChange(options: MatListOption[], tabGroup: MatTabGroup) {

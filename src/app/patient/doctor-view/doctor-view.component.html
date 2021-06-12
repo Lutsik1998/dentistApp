@@ -15,11 +15,15 @@
             </mat-calendar>
           </mat-tab>
           <mat-tab label="Time" [disabled]="true">
-            <mat-selection-list #time [multiple]="false"
+            <mat-selection-list #time [multiple]="false" 
               (selectionChange)="onGroupsChange(time.selectedOptions.selected,this.tabGroup)">
-              <mat-list-option id="time" *ngFor="let time of typesOfTime" [value]="time">
-                {{time}}
-              </mat-list-option>
+                <div class="grid">
+                <mat-list-option id="time" *ngFor="let time of typesOfTime" [value]="time"> 
+                  {{time}}
+                </mat-list-option>
+              </div>
+       
+    
             </mat-selection-list>
           </mat-tab>
           <mat-tab label="Info"  [disabled]="true">
