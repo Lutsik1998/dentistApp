@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ToothStatus } from 'src/app/enums/various.enum';
 import { Tooth } from 'src/app/models/patient';
+import { AuthService } from 'src/app/services/auth.service';
 import { JawService } from 'src/app/services/jaw.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class JawViewComponent implements OnInit {
 
   @Input() teeth: Tooth[];
   @Input() patientId: string;
+  @Input() isDoc: boolean = false;
   @Output() readonly teethChanged = new EventEmitter();
   activeTooth: number;
   isEditing: boolean = false;
@@ -27,7 +29,7 @@ export class JawViewComponent implements OnInit {
     {value: ToothStatus.notHealthy, display: "Chory"},
     {value: ToothStatus.removed, display: "Usunięty"}
   ]
-  constructor(private fb: FormBuilder, private jawService: JawService) { }
+  constructor(private fb: FormBuilder, private jawService: JawService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.form.disable();

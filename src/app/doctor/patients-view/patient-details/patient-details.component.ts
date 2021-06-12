@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PatientUpdateRequestModel } from 'src/app/models/patient';
+import { PatientUpdateRequestModel, Tooth } from 'src/app/models/patient';
 import { AuthService } from 'src/app/services/auth.service';
+import { JawService } from 'src/app/services/jaw.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
@@ -45,7 +46,8 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   patientId: string;
   isLoading: boolean;
-  constructor(private fb: FormBuilder, private patientService: PatientService, private router: Router, private route: ActivatedRoute, private snackBar: SnackbarService) { }
+  teeth: Tooth[];
+  constructor(private fb: FormBuilder, private patientService: PatientService, private router: Router, private route: ActivatedRoute, private snackBar: SnackbarService, private jawService: JawService) { }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -65,6 +67,9 @@ export class PatientDetailsComponent implements OnInit, OnDestroy {
         phoneNumber: res.phoneNumber[0].number,
       })
       this.isLoading = false;
+    }))
+    this.sub.add(this.jawService.getJaw(this.patientId).subscribe(res => {
+      this.teeth = res;
     }))
   }
 

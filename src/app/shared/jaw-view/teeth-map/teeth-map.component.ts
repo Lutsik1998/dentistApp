@@ -16,7 +16,7 @@ export class TeethMapComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.teeth && this.toothInit) {
+    if(changes.teeth.currentValue && this.toothInit) {
       this.toothClick.emit({number: 1, tooth: this.teeth[1]})
       this.toothInit = false;
     }

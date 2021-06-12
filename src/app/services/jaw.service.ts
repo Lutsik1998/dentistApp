@@ -13,9 +13,7 @@ export class JawService {
   constructor(private http: HttpClient) {}
 
   getJaw(patientId: string): Observable<Tooth[]> {
-    return this.http.get<Tooth[]>(`${this.getUrl}/${patientId}/jaw`).pipe(tap((res) => {
-      console.log(res[0])
-    }));
+    return this.http.get<Tooth[]>(`${this.getUrl}/${patientId}/jaw`);
   }
 
   updateTooth(patientId: string, toothId: string, data: Tooth) {
