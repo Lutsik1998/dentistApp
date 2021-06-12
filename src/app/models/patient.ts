@@ -1,4 +1,4 @@
-import { Gender, UserRole } from "../enums/various.enum";
+import { Gender, ToothStatus, UserRole } from "../enums/various.enum";
 import { Address } from "./user";
 
 export interface Patient {
@@ -46,4 +46,9 @@ export interface PatientUpdateRequestModel {
     phoneNumber: {number: string},
     address: Address,
     cardNumber: number,
+}
+
+export interface Tooth {
+    information: string;
+    state: ToothStatus;
 }
