@@ -181,36 +181,39 @@ export class DoctorViewComponent implements OnInit {
     };
   }
 
-  typesOfTime: string[] = [
-    '08:00',
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-    '19:00',
-    '19:30'
-  ];
+  typesOfTime: Map<string, boolean>;
   selectedDate = new Date();
   selectedTime: string;
-
+  keys: Array<string>;
   onSelect(event, tabGroup: MatTabGroup) {
     this.selectedDate = event;
+    
+    this.typesOfTime = new  Map<string, boolean>([
+      ['08:00',false],
+      ['08:30',false],
+      ['09:00',false],
+      ['09:30',false],
+      ['10:00',false],
+      ['10:30',false],
+      ['11:00',false],
+      ['11:30',false],
+      ['12:00',false],
+      ['12:30',false],
+      ['13:00',false],
+      ['13:30',false],
+      ['14:00',false],
+      ['15:00',false],
+      ['15:30',false],
+      ['16:00',false],
+      ['16:30',false],
+      ['17:00',false],
+      ['17:30',false],
+      ['18:00',false],
+      ['18:30',false],
+      ['19:00',false],
+      ['19:30',false]
+    ]);
+    this.keys= Array.from( this.typesOfTime.keys());
     var dateTimeStart = new Date(this.selectedDate);
     var dateTimeEnd = new Date(this.selectedDate);
     dateTimeStart.setHours(0);
@@ -218,19 +221,20 @@ export class DoctorViewComponent implements OnInit {
     this.visitService.getFreeTime(this.visitForm.doctorId,dateTimeStart.toISOString().substring(0,16),dateTimeEnd.toISOString()).subscribe((res) =>{
       this.listFreeTime = res;
       console.log(this.listFreeTime);
+   
       for (let i = 0; i < this.listFreeTime.length; i++) {
-        for (let j = 0; j < this.typesOfTime.length; j++) {
+        for (let j = 0; j < this.keys.length; j++) {
           var temp = new Date(this.listFreeTime[i].dateTimeStart);
-          temp.setHours(Number(this.typesOfTime[j].substring(0,2))+2);
-          temp.setMinutes(Number(this.typesOfTime[j].substring(3,5)));
+          
+          temp.setHours(Number(this.keys[j].substring(0,2))+2);
+          temp.setMinutes(Number(this.keys[j].substring(3,5)));
           var start =new Date(this.listFreeTime[i].dateTimeStart);
           var end = new Date(this.listFreeTime[i].dateTimeEnd);
           start = (new Date(start.getTime() - this.tzoffset));
           end = (new Date(end.getTime()- this.tzoffset));
           if (temp.getTime() >= start.getTime() && temp.getTime() <= end.getTime()) {
-            var element = <HTMLElement>document.getElementById('time');
-            console.log(this.typesOfTime[j]);
-            this.typesOfTime= this.typesOfTime.filter(x=> x !== this.typesOfTime[j]);
+            console.log(this.typesOfTime.get(this.keys[j]));
+            this.typesOfTime.set(this.keys[j],true);
           }
         }
        }
@@ -252,4 +256,5 @@ export class DoctorViewComponent implements OnInit {
     element.disabled = false;
     this.visitForm.information = text;
   }
+
 }

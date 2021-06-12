@@ -71,12 +71,10 @@ export class AddPatientComponent implements OnInit, OnDestroy {
       password: this.docForm.get('password').get('pass').value,
     }
     this.sub.add(this.patientService.signUpPatient(data).subscribe(res => {
-      console.log(res)
       this.snackbar.success("Pacjent został dodany");
       this.back();
     }, err => {
       this.snackbar.error("Pacjent nie został dodany")
-      console.log(err)
     }))
   }
 }

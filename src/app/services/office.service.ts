@@ -14,6 +14,10 @@ export class OfficeService {
     return this.http.get<OfficeInfoResponseModel[]>(this.baseUrl + '/all')
   }
 
+  postOffice(body) {
+    return this.http.post(`${this.baseUrl}/save`, body)
+  }
+
   patchOffice(body: OfficeInfoResponseModel) {
     return this.http.put(`${this.baseUrl}/${body.id}`, body)
   }

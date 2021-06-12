@@ -19,13 +19,12 @@
 
           </mat-tab>
           <mat-tab label="Time" [disabled]="false">
-            <div class="grid">
-              <mat-label>Start time</mat-label>
-                <input type="time"#timestart placeholder="08:00" (change)="timeStartChange(timestart.value)">       
-     
-                <mat-label>End time</mat-label>
-                <input type="time" #timeend placeholder="20:00"(change)="timeEndChange(timeend.value)">   
-              </div>
+            <mat-selection-list #time [multiple]="false " >
+              <mat-list-option  *ngFor="let time of keys" id="time" [value]="time" [disabled]="typesOfTime.get(time)" 
+              (mouseover)="mouseoverEvent($event)" (mousedown)="mousedownEvent($event,time)" > 
+                {{time}}
+              </mat-list-option>
+            </mat-selection-list>
            </mat-tab>
           <mat-tab label="Info"  [disabled]="false">
               <mat-label>Leave a information</mat-label>

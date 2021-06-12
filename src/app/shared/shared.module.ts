@@ -19,10 +19,12 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ImageShowComponent } from './image-show/image-show.component';
+import { JawViewComponent } from './jaw-view/jaw-view.component';
+import { TeethMapComponent } from './jaw-view/teeth-map/teeth-map.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent, RecipeDetailsComponent, ImageShowComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent, RecipeDetailsComponent, ImageShowComponent, JawViewComponent, TeethMapComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -48,6 +50,7 @@ import { ImageShowComponent } from './image-show/image-show.component';
     DoctorReviewsComponent,
     RecipeDetailsComponent,
     ImageShowComponent,
+    JawViewComponent
   ],
   providers: [DatePipe]
 })
