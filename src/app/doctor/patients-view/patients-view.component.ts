@@ -301,9 +301,15 @@ export class PatientsViewComponent implements OnInit, OnDestroy {
     this.selectionModeActive = !this.selectionModeActive;
   }
   mouseoverEvent(event:any){
-    if(this.selectionModeActive){
+
+    if(this.selectionModeActive && event.target.style.background == 'green'){
+      console.log('over');
+      event.target.style.background = 'white';
+    }
+    else if (this.selectionModeActive){
+      console.log('over');
       event.target.style.background = 'green';
-      this.mouseoverFlag = false;
+
     }
 
 
