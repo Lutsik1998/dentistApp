@@ -8,3 +8,21 @@ export interface OfficeInfoResponseModel {
     listDoctorsId: Array<string>,
     nip: number
 }
+
+export const newOfficeTemplate = {
+    name: "nazwa",
+    address: {
+      country: "kraj",
+      region: "region",
+      city: "miasto",
+      postalCode: "00-000",
+      street: "ulica",
+      houseNr: "dom",
+      roomNr: "nr",
+      information: "informacje"
+    },
+    phoneNumber: {
+      number: "000000000"
+    },
+    nip: 0
+  }

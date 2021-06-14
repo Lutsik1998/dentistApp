@@ -1,8 +1,6 @@
 package com.dentistapp.dentistappdevelop.service.impl;
 
-import com.dentistapp.dentistappdevelop.model.Patient;
-import com.dentistapp.dentistappdevelop.model.Review;
-import com.dentistapp.dentistappdevelop.model.Visit;
+import com.dentistapp.dentistappdevelop.model.*;
 import com.dentistapp.dentistappdevelop.repository.PatientRepository;
 import com.dentistapp.dentistappdevelop.service.PatientService;
 import com.mongodb.client.result.UpdateResult;
@@ -84,7 +82,13 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient save(Patient patient) {
         patient.setPassword(passwordEncoder.encode(patient.getPassword()));
+        Jaw initJaw = new Jaw();
+        for(int i = 1; i <= 32; i++){
+            initJaw.put(i, new Tooth());
+        }
+        patient.setJaw(initJaw);
         patientRepository.save(patient);
+        patient.toDTO();
         return patient;
     }
 

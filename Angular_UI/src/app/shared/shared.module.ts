@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AngularMaterialModule } from '../material.module';
 import { RouterModule } from '@angular/router';
@@ -15,10 +15,16 @@ import { SubheaderEditComponent } from './subheader-edit/subheader-edit.componen
 import { PipesModule } from '../pipes/pipes.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ImageShowComponent } from './image-show/image-show.component';
+import { JawViewComponent } from './jaw-view/jaw-view.component';
+import { TeethMapComponent } from './jaw-view/teeth-map/teeth-map.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent],
+  declarations: [LoginComponent, RegistrationComponent,HeaderComponent, SpinnerComponent, SubheaderEditComponent, ConfirmationDialogComponent, DoctorReviewsComponent, ChangePasswordComponent, RecipeDetailsComponent, ImageShowComponent, JawViewComponent, TeethMapComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -27,7 +33,8 @@ import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.componen
     ReactiveFormsModule,
     RouterModule,
     PipesModule,
-    NgbModule
+    NgbModule,
+    NgxDropzoneModule
   ],
   exports: [
     PipesModule,
@@ -38,7 +45,13 @@ import { DoctorReviewsComponent } from './doctor-reviews/doctor-reviews.componen
     AngularMaterialModule,
     NgbModule,
     ConfirmationDialogComponent,
-    DoctorReviewsComponent
-  ]
+    DoctorReviewsComponent,
+    ChangePasswordComponent,
+    DoctorReviewsComponent,
+    RecipeDetailsComponent,
+    ImageShowComponent,
+    JawViewComponent
+  ],
+  providers: [DatePipe]
 })
 export class SharedModule { }

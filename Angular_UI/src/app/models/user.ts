@@ -6,6 +6,15 @@ export interface User {
     role: UserRole;
 }
 
+export interface CurrentUser {
+    accessToken: string;
+    email: string;
+    id: string;
+    role: UserRole;
+    tokenType: string;
+    type: string;
+}
+
 export interface Address {
     country: string,
     region: string,

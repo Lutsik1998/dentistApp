@@ -1,3 +1,4 @@
+import { Recipe } from "./recipe";
 
 export interface Visit {
     dateTimeStart: string,
@@ -16,8 +17,9 @@ export interface VisitResponseModel {
     information: string,
     doctorId: string,
     officeId: string,
-    patientId: string 
-    review: Review
+    patientId: string, 
+    review: Review,
+    recipes: Recipe[];
 }
 
 export interface VisitListItemModel {
@@ -28,7 +30,8 @@ export interface VisitListItemModel {
     doctorId: string,
     officeId: string,
     patientId: string 
-    review: Review
+    review: Review,
+    recipes: Recipe[]
 }
 
 export interface Review {

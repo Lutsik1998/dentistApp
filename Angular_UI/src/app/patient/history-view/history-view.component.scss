@@ -1,10 +1,5 @@
 @import 'var';
 
-.table-container {
-    table {
-        width: 100%;
-    }
-}
 
 .link {
     color: $primary;
@@ -13,6 +8,10 @@
         color: $accent;
         font-weight: bolder;
     }
+}
+
+.mat-input-element:disabled {
+    color: currentColor;
 }
 
 .no-patient {

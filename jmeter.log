@@ -1,0 +1,46 @@
+2021-06-12 02:10:26,740 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2021-06-12 02:10:26,765 INFO o.a.j.JMeter: Loading user properties from: /opt/jmeter/bin/user.properties
+2021-06-12 02:10:26,765 INFO o.a.j.JMeter: Loading system properties from: /opt/jmeter/bin/system.properties
+2021-06-12 02:10:26,766 INFO o.a.j.JMeter: Copyright (c) 1998-2019 The Apache Software Foundation
+2021-06-12 02:10:26,767 INFO o.a.j.JMeter: Version 5.2.1
+2021-06-12 02:10:26,767 INFO o.a.j.JMeter: java.version=11.0.11
+2021-06-12 02:10:26,767 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2021-06-12 02:10:26,767 INFO o.a.j.JMeter: os.name=Linux
+2021-06-12 02:10:26,767 INFO o.a.j.JMeter: os.arch=amd64
+2021-06-12 02:10:26,768 INFO o.a.j.JMeter: os.version=5.12.4-zen1-2-zen
+2021-06-12 02:10:26,768 INFO o.a.j.JMeter: file.encoding=UTF-8
+2021-06-12 02:10:26,768 INFO o.a.j.JMeter: java.awt.headless=null
+2021-06-12 02:10:26,768 INFO o.a.j.JMeter: Max memory     =1073741824
+2021-06-12 02:10:26,768 INFO o.a.j.JMeter: Available Processors =8
+2021-06-12 02:10:26,792 INFO o.a.j.JMeter: Default Locale=English (EN)
+2021-06-12 02:10:26,793 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2021-06-12 02:10:26,793 INFO o.a.j.JMeter: JMeterHome=/opt/jmeter
+2021-06-12 02:10:26,793 INFO o.a.j.JMeter: user.dir  =/mnt/Other/Programing/Projects/dentist_app/prod
+2021-06-12 02:10:26,793 INFO o.a.j.JMeter: PWD       =/mnt/Other/Programing/Projects/dentist_app/prod
+2021-06-12 02:10:26,794 INFO o.a.j.JMeter: IP: 192.168.0.107 Name: MSI-GE62-7RE FullName: MSI-GE62-7RE
+2021-06-12 02:10:27,187 INFO o.a.j.g.a.LookAndFeelCommand: Installing Darcula LAF
+2021-06-12 02:10:27,208 INFO o.a.j.g.a.LookAndFeelCommand: Using look and feel: com.bulenkov.darcula.DarculaLaf [Darcula]
+2021-06-12 02:10:27,209 INFO o.a.j.JMeter: Setting LAF to: com.bulenkov.darcula.DarculaLaf
+2021-06-12 02:10:27,286 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2021-06-12 02:10:29,101 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-06-12 02:10:29,102 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-06-12 02:10:29,102 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-06-12 02:10:29,103 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-06-12 02:10:29,103 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2021-06-12 02:10:29,103 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2021-06-12 02:10:29,414 INFO o.a.j.e.KeyToolUtils: keytool found at 'keytool'
+2021-06-12 02:10:29,415 INFO o.a.j.p.h.p.ProxyControl: HTTP(S) Test Script Recorder SSL Proxy will use keys that support embedded 3rd party resources in file /opt/jmeter/bin/proxyserver.jks
+2021-06-12 02:10:29,520 INFO o.a.j.s.FileServer: Default base='/mnt/Other/Programing/Projects/dentist_app/prod'
+2021-06-12 02:10:29,777 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2021-06-12 02:10:29,777 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2021-06-12 02:10:29,777 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2021-06-12 02:10:29,777 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2021-06-12 02:10:29,795 INFO o.a.j.v.ViewResultsFullVisualizer: Add JavaFX to your Java installation if you want to use renderer: org.apache.jmeter.visualizers.RenderInBrowser
+2021-06-12 02:10:54,035 INFO o.a.j.g.a.Load: Loading file: /mnt/Other/Programing/python/pwr/DPP/JMeter/Test.jmx
+2021-06-12 02:10:54,301 INFO o.a.j.s.FileServer: Set new base='/mnt/Other/Programing/python/pwr/DPP/JMeter'
+2021-06-12 02:10:54,450 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2021-06-12 02:10:54,458 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2021-06-12 02:10:54,460 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2021-06-12 02:10:54,461 INFO o.a.j.s.SaveService: Loading file: /mnt/Other/Programing/python/pwr/DPP/JMeter/Test.jmx
+2021-06-12 02:10:54,532 INFO o.a.j.v.ViewResultsFullVisualizer: Add JavaFX to your Java installation if you want to use renderer: org.apache.jmeter.visualizers.RenderInBrowser
+2021-06-12 02:10:54,679 INFO o.a.j.s.FileServer: Set new base='/mnt/Other/Programing/python/pwr/DPP/JMeter'

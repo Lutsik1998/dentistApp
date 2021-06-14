@@ -13,9 +13,10 @@ import { AddDoctorComponent } from './doctors-list/add-doctor/add-doctor.compone
 import { AddPatientComponent } from './patients-view/add-patient/add-patient.component';
 import { PatientDetailsComponent } from './patients-view/patient-details/patient-details.component';
 import { VisitsComponent } from './visits/visits.component';
+import { RecipeDoctorComponent } from './visits/recipe-doctor/recipe-doctor.component';
 
 @NgModule({
-  declarations: [DoctorComponent, PatientsViewComponent, OfficeViewDoctorComponent, AccountViewDoctorComponent, OfficeInfoComponent, DoctorsListComponent, AddDoctorComponent, AddPatientComponent, PatientDetailsComponent, VisitsComponent],
+  declarations: [DoctorComponent, PatientsViewComponent, OfficeViewDoctorComponent, AccountViewDoctorComponent, OfficeInfoComponent, DoctorsListComponent, AddDoctorComponent, AddPatientComponent, PatientDetailsComponent, VisitsComponent, RecipeDoctorComponent],
   imports: [
     CommonModule,
     DoctorRoutingModule,

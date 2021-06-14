@@ -2,6 +2,7 @@ package com.dentistapp.dentistappdevelop.controller;
 
 import com.dentistapp.dentistappdevelop.dto.LoginDto;
 import com.dentistapp.dentistappdevelop.model.*;
+import com.dentistapp.dentistappdevelop.security.payload.MessageResponse;
 import com.dentistapp.dentistappdevelop.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ public class AdminController {
 
     @GetMapping("/initialize")
     public ResponseEntity<?> initAdmin(@RequestParam (value="admin") String password) {
+
         if(!password.equals(adminPassword)){
             System.out.println("pass");
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
@@ -44,12 +46,16 @@ public class AdminController {
         doctorAdmin.setAddress(new Address());
         doctorAdmin.setPhoneNumber(new HashSet<>());
         doctorAdmin.setRoles(new LinkedHashSet<Roles>(){{
-            add(Roles.ROLE_ADMIN);
             add(Roles.ROLE_DOCTOR);
+            add(Roles.ROLE_ADMIN);
         }});
         System.out.println("before cor");
-
-        doctorService.save(doctorAdmin);
+        if (doctorService.doctorRepository().existsByEmail(doctorAdmin.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: User with email: " + doctorAdmin.getEmail() +" is already taken!"));
+        }
+        doctorAdmin = doctorService.save(doctorAdmin);
 
         return ResponseEntity.ok(doctorAdmin);
     }

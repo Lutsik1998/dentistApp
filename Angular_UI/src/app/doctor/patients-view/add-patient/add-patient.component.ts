@@ -23,7 +23,7 @@ export class AddPatientComponent implements OnInit, OnDestroy {
     }, {validator: StringsMatch('pass','confirmPass')}),
     roles: ['ROLE_PATIENT'],
     firstName: ['', [Validators.required]],
-    secondName: ['', [Validators.required]],
+    secondName: [''],
     lastName: ['', [Validators.required]],
     pesel: ['', [Validators.required]],
     birthDate: ['', [Validators.required]],
@@ -35,7 +35,7 @@ export class AddPatientComponent implements OnInit, OnDestroy {
       postalCode: ['', [Validators.required]],
       street: ['', [Validators.required]],
       houseNr: ['', [Validators.required]],
-      roomNr: ['', [Validators.required]],
+      roomNr: ['',],
       information: [''],
     }),
     phoneNumber: ['', [Validators.required]],
@@ -71,12 +71,10 @@ export class AddPatientComponent implements OnInit, OnDestroy {
       password: this.docForm.get('password').get('pass').value,
     }
     this.sub.add(this.patientService.signUpPatient(data).subscribe(res => {
-      console.log(res)
       this.snackbar.success("Pacjent został dodany");
       this.back();
     }, err => {
       this.snackbar.error("Pacjent nie został dodany")
-      console.log(err)
     }))
   }
 }

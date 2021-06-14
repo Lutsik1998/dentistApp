@@ -48,7 +48,8 @@ public class VisitServiceImpl implements VisitService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong patient id \"" + visit.getPatientId() + "\"");
         }
         if (visit.getDateTimeStart().getHour() < 8 || visit.getDateTimeEnd().getHour() >= 20
-                || visit.getDateTimeEnd().toEpochSecond(zoneOffset) - visit.getDateTimeStart().toEpochSecond(zoneOffset) < 60){
+                || visit.getDateTimeEnd().toEpochSecond(zoneOffset) - visit.getDateTimeStart().toEpochSecond(zoneOffset) < 60 ||
+                visit.getDateTimeStart().compareTo(LocalDateTime.now()) < 0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong Time");
         }
         if (this.existsInIntervalByDateTimeStartAndDateTimeEndAndDoctorId(visit.getDateTimeStart(), visit.getDateTimeEnd(), visit.getDoctorId())) {

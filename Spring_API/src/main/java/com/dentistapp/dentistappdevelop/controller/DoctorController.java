@@ -57,8 +57,12 @@ public class DoctorController {
 
     @PreAuthorize("hasRole('ROLE_DOCTOR')" + " || " + "hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/save")
-    public ResponseEntity<Doctor> saveDoctor(@RequestBody @Valid Doctor doctor) {
-
+    public ResponseEntity saveDoctor(@RequestBody @Valid Doctor doctor) {
+        if (doctorService.doctorRepository().existsByEmail(doctor.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: User with email: " + doctor.getEmail() +" is already taken!"));
+        }
         doctorService.save(doctor);
         return new ResponseEntity(doctor, HttpStatus.CREATED);
     }

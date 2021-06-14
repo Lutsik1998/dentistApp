@@ -5,17 +5,18 @@ import { catchError, map } from "rxjs/operators";
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
 import { Patient } from '../models/patient'
-import { User } from '../models/user';
+import { CurrentUser } from '../models/user';
+import { UserRole } from '../enums/various.enum';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-    private currentUserSubject!: BehaviorSubject<any>;
-    public currentUser!: Observable<any>;
+    private currentUserSubject!: BehaviorSubject<CurrentUser>;
+    public currentUser!: Observable<CurrentUser>;
     isLoggedOut: boolean = true;
     constructor( private router: Router,private http: HttpClient) {
-      this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')!));
+      this.currentUserSubject = new BehaviorSubject<CurrentUser>(JSON.parse(localStorage.getItem('currentUser')!));
       this.currentUser = this.currentUserSubject.asObservable();
      }
      canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -36,7 +37,7 @@ export class AuthService {
     login(userLogin: any){
       this.isLoggedOut = false;
       return this.http.post('http://localhost:8080/api/user/auth/signin', userLogin).pipe(
-          map((user: User) => {
+          map((user: CurrentUser) => {
               localStorage.setItem('currentUser', JSON.stringify(user));
               this.currentUserSubject.next(user);
               return user;
@@ -46,7 +47,14 @@ export class AuthService {
     handleError(error: HttpErrorResponse) {
         return throwError(error);}
   
-  
+    getRole(): UserRole {
+      return this.currentUserSubject.value.role;
+    }
+
+    getId(): string {
+      return this.currentUserSubject.value.id;
+    }
+
     logout(){
       localStorage.removeItem('currentUser');
       this.isLoggedOut = true;

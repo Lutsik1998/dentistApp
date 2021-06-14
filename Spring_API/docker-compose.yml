@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   main-db:
-    container_name: mongodb-dentist # Container name
+    container_name: dentist-mongodb # Container name
     image: mongo # image name to start/build
     ports: # Port mapping
       - 27017:27017
@@ -29,3 +29,4 @@ services:
       - "./img_db/:/img_db"
     links: # list mapping: service_name:name_how_will_see_your_program
       - main-db
+      - cache-db

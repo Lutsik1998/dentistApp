@@ -29,7 +29,7 @@ services:
       - main-db
       - cache-db
     volumes:
-      - ./img_db/:/img_db
+      - ./Spring_API/img_db/:/img_db
   angular-WebUI:
     build:
       context: ./Angular_UI
