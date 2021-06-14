@@ -36,7 +36,7 @@ Części apolikacji uruchomione na następujących portach:
 ## Dokumentacja
 
 - documentacja dla Backend'u (swagger): http://127.0.0.1:8080/swagger-ui/index.html
-- testy Postman: plik ./Spring_API/DentistApp.postman_collection.json
+- testy Postman(TODO: tooth_tests): plik ./Spring_API/DentistApp.postman_collection.json
 
 ## Dodatkowa informacja
 
@@ -95,7 +95,7 @@ Application running on the following ports:
 ## Documentation
 
 - Backend documentation (swagger): http://127.0.0.1:8080/swagger-ui/index.html
-- Postman tests: plik ./Spring_API/DentistApp.postman_collection.json
+- Postman tests(TODO: tooth_tests): plik ./Spring_API/DentistApp.postman_collection.json
 
 ## Additiona Information
 
