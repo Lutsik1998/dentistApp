@@ -22,11 +22,17 @@ docker-compose -f docker-compose-nix.yml build
 docker-compose -f docker-compose-nix.yml up
 ```
 
+Po pierwszym uruchomianiu należy stworzyć konto administratora. Dla tego wystarczy wysłać GET zapytanie, na przykład za pomocą przeglądarki
+
+```
+http://localhost:8080/api/admin/initialize?admin=ryPr8dg5LvTjicETulyzoC60QBUKCovLjZMKxMXFb7dHc1xXINKlr29Fsd99XsFmdNKD4hB4Mu1iAVsXSdoLQMhPqCW3uMMhYHKxX5fv3NfYfD4huU5GVyDmKJuVeGLMRGFCEdKZPpJ9LcPPh15vzfIh8llQ8LiGaP8EXRMRgo6RqHeL1j7kWx5reu09cnLEOmTUS7508J3L1RYDibxJHpJUNIv4yqTJwFJJBapOYBTCn0SoHGpg1g7JTWwvfUwl
+```
+
 ### Uwaga! Jeśli jeden z portów jest już zajęty, nie wszystkie elementy będą uruchomione.
 
 ## Wykorzystanie
 
-Części apolikacji uruchomione na następujących portach:
+Części aplikacji uruchomione na następujących portach:
 
 - frontend - 80 (http://127.0.0.1:80)
 - backend - 8080 (http://127.0.0.1:8080)
