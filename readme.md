@@ -135,6 +135,8 @@ Remove all <none> images (linux)
 docker rmi $(docker images | grep '<none>' | awk '{print $3}')
 ``` -->
 
+## Demo
+You can watch demo video at this link: https://youtu.be/ShLs0XzMROE
 
 ## Authors 
 Created by students of the Wroclaw University of Technology:
