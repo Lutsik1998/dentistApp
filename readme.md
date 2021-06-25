@@ -144,4 +144,4 @@ Created by students of the Wroclaw University of Technology:
 2. Nikita Stepanenko - nikita.stepanenko.dev@gmail.com
 3. Vladyslav Bobrov - vbobrov1234@gmail.com
 4. Paweł Kuriata - kuriatapaw@gmail.com
-5. Wojciech Czarnecki - 
+5. Wojciech Czarnecki - wojtekcz15@wp.pl
